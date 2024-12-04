@@ -1,0 +1,125 @@
+.back-manager {
+  background-color: #f8f8ff;
+  min-height: 100vh;
+}
+
+.back-manager-header {
+  height: 60px;
+  background-color: #0066bc;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
+  padding: 10px 20px;
+}
+
+/* header的左侧样式 */
+.back-manager-header-left {
+  min-width: 250px;
+  display: flex;
+}
+
+.back-manager-header-left .content {
+  width: 160px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.back-manager-header-left .content img {
+  width: 30px;
+  height: 30px;
+}
+
+.back-manager-header-left .content .title {
+  color: var(--primary-color);
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+}
+
+/* header的中间样式 */
+
+.back-manager-header-center {
+  flex: 1 ;
+}
+
+/* header右侧样式 */
+
+.back-manager-header-right .content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 90px;
+}
+
+.back-manager-header-right .content img {
+  width: 40px;
+  height: 40px;
+}
+
+.back-manager-header-right .content span {
+  color: white;
+}
+
+.back-manager-main {
+  display: flex;
+  height: 100vh;
+}
+
+.back-manager-main .back-manager-main-left {
+  width: 200px;
+  height: 100%;
+  background-color: #00162a;
+  box-shadow: 0 0 6px rgba(0, 21, 41, .33);
+}
+
+.back-manager-main-left .tag {
+  background-color: #1890ff;
+}
+
+.back-manager-main-right {
+  padding: 10px;
+  flex: 1;
+}
+
+
+
+/** element 样式覆盖 */
+.el-tooltip__trigger {
+  outline: none;
+}
+
+:deep(.el-breadcrumb__item .el-breadcrumb__inner) {
+  color: white;
+}
+
+:deep(.el-breadcrumb__separator) {
+  color: white;
+}
+
+.el-menu {
+  width: 100%;
+  background-color: #011223;
+}
+
+.el-menu-item {
+  color: white;
+  background-color: #011223;
+}
+:deep(.el-sub-menu__title) {
+  color: white;
+}
+
+:deep(.el-sub-menu__title:hover) {
+  background-color: #00162a;
+}
+
+:deep(.el-breadcrumb__inner:hover) {
+  color: white !important;
+}
+
+.el-menu-item:hover {
+  background-color: #1890ff;
+}
+.el-menu--inline .el-menu-item {
+  padding-left: 50px !important;
+}

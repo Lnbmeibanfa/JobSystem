@@ -1,0 +1,52 @@
+.front-shower {
+  width: 100vw;
+  height: 100vh;
+}
+
+.front-shower-header {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+}
+
+.front-shower-header {
+  height: 60px;
+  border-bottom: 1px solid #dcdfe6;
+}
+
+.front-shower-header .left {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  width: 200px;
+}
+
+.front-shower-header .title {
+  font-weight: bold;
+  font-size: 20px;
+  margin-left: 10px;
+}
+
+.front-shower-header .center {
+  flex: 1;
+}
+
+.front-shower-header .right .content {
+  width: 100px;
+  display: flex;
+  align-items: center;
+}
+
+.front-shower-header .right .content .info {
+  margin-left: 10px;
+}
+
+.front-shower-header img {
+  width: 30px;
+  height: 30px;
+}
+
+/* 覆盖Element UI 样式 */
+.el-dropdown {
+  outline: none;
+}
