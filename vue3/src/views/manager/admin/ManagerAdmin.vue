@@ -28,7 +28,8 @@ const formVisiable = ref(false)
 const submit = () => {
   adminForm.value.validate(async (valid) => {
     if (valid) {
-      await addAdminAPI(formData)
+      const res = await addAdminAPI(formData.value)
+      console.log(res)
     }
   })
 }

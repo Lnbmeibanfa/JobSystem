@@ -19,6 +19,9 @@ public class AdminService {
         if (ObjectUtil.isNotNull(dbAdmin)) {
             throw new CustomException(ResultCodeEnum.USER_EXIST_ERROR);
         }
+        if (ObjectUtil.isEmpty(admin.getUsername())) {
+            return ;
+        }
         if (ObjectUtil.isEmpty(admin.getPassword())) {
             admin.setPassword("123456");
         }
