@@ -1,3 +1,4 @@
+
 const isLegal = (str) => {
   if (typeof str !== 'string') {
     return false
@@ -11,4 +12,6 @@ const isLegal = (str) => {
   return true;
 }
 
-export default isLegal
+export {
+  isLegal
+}

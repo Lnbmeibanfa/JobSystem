@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Manager from '@/views/BackManager.vue'
 import Home from '@/views/manager/ManagerHome.vue'
-import Admin from '@/views/manager/ManagerAdmin.vue'
+import Admin from '@/views/manager/admin/ManagerAdmin.vue'
 import InvalidPage from '@/views/InvalidPage404.vue'
 import Shower from '@/views/FrontShower.vue'
 const router = createRouter({
