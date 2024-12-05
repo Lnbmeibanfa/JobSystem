@@ -1,10 +1,8 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, reactive } from 'vue'
 import { ElButton, ElDialog } from 'element-plus';
+import isLegal from '@/utils/ManagerUtil'
 import {addAdminAPI} from '@/api/admin'
-const toggleFormVisiable = (isvisiable) => {
-  formVisiable.value = isvisiable
-}
 const form = ref({
   username: '',
   password: '',
@@ -13,13 +11,35 @@ const form = ref({
   phone: '',
   email: '',
 })
+const rules = reactive({
+  username: [
+  { validator: validateUsername, trigger: 'blur' },
+  ]
+})
+const toggleFormVisiable = (isvisiable) => {
+  formVisiable.value = isvisiable
+}
+
+const validateUsername = (rule, value, callback) => {
+  if (value === '') {
+    callback(new Error('用户名不得为空'))
+  } else if (value.length < 5 || value.length > 50) {
+    callback(new Error('用户名长度应为5-50'))
+  } else if(!isLegal(value)) {
+    callback(new Error('用户名中不得含有特殊字符'))
+  } else {
+    callback()
+  }
+}
+
+
 const formVisiable = ref(false)
-const add = async () => {
+const addAdmin = async () => {
   const res = await addAdminAPI(form.value)
   console.log(res);
 }
 const submit = () => {
-  add()
+  addAdmin()
 }
 </script>
 
@@ -29,7 +49,7 @@ const submit = () => {
       <el-button @click="toggleFormVisiable(true)">添加</el-button>
     </div>
     <el-dialog v-model="formVisiable" title="新增管理员" width="40%">
-      <el-form :model="form"  label-width="60px" style="padding: 20px;">
+      <el-form :model="form"  label-width="70px" style="padding: 20px;" :rules="rules">
         <el-form-item label="用户名" prop="username">
           <el-input v-model="form.username" placeholder="请输入用户名" />
         </el-form-item>
