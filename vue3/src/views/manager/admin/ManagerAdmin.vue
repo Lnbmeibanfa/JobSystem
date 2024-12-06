@@ -5,6 +5,7 @@ import { validateUsername, validateEmail, validatePhone } from './validateUtil'
 import { addAdminAPI, selectAllAPI } from '@/api/admin'
 
 onMounted(() => {
+  // 加载表格数据
   load()
 })
 /**table 数据和方法*/
@@ -12,8 +13,21 @@ const tableData = ref([])
 const pageNum = ref(1)
 const pageSize = ref(1)
 const total = ref(0)
-// const name = ref('')
-
+const name = ref('')
+const load = () => {
+  selectAllAPI(pageNum.value, pageSize.value).then((res) => {
+    if (res.code === '200') {
+      tableData.value = res.data?.list || []
+      total.value = res.data?.total
+    }
+  })
+}
+const handleEdit = (row) => {
+  console.log(row)
+}
+const handleDel = (id) => {
+  console.log(id)
+}
 /**dialog数据和方法*/
 // 表单数据和rules
 const adminForm = ref(null)
@@ -25,6 +39,7 @@ const formData = ref({
   phone: '',
   email: ''
 })
+
 const rules = reactive({
   username: [{ validator: validateUsername, trigger: 'blur' }],
   phone: [{ validator: validatePhone, trigger: 'blur' }],
@@ -50,19 +65,20 @@ const submit = () => {
     }
   })
 }
-const load = () => {
-  selectAllAPI(pageNum.value, pageSize.value).then((res) => {
-    if (res.code === '200') {
-      tableData.value = res.data?.list || []
-      total.value = res.data?.total
-    }
-    console.log(tableData.value)
-  })
-}
 </script>
 
 <template>
   <div class="manager-admin">
+    <div class="card">
+      <el-input
+        v-model="name"
+        prefix-icon="Search"
+        placeholder="请输入名称查询"
+        style="width: 400px; margin-right: 15px"
+      ></el-input>
+      <el-button type="primary" size="default" @click="load" plain>查询</el-button>
+      <el-button type="warning" size="default" @click="load" plain>重置</el-button>
+    </div>
     <div class="card">
       <el-button @click="toggleFormVisiable(true)">添加</el-button>
     </div>
@@ -75,12 +91,34 @@ const load = () => {
         <el-table-column prop="phone" label="电话" />
         <el-table-column prop="email" label="邮箱" />
         <el-table-column label="操作">
-          <template #default>
-            <el-button type="primary" size="default"></el-button>
-            <el-button type="danger" size="default"></el-button>
+          <template #default="scope">
+            <el-button
+              type="primary"
+              circle
+              icon="Edit"
+              size="default"
+              @click="handleEdit(scope.row)"
+            ></el-button>
+            <el-button
+              type="danger"
+              circle
+              icon="Delete"
+              size="default"
+              @click="handleDel(scope.row.id)"
+            ></el-button>
           </template>
         </el-table-column>
       </el-table>
+    </div>
+    <div class="card">
+      <el-pagination
+        background
+        :page-size="pageSize"
+        v-model:current-page="pageNum"
+        layout="prev, pager, next"
+        :total="total"
+        @current-change="load"
+      />
     </div>
     <el-dialog v-model="formVisiable" title="新增管理员" width="40%">
       <el-form
