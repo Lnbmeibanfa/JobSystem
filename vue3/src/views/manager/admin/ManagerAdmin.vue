@@ -1,8 +1,20 @@
 <script setup>
-import { ref, reactive } from 'vue'
-import { ElButton, ElDialog } from 'element-plus'
-import { validateUsername, validatePassword, validateEmail, validatePhone } from './validateUtil'
-import { addAdminAPI } from '@/api/admin'
+import { ref, reactive, onMounted } from 'vue'
+import { ElButton, ElDialog, ElMessage } from 'element-plus'
+import { validateUsername, validateEmail, validatePhone } from './validateUtil'
+import { addAdminAPI, selectAllAPI } from '@/api/admin'
+
+onMounted(() => {
+  load()
+})
+/**table 数据和方法*/
+const tableData = ref([])
+const pageNum = ref(1)
+const pageSize = ref(1)
+const total = ref(0)
+// const name = ref('')
+
+/**dialog数据和方法*/
 // 表单数据和rules
 const adminForm = ref(null)
 const formData = ref({
@@ -15,7 +27,6 @@ const formData = ref({
 })
 const rules = reactive({
   username: [{ validator: validateUsername, trigger: 'blur' }],
-  password: [{ validator: validatePassword, trigger: 'blur' }],
   phone: [{ validator: validatePhone, trigger: 'blur' }],
   email: [{ validator: validateEmail, trigger: 'blur' }]
 })
@@ -28,9 +39,24 @@ const formVisiable = ref(false)
 const submit = () => {
   adminForm.value.validate(async (valid) => {
     if (valid) {
-      const res = await addAdminAPI(formData.value)
-      console.log(res)
+      addAdminAPI(formData.value).then((res) => {
+        if (res.code === '200') {
+          ElMessage.success('添加成功')
+          toggleFormVisiable(false)
+        } else {
+          ElMessage.warning(res.msg)
+        }
+      })
     }
+  })
+}
+const load = () => {
+  selectAllAPI(pageNum.value, pageSize.value).then((res) => {
+    if (res.code === '200') {
+      tableData.value = res.data?.list || []
+      total.value = res.data?.total
+    }
+    console.log(tableData.value)
   })
 }
 </script>
@@ -38,8 +64,23 @@ const submit = () => {
 <template>
   <div class="manager-admin">
     <div class="card">
-      管理员信息
       <el-button @click="toggleFormVisiable(true)">添加</el-button>
+    </div>
+    <div class="card">
+      <el-table :data="tableData">
+        <el-table-column prop="username" label="用户名" />
+        <el-table-column prop="name" label="名字" />
+        <el-table-column prop="avatar" label="头像" />
+        <el-table-column prop="role" label="角色" />
+        <el-table-column prop="phone" label="电话" />
+        <el-table-column prop="email" label="邮箱" />
+        <el-table-column label="操作">
+          <template #default>
+            <el-button type="primary" size="default"></el-button>
+            <el-button type="danger" size="default"></el-button>
+          </template>
+        </el-table-column>
+      </el-table>
     </div>
     <el-dialog v-model="formVisiable" title="新增管理员" width="40%">
       <el-form
@@ -51,9 +92,6 @@ const submit = () => {
       >
         <el-form-item label="用户名" prop="username">
           <el-input v-model="formData.username" placeholder="请输入用户名" />
-        </el-form-item>
-        <el-form-item label="密码" prop="password">
-          <el-input v-model="formData.password" placeholder="请输入密码" />
         </el-form-item>
         <el-form-item label="名字" prop="name">
           <el-input v-model="formData.name" placeholder="请输入名字" />
