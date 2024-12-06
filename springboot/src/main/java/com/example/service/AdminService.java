@@ -6,8 +6,13 @@ import com.example.common.enums.admin.RoleEnum;
 import com.example.entity.Admin;
 import com.example.exception.CustomException;
 import com.example.mapper.AdminMapper;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class AdminService {
@@ -30,5 +35,11 @@ public class AdminService {
         }
         admin.setRole(RoleEnum.ADMIN.name());
         adminMapper.insert(admin);
+    }
+
+    public PageInfo<Admin> selectAll(Admin admin, Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<Admin> list = adminMapper.selectAll(admin);
+        return PageInfo.of(list);
     }
 }
