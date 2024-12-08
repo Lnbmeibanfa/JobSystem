@@ -13,4 +13,8 @@ public interface AdminMapper {
     Admin selectById(int id);
 
     List<Admin> selectAll(Admin admin);
+
+    void update(Admin admin);
+
+    void deleteById(Integer id);
 }

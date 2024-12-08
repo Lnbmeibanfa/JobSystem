@@ -76,7 +76,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.sourceCode",
+    "settings.editor.selected.configurable": "fileTemplates",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -137,7 +137,10 @@
       <workItem from="1733384516219" duration="3200000" />
       <workItem from="1733389956248" duration="387000" />
       <workItem from="1733390460875" duration="737000" />
-      <workItem from="1733461786791" duration="6349000" />
+      <workItem from="1733461786791" duration="10550000" />
+      <workItem from="1733538324315" duration="2964000" />
+      <workItem from="1733544305633" duration="5055000" />
+      <workItem from="1733636521298" duration="2777000" />
     </task>
     <task id="LOCAL-00001" summary="项目初始化">
       <option name="closed" value="true" />
@@ -179,7 +182,15 @@
       <option name="project" value="LOCAL" />
       <updated>1733473870509</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="分页功能">
+      <option name="closed" value="true" />
+      <created>1733477373213</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1733477373213</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -212,6 +223,7 @@
     <MESSAGE value="Result实体类封装" />
     <MESSAGE value="项目初始化" />
     <MESSAGE value="后端查找全部逻辑" />
-    <option name="LAST_COMMIT_MESSAGE" value="后端查找全部逻辑" />
+    <MESSAGE value="分页功能" />
+    <option name="LAST_COMMIT_MESSAGE" value="分页功能" />
   </component>
 </project>

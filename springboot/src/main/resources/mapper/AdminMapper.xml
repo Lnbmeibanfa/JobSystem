@@ -5,7 +5,8 @@
     <select id="selectAll" resultType="com.example.entity.Admin">
         select * from `admin`
         <where>
-            <if test="name != null">and name like concat('%', name, '%')</if>
+            <if test="name != null">and name like concat('%',
+                #{name}, '%')</if>
         </where>
     </select>
     <insert id="insert">
@@ -31,4 +32,25 @@
             <if test="email != null">#{email},</if>
         </trim>
     </insert>
+
+    <update id="update">
+        update `admin`
+        <set>
+            <if test="username != null">username = #{username},</if>
+            <if test="password != null">password = #{password},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="avatar != null">avatar = #{avatar},</if>
+            <if test="role != null">role = #{role},</if>
+            <if test="phone != null">phone = #{phone},</if>
+            <if test="email != null">email = #{email},</if>
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <delete id="deleteById">
+        delete from `admin`
+        where id = #{id}
+    </delete>
 </mapper>

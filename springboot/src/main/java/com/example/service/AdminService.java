@@ -21,18 +21,11 @@ public class AdminService {
 
     public void add (Admin admin) {
         Admin dbAdmin = adminMapper.selectById(admin.getId());
+        // 校验用户是否已存在
         if (ObjectUtil.isNotNull(dbAdmin)) {
             throw new CustomException(ResultCodeEnum.USER_EXIST_ERROR);
         }
-        if (ObjectUtil.isEmpty(admin.getUsername())) {
-            return ;
-        }
-        if (ObjectUtil.isEmpty(admin.getPassword())) {
-            admin.setPassword("123456");
-        }
-        if (ObjectUtil.isEmpty(admin.getName())) {
-            admin.setName(admin.getUsername());
-        }
+        initAdmin(admin);
         admin.setRole(RoleEnum.ADMIN.name());
         adminMapper.insert(admin);
     }
@@ -41,5 +34,37 @@ public class AdminService {
         PageHelper.startPage(pageNum, pageSize);
         List<Admin> list = adminMapper.selectAll(admin);
         return PageInfo.of(list);
+    }
+
+    public void update(Admin admin) {
+        // 校验是否有用户存在
+        Admin dbAdmin = adminMapper.selectById(admin.getId());
+        if (!ObjectUtil.isNotNull(dbAdmin)) {
+            throw new CustomException(ResultCodeEnum.USER_NOT_EXIST_ERROR);
+        }
+        initAdmin(admin);
+        adminMapper.update(admin);
+    }
+
+    private void initAdmin (Admin admin) {
+        if (ObjectUtil.isEmpty(admin.getUsername())) {
+            throw new CustomException(ResultCodeEnum.PARAM_LOST_ERROR);
+        }
+        if (ObjectUtil.isEmpty(admin.getPassword())) {
+            admin.setPassword("123456");
+        }
+        if (ObjectUtil.isEmpty(admin.getName())) {
+            admin.setName(admin.getUsername());
+        }
+    }
+
+    public void deleteById(Integer id) {
+        adminMapper.deleteById(id);
+    }
+
+    public void deleteBatch(List<Integer> ids) {
+        for (Integer id : ids) {
+            adminMapper.deleteById(id);
+        }
     }
 }

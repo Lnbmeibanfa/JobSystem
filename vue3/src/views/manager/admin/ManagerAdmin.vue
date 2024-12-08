@@ -1,8 +1,8 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
-import { ElButton, ElDialog, ElMessage } from 'element-plus'
+import { ElButton, ElDialog, ElMessage, ElMessageBox } from 'element-plus'
 import { validateUsername, validateEmail, validatePhone } from './validateUtil'
-import { addAdminAPI, selectAllAPI } from '@/api/admin'
+import { addAdminAPI, selectAllAPI, updateAdminAPI, deleteBatch, deleteById } from '@/api/admin'
 
 onMounted(() => {
   // 加载表格数据
@@ -11,27 +11,31 @@ onMounted(() => {
 /**table 数据和方法*/
 const tableData = ref([])
 const pageNum = ref(1)
-const pageSize = ref(1)
+const pageSize = ref(10)
 const total = ref(0)
 const name = ref('')
 const load = () => {
-  selectAllAPI(pageNum.value, pageSize.value).then((res) => {
+  selectAllAPI(pageNum.value, pageSize.value, name.value).then((res) => {
     if (res.code === '200') {
       tableData.value = res.data?.list || []
       total.value = res.data?.total
     }
   })
 }
-const handleEdit = (row) => {
-  console.log(row)
-}
-const handleDel = (id) => {
-  console.log(id)
+// 重置搜索关键字
+const replace = () => {
+  name.value = ''
+  load()
 }
 /**dialog数据和方法*/
 // 表单数据和rules
 const adminForm = ref(null)
+// 图片访问地址
+const baseUrl = import.meta.env.VITE_BASE_URL
+// 图片上传列表
+const fileList = ref([])
 const formData = ref({
+  id: '',
   username: '',
   password: '',
   name: '',
@@ -39,12 +43,67 @@ const formData = ref({
   phone: '',
   email: ''
 })
-
 const rules = reactive({
   username: [{ validator: validateUsername, trigger: 'blur' }],
   phone: [{ validator: validatePhone, trigger: 'blur' }],
   email: [{ validator: validateEmail, trigger: 'blur' }]
 })
+// 打开dialog
+const handeleAdd = () => {
+  formData.value = {}
+  fileList.value = []
+  toggleFormVisiable(true)
+}
+const handleEdit = (row) => {
+  formData.value = {}
+  fileList.value = []
+  formData.value = JSON.parse(JSON.stringify(row))
+  toggleFormVisiable(true)
+}
+const handleDel = (id) => {
+  ElMessageBox.confirm('删除数据后不可恢复', '确认删除', {
+    confirmButtonText: '确认',
+    cancelButtonText: '取消',
+    type: 'warning'
+  })
+    .then(() => {
+      deleteById(id).then((res) => {
+        if (res.code === '200') {
+          ElMessage.success('删除成功')
+          load()
+        } else {
+          ElMessage.error(res.msg)
+        }
+      })
+    })
+    .catch((err) => console.error(err))
+}
+// 维护批量删除的id
+const ids = ref([])
+const handleSelectionChange = (rows) => {
+  ids.value = rows.map((row) => row.id)
+}
+const handleDelBatch = () => {
+  ElMessageBox.confirm('删除数据后不可恢复', '确认删除', {
+    confirmButtonText: '确认',
+    cancelButtonText: '取消',
+    type: 'warning'
+  })
+    .then(() => {
+      deleteBatch(ids.value).then((res) => {
+        if (res.code === '200') {
+          ElMessage.success('批量删除成功')
+          load()
+        } else {
+          ElMessage.error(res.msg)
+        }
+      })
+    })
+    .catch((err) => console.error(err))
+}
+const handleUploadSuccess = (res) => {
+  formData.value.avatar = res.data
+}
 // 处理表单是否可见
 const toggleFormVisiable = (isvisiable) => {
   formVisiable.value = isvisiable
@@ -54,14 +113,30 @@ const formVisiable = ref(false)
 const submit = () => {
   adminForm.value.validate(async (valid) => {
     if (valid) {
-      addAdminAPI(formData.value).then((res) => {
-        if (res.code === '200') {
-          ElMessage.success('添加成功')
-          toggleFormVisiable(false)
-        } else {
-          ElMessage.warning(res.msg)
-        }
-      })
+      formData.value.id ? update() : add()
+    }
+  })
+}
+const add = () => {
+  addAdminAPI(formData.value).then((res) => {
+    if (res.code === '200') {
+      ElMessage.success('添加成功')
+      toggleFormVisiable(false)
+      load()
+    } else {
+      ElMessage.warning(res.msg)
+    }
+  })
+}
+const update = () => {
+  updateAdminAPI(formData.value).then((res) => {
+    console.log(res)
+    if (res.code === '200') {
+      ElMessage.success('修改成功')
+      toggleFormVisiable(false)
+      load()
+    } else {
+      ElMessage.warning(res.msg)
     }
   })
 }
@@ -75,18 +150,30 @@ const submit = () => {
         prefix-icon="Search"
         placeholder="请输入名称查询"
         style="width: 400px; margin-right: 15px"
+        @keyup.enter="load"
       ></el-input>
       <el-button type="primary" size="default" @click="load" plain>查询</el-button>
-      <el-button type="warning" size="default" @click="load" plain>重置</el-button>
+      <el-button type="warning" size="default" @click="replace" plain>重置</el-button>
     </div>
     <div class="card">
-      <el-button @click="toggleFormVisiable(true)">添加</el-button>
+      <el-button @click="handeleAdd" plain type="primary">添加</el-button>
+      <el-button @click="handleDelBatch" plain type="danger">批量删除</el-button>
     </div>
     <div class="card">
-      <el-table :data="tableData">
+      <el-table :data="tableData" @selection-change="handleSelectionChange">
+        <el-table-column type="selection" width="55" />
         <el-table-column prop="username" label="用户名" />
         <el-table-column prop="name" label="名字" />
-        <el-table-column prop="avatar" label="头像" />
+        <el-table-column prop="avatar" label="头像">
+          <template #default="scope">
+            <el-image
+              style="width: 40px; height: 40px; border-radius: 50%"
+              :preview-src-list="[scope.row.avatar]"
+              :preview-teleported="true"
+              :src="scope.row.avatar"
+            ></el-image>
+          </template>
+        </el-table-column>
         <el-table-column prop="role" label="角色" />
         <el-table-column prop="phone" label="电话" />
         <el-table-column prop="email" label="邮箱" />
@@ -135,7 +222,14 @@ const submit = () => {
           <el-input v-model="formData.name" placeholder="请输入名字" />
         </el-form-item>
         <el-form-item label="头像" prop="avatar">
-          <el-input v-model="formData.avatar" placeholder="请输入头像" />
+          <el-upload
+            :action="baseUrl + '/files/upload'"
+            :on-success="handleUploadSuccess"
+            list-type="picture"
+            :file-list="fileList"
+          >
+            <template #trigger><el-button type="primary">上传文件</el-button></template>
+          </el-upload>
         </el-form-item>
         <el-form-item label="手机号" prop="phone">
           <el-input v-model="formData.phone" placeholder="请输入手机号" />
