@@ -144,7 +144,7 @@
       <workItem from="1733639912342" duration="4501000" />
       <workItem from="1733660606288" duration="2835000" />
       <workItem from="1733724160218" duration="6457000" />
-      <workItem from="1733799337405" duration="6232000" />
+      <workItem from="1733799337405" duration="9198000" />
     </task>
     <task id="LOCAL-00001" summary="项目初始化">
       <option name="closed" value="true" />
@@ -194,7 +194,23 @@
       <option name="project" value="LOCAL" />
       <updated>1733477373213</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="JWT校验">
+      <option name="closed" value="true" />
+      <created>1733812326111</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1733812326111</updated>
+    </task>
+    <task id="LOCAL-00008" summary="JWT校验">
+      <option name="closed" value="true" />
+      <created>1733812346830</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1733812346830</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -228,18 +244,10 @@
     <MESSAGE value="项目初始化" />
     <MESSAGE value="后端查找全部逻辑" />
     <MESSAGE value="分页功能" />
-    <option name="LAST_COMMIT_MESSAGE" value="分页功能" />
+    <MESSAGE value="JWT校验" />
+    <option name="LAST_COMMIT_MESSAGE" value="JWT校验" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/springboot/src/main/java/com/example/common/config/JWTInterceptor.java</url>
-          <line>30</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <watches-manager>
       <configuration name="SpringBootApplicationConfigurationType">
         <watch expression="adminService" language="JAVA" />

@@ -1,3 +1,4 @@
+import router from '@/router'
 import axios from 'axios'
 import { ElMessage } from 'element-plus'
 
@@ -29,6 +30,10 @@ request.interceptors.response.use(
     // 如果是返回的文件
     if (response.config.responseType === 'blob') {
       return res
+    }
+    if (res.code === '401') {
+      ElMessage.error(res.msg)
+      router.push('/login')
     }
     // 兼容服务端返回的字符串数据
     if (typeof res === 'string') {
