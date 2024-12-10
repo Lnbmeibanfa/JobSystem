@@ -11,6 +11,9 @@ const request = axios.create({
 request.interceptors.request.use(
   (config) => {
     config.headers['Content-Type'] = 'application/json;charset=utf-8'
+    const token = JSON.parse(localStorage.getItem('pinia-userInfo') || '{}')?.AccountInfo?.token
+    config.headers['token'] = token || ''
+
     return config
   },
   (error) => {
