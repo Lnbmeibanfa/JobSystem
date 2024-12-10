@@ -66,7 +66,7 @@
     "RequestMappingsPanelWidth0": "75",
     "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "Spring Boot.SpringbootApplication.executor": "Run",
+    "Spring Boot.SpringbootApplication.executor": "Debug",
     "git-widget-placeholder": "master",
     "jdk.selected.JAVA_MODULE": "openjdk-21",
     "kotlin-language-version-configured": "true",
@@ -141,6 +141,10 @@
       <workItem from="1733538324315" duration="2964000" />
       <workItem from="1733544305633" duration="5055000" />
       <workItem from="1733636521298" duration="2777000" />
+      <workItem from="1733639912342" duration="4501000" />
+      <workItem from="1733660606288" duration="2835000" />
+      <workItem from="1733724160218" duration="6457000" />
+      <workItem from="1733799337405" duration="6232000" />
     </task>
     <task id="LOCAL-00001" summary="项目初始化">
       <option name="closed" value="true" />
@@ -225,5 +229,21 @@
     <MESSAGE value="后端查找全部逻辑" />
     <MESSAGE value="分页功能" />
     <option name="LAST_COMMIT_MESSAGE" value="分页功能" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/springboot/src/main/java/com/example/common/config/JWTInterceptor.java</url>
+          <line>30</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="SpringBootApplicationConfigurationType">
+        <watch expression="adminService" language="JAVA" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>

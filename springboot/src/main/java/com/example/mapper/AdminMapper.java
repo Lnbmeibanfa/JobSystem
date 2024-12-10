@@ -12,9 +12,14 @@ public interface AdminMapper {
     @Select("select * from `admin` where id = #{id}")
     Admin selectById(int id);
 
-    List<Admin> selectAll(Admin admin);
+    @Select("select * from `admin`")
+    List<Admin> selectAll();
+
+    List<Admin> selectByPage(Admin admin);
 
     void update(Admin admin);
 
     void deleteById(Integer id);
+
+    Admin selectByUsername(String username);
 }

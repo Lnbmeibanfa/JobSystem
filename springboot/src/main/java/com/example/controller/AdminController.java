@@ -6,6 +6,7 @@ import com.example.entity.Admin;
 import com.example.service.AdminService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ import java.util.List;
 @RequestMapping("/admin")
 public class AdminController {
 
-    @Autowired
+    @Resource
     private AdminService adminService;
 
     @PostMapping("/add")
@@ -30,8 +31,14 @@ public class AdminController {
     public Result selectPage(Admin admin,
                              @RequestParam(defaultValue = "1") Integer pageNum,
                              @RequestParam(defaultValue = "10") Integer pageSize) {
-        PageInfo<Admin> pageinfo = adminService.selectAll(admin, pageNum, pageSize);
+        PageInfo<Admin> pageinfo = adminService.selectByPage(admin, pageNum, pageSize);
         return Result.success(pageinfo);
+    }
+
+    @GetMapping("/selectAll")
+    public Result selectAll() {
+        List<Admin> admins = adminService.selectAll();
+        return Result.success(admins);
     }
 
     @PutMapping("/update")
