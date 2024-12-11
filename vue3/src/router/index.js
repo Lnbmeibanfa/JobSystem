@@ -1,28 +1,39 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Manager from '@/views/BackManager.vue'
-import Home from '@/views/manager/ManagerHome.vue'
-import Admin from '@/views/manager/admin/ManagerAdmin.vue'
-import InvalidPage from '@/views/global/InvalidPage404.vue'
-import Shower from '@/views/FrontShower.vue'
-import Login from '@/views/login/AccountLogin.vue'
-import Register from '@/views/login/AccountRegister.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     { path: '/', redirect: '/manager/home' },
     {
       path: '/manager',
-      component: Manager,
+      component: () => import('@/views/BackManager.vue'),
       children: [
-        { path: '/manager/home', meta: { name: '系统首页' }, component: Home },
-        { path: '/manager/admin', meta: { name: '管理员管理' }, component: Admin }
+        {
+          path: 'home',
+          meta: { name: '系统首页' },
+          component: () => import('@/views/manager/ManagerHome.vue')
+        },
+        {
+          path: 'admin',
+          meta: { name: '管理员管理' },
+          component: () => import('@/views/manager/admin/ManagerAdmin.vue')
+        },
+        {
+          path: 'user',
+          meta: { name: '个人中心' },
+          component: () => import('@/views/manager/ManagerUser.vue')
+        },
+        {
+          path: 'password',
+          meta: { name: '修改密码' },
+          component: () => import('@/views/manager/ManagerPassword.vue')
+        }
       ]
     },
-    { path: '/404', component: InvalidPage },
+    { path: '/404', component: () => import('@/views/global/InvalidPage404.vue') },
     { path: '/:pathMatch(.*)', redirect: '/404' },
-    { path: '/login', component: Login },
-    { path: '/register', component: Register },
-    { path: '/front', component: Shower }
+    { path: '/login', component: () => import('@/views/login/AccountLogin.vue') },
+    { path: '/register', component: () => import('@/views/login/AccountRegister.vue') },
+    { path: '/front', component: () => import('@/views/FrontShower.vue') }
   ]
 })
 

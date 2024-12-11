@@ -3,6 +3,7 @@ import router from '@/router'
 import { useRoute } from 'vue-router'
 import { useAccountStore } from '@/stores/login'
 import { ElMessageBox } from 'element-plus'
+import { ROUTE_PATH } from '@/utils/Contants'
 const accountStore = useAccountStore()
 const route = useRoute()
 const handleQuit = () => {
@@ -14,6 +15,13 @@ const handleQuit = () => {
     accountStore.setAccountInfo({})
     router.push('/login')
   })
+}
+const toUser = () => {
+  console.log(route.path)
+  router.push('/manager/user')
+}
+const toPassword = () => {
+  router.push('/manager/password')
 }
 </script>
 
@@ -42,8 +50,8 @@ const handleQuit = () => {
           </div>
           <template #dropdown>
             <el-dropdown-menu>
-              <el-dropdown-item>个人资料</el-dropdown-item>
-              <el-dropdown-item>修改密码</el-dropdown-item>
+              <el-dropdown-item @click="toUser">个人资料</el-dropdown-item>
+              <el-dropdown-item @click="toPassword">修改密码</el-dropdown-item>
               <el-dropdown-item @click="handleQuit">退出登录</el-dropdown-item>
             </el-dropdown-menu>
           </template>
@@ -53,8 +61,8 @@ const handleQuit = () => {
     <!-- 页面主体部分开始 -->
     <div class="back-manager-main">
       <div class="back-manager-main-left">
-        <el-menu default-active="2" class="el-menu-vertical-demo" router>
-          <el-menu-item index="/manager/home" class="tag">
+        <el-menu :default-active="ROUTE_PATH.HOME" class="el-menu-vertical-demo" router>
+          <el-menu-item :index="ROUTE_PATH.HOME" :class="{ tag: route.path === ROUTE_PATH.HOME }">
             <el-icon><House /></el-icon>
             <span>系统首页</span>
           </el-menu-item>
@@ -74,7 +82,11 @@ const handleQuit = () => {
               <el-icon><User /></el-icon>
               <span>用户信息</span>
             </template>
-            <el-menu-item index="/manager/admin">管理员信息</el-menu-item>
+            <el-menu-item
+              :index="ROUTE_PATH.ADMIN"
+              :class="{ tag: route.path === ROUTE_PATH.ADMIN }"
+              >管理员信息</el-menu-item
+            >
             <el-menu-item index="3-2">企业信息</el-menu-item>
             <el-menu-item index="3-3">用户信息</el-menu-item>
           </el-sub-menu>

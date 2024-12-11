@@ -8,7 +8,7 @@
   background-color: #0066bc;
   display: flex;
   align-items: center;
-  box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
+  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
   padding: 10px 20px;
 }
 
@@ -39,7 +39,7 @@
 /* header的中间样式 */
 
 .back-manager-header-center {
-  flex: 1 ;
+  flex: 1;
 }
 
 /* header右侧样式 */
@@ -69,7 +69,7 @@
   width: 200px;
   height: 100%;
   background-color: #00162a;
-  box-shadow: 0 0 6px rgba(0, 21, 41, .33);
+  box-shadow: 0 0 6px rgba(0, 21, 41, 0.33);
 }
 
 .back-manager-main-left .tag {
@@ -80,8 +80,6 @@
   padding: 10px;
   flex: 1;
 }
-
-
 
 /** element 样式覆盖 */
 .el-tooltip__trigger {
