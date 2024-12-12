@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref } from 'vue'
 const isLogin = ref(false)
 </script>
 
@@ -7,16 +7,13 @@ const isLogin = ref(false)
   <div class="front-shower">
     <header class="front-shower-header">
       <div class="left">
-        <img src="../assets/imgs/logo.svg">
+        <img src="../assets/imgs/logo.svg" />
         <span class="title">项目前台</span>
       </div>
       <div class="center">
-        <el-menu
-          class="el-menu-demo"
-          mode="horizontal"
-        >
+        <el-menu class="el-menu-demo" mode="horizontal" router>
           <el-menu-item index="1">首页</el-menu-item>
-          <el-menu-item index="2">个人中心</el-menu-item>
+          <el-menu-item index="/front/user">个人中心</el-menu-item>
         </el-menu>
       </div>
       <div class="right">
@@ -26,20 +23,22 @@ const isLogin = ref(false)
         </div>
         <div v-else>
           <el-dropdown>
-          <div class="content">
-            <img src="../assets/imgs/user.svg">
-            <span class="info">管理员</span>
-          </div>
-          <template #dropdown>
-            <el-dropdown-menu>
-              <el-dropdown-item>退出登录</el-dropdown-item>
-            </el-dropdown-menu>
-          </template>
-        </el-dropdown>
+            <div class="content">
+              <img src="../assets/imgs/user.svg" />
+              <span class="info">管理员</span>
+            </div>
+            <template #dropdown>
+              <el-dropdown-menu>
+                <el-dropdown-item>退出登录</el-dropdown-item>
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
         </div>
       </div>
     </header>
-    <div class="front-shower-content"></div>
+    <div class="front-shower-content">
+      <RouterView />
+    </div>
   </div>
 </template>
 

@@ -95,4 +95,19 @@ public class AdminService {
     public List<Admin> selectAll() {
         return adminMapper.selectAll();
     }
+
+    public void updatePassword(Account account) {
+        Admin dbAdmin = adminMapper.selectByUsername(account.getUsername());
+        if (ObjectUtil.isNull(dbAdmin)) {
+            throw new CustomException(ResultCodeEnum.USER_NOT_EXIST_ERROR);
+        }
+        if (!dbAdmin.getPassword().equals(account.getPassword())) {
+            throw new CustomException(ResultCodeEnum.PARAM_PASSWORD_ERROR);
+        }
+        if (dbAdmin.getPassword().equals(account.getNewPassword())) {
+            return ;
+        }
+        dbAdmin.setPassword(account.getNewPassword());
+        adminMapper.update(dbAdmin);
+    }
 }

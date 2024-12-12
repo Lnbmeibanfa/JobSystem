@@ -17,7 +17,6 @@ const handleQuit = () => {
   })
 }
 const toUser = () => {
-  console.log(route.path)
   router.push('/manager/user')
 }
 const toPassword = () => {
@@ -45,7 +44,7 @@ const toPassword = () => {
       <div class="back-manager-header-right">
         <el-dropdown>
           <div class="content">
-            <img src="../assets/imgs/user(white).svg" />
+            <img style="border-radius: 50%" :src="accountStore.AccountInfo.avatar" />
             <span>管理员</span>
           </div>
           <template #dropdown>
@@ -77,7 +76,7 @@ const toPassword = () => {
             <el-menu-item index="2-4">职位信息</el-menu-item>
             <el-menu-item index="2-5">岗位投递</el-menu-item>
           </el-sub-menu>
-          <el-sub-menu index="3">
+          <el-sub-menu index="3" :class="{ tag: route.path === ROUTE_PATH.ADMIN }">
             <template #title>
               <el-icon><User /></el-icon>
               <span>用户信息</span>

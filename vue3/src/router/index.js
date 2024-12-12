@@ -33,7 +33,11 @@ const router = createRouter({
     { path: '/:pathMatch(.*)', redirect: '/404' },
     { path: '/login', component: () => import('@/views/login/AccountLogin.vue') },
     { path: '/register', component: () => import('@/views/login/AccountRegister.vue') },
-    { path: '/front', component: () => import('@/views/FrontShower.vue') }
+    {
+      path: '/front',
+      component: () => import('@/views/FrontShower.vue'),
+      children: [{ path: 'user', component: () => import('@/views/front/FrontUser.vue') }]
+    }
   ]
 })
 

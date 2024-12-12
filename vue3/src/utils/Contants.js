@@ -10,4 +10,12 @@ const ROUTE_PATH = {
   FRONT: '/front'
 }
 
-export { ROUTE_PATH }
+const ROLE = {
+  ADMIN: '管理员'
+}
+
+const LOCALSTORAGE_KEY = {
+  USER: 'pinia-userInfo'
+}
+
+export { ROUTE_PATH, ROLE, LOCALSTORAGE_KEY }

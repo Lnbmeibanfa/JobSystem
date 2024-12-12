@@ -1,6 +1,7 @@
 import router from '@/router'
 import axios from 'axios'
 import { ElMessage } from 'element-plus'
+import { LOCALSTORAGE_KEY } from './Contants'
 
 const request = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
@@ -12,7 +13,8 @@ const request = axios.create({
 request.interceptors.request.use(
   (config) => {
     config.headers['Content-Type'] = 'application/json;charset=utf-8'
-    const token = JSON.parse(localStorage.getItem('pinia-userInfo') || '{}')?.AccountInfo?.token
+    const token = JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY.USER) || '{}')?.AccountInfo
+      ?.token
     config.headers['token'] = token || ''
 
     return config

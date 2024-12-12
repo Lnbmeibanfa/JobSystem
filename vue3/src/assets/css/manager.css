@@ -108,7 +108,7 @@
 }
 
 :deep(.el-sub-menu__title:hover) {
-  background-color: #00162a;
+  background-color: #1890ff;
 }
 
 :deep(.el-breadcrumb__inner:hover) {

@@ -2,6 +2,8 @@ package com.example.controller;
 
 import com.example.common.Result;
 import com.example.common.enums.ResultCodeEnum;
+import com.example.common.enums.admin.RoleEnum;
+import com.example.entity.Account;
 import com.example.entity.Admin;
 import com.example.service.AdminService;
 import com.github.pagehelper.PageHelper;
@@ -56,6 +58,15 @@ public class AdminController {
     @DeleteMapping("/delete/batch")
     public Result deleteByIds (@RequestBody List<Integer> ids) {
         adminService.deleteBatch(ids);
+        return Result.success();
+    }
+
+    @PutMapping("/update/password")
+    public Result updatePassword (@RequestBody Account account) {
+        if (account.getRole().equals(RoleEnum.ADMIN.name())) {
+            adminService.updatePassword(account);
+
+        }
         return Result.success();
     }
 

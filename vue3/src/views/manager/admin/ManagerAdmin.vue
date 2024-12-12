@@ -1,7 +1,7 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
 import { ElButton, ElDialog, ElMessage, ElMessageBox } from 'element-plus'
-import { validateUsername, validateEmail, validatePhone } from './validateUtil'
+import { validateUsername, validateEmail, validatePhone } from '../../../utils/validateUtil'
 import { addAdminAPI, selectAllAPI, updateAdminAPI, deleteBatch, deleteById } from '@/api/admin'
 
 onMounted(() => {
