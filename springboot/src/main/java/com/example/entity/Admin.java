@@ -1,6 +1,5 @@
 package com.example.entity;
 
-import com.example.common.enums.admin.RoleEnum;
 import lombok.Getter;
 import lombok.Setter;
 /**
@@ -11,7 +10,7 @@ import lombok.Setter;
 @Setter
 @Getter
 public class Admin extends Account {
-    private int id;
+    private Integer id;
     private String username;
     private String password;
     private String name;

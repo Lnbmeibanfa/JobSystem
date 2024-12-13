@@ -3,8 +3,8 @@ package com.example.controller;
 import com.example.common.Result;
 import com.example.common.enums.RoleEnum;
 import com.example.entity.Account;
-import com.example.entity.Admin;
-import com.example.service.AdminService;
+import com.example.entity.Notice;
+import com.example.service.NoticeService;
 import com.github.pagehelper.PageInfo;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -14,56 +14,47 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/admin")
-public class AdminController {
+@RequestMapping("/notice")
+public class NoticeController {
 
     @Resource
-    private AdminService adminService;
+    private NoticeService noticeService;
 
     @PostMapping("/add")
-    public Result add (@RequestBody Admin admin) {
-        adminService.add(admin);
+    public Result add (@RequestBody Notice notice) {
+        noticeService.add(notice);
         return Result.success();
     }
 
     @GetMapping("/selectPage")
-    public Result selectPage(Admin admin,
+    public Result selectPage(Notice notice,
                              @RequestParam(defaultValue = "1") Integer pageNum,
                              @RequestParam(defaultValue = "10") Integer pageSize) {
-        PageInfo<Admin> pageinfo = adminService.selectByPage(admin, pageNum, pageSize);
+        PageInfo<Notice> pageinfo = noticeService.selectByPage(notice, pageNum, pageSize);
         return Result.success(pageinfo);
     }
 
     @GetMapping("/selectAll")
     public Result selectAll() {
-        List<Admin> admins = adminService.selectAll();
-        return Result.success(admins);
+        List<Notice> notices = noticeService.selectAll();
+        return Result.success(notices);
     }
 
     @PutMapping("/update")
-    public Result update (@RequestBody Admin admin) {
-        adminService.update(admin);
+    public Result update (@RequestBody Notice notice) {
+        noticeService.update(notice);
         return Result.success();
     }
 
     @DeleteMapping("/delete/{id}")
     public Result deleteById (@PathVariable Integer id) {
-        adminService.deleteById(id);
+        noticeService.deleteById(id);
         return Result.success();
     }
 
     @DeleteMapping("/delete/batch")
     public Result deleteByIds (@RequestBody List<Integer> ids) {
-        adminService.deleteBatch(ids);
-        return Result.success();
-    }
-
-    @PutMapping("/update/password")
-    public Result updatePassword (@RequestBody Account account) {
-        if (account.getRole().equals(RoleEnum.ADMIN.name())) {
-            adminService.updatePassword(account);
-
-        }
+        noticeService.deleteBatch(ids);
         return Result.success();
     }
 

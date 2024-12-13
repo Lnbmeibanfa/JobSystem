@@ -1,9 +1,8 @@
 package com.example.service;
 
 import cn.hutool.core.util.ObjectUtil;
-import cn.hutool.jwt.JWT;
 import com.example.common.enums.ResultCodeEnum;
-import com.example.common.enums.admin.RoleEnum;
+import com.example.common.enums.RoleEnum;
 import com.example.entity.Account;
 import com.example.entity.Admin;
 import com.example.exception.CustomException;
@@ -14,7 +13,6 @@ import com.github.pagehelper.PageInfo;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service

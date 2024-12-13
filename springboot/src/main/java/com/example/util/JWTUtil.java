@@ -2,19 +2,16 @@ package com.example.util;
 
 
 import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.util.ObjectUtil;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.example.common.enums.admin.Constants;
-import com.example.common.enums.admin.RoleEnum;
+import com.example.common.enums.Constants;
+import com.example.common.enums.RoleEnum;
 import com.example.entity.Account;
 import com.example.service.AdminService;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.tomcat.util.http.fileupload.RequestContext;
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 

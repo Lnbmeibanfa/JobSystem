@@ -70,7 +70,7 @@ const toPassword = () => {
               <el-icon><User /></el-icon>
               <span>信息管理</span>
             </template>
-            <el-menu-item index="2-1">系统公告</el-menu-item>
+            <el-menu-item index="/manager/notice">系统公告</el-menu-item>
             <el-menu-item index="2-2">广告信息</el-menu-item>
             <el-menu-item index="2-3">行业信息</el-menu-item>
             <el-menu-item index="2-4">职位信息</el-menu-item>

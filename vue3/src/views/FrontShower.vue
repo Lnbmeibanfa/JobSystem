@@ -1,9 +1,50 @@
 <script setup>
-import { ref } from 'vue'
+import { selectAllAPI } from '@/api/notice'
+import { reactive, ref } from 'vue'
+import { ElMessage } from 'element-plus'
+
+const data = reactive({
+  notices: {},
+  top: ''
+})
+const loadNotice = () => {
+  selectAllAPI().then((res) => {
+    if (res.code === '200') {
+      console.log(111)
+      data.notices = res.data
+      let i = 0
+      if (data.notices && data.notices.length) {
+        data.top = data.notices[0].content
+        setInterval(() => {
+          data.top = data.notices[i].content
+          i++
+          if (i === data.notices.length) {
+            i = 0
+          }
+        }, 2500)
+      }
+    } else {
+      ElMessage.error(res.msg)
+    }
+  })
+}
+loadNotice()
 const isLogin = ref(false)
 </script>
 
 <template>
+  <div
+    class="front-notice"
+    style="
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      padding: 5px 10px;
+      color: #666;
+    "
+  >
+    <el-icon><Bell /></el-icon> 公告:{{ data.top }}
+  </div>
   <div class="front-shower">
     <header class="front-shower-header">
       <div class="left">
@@ -12,7 +53,7 @@ const isLogin = ref(false)
       </div>
       <div class="center">
         <el-menu class="el-menu-demo" mode="horizontal" router>
-          <el-menu-item index="1">首页</el-menu-item>
+          <el-menu-item index="/front">首页</el-menu-item>
           <el-menu-item index="/front/user">个人中心</el-menu-item>
         </el-menu>
       </div>

@@ -1,8 +1,8 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue'
 import { ElButton, ElDialog, ElMessage, ElMessageBox } from 'element-plus'
-import { validateUsername, validateEmail, validatePhone } from '../../../utils/validateUtil'
-import { addAdminAPI, selectAllAPI, updateAdminAPI, deleteBatch, deleteById } from '@/api/admin'
+import { validateUsername, validateEmail, validatePhone } from '@/utils/validateUtil'
+import { addAdminAPI, selectByPageAPI, updateAdminAPI, deleteBatch, deleteById } from '@/api/admin'
 
 onMounted(() => {
   // 加载表格数据
@@ -15,7 +15,7 @@ const pageSize = ref(10)
 const total = ref(0)
 const name = ref('')
 const load = () => {
-  selectAllAPI(pageNum.value, pageSize.value, name.value).then((res) => {
+  selectByPageAPI(pageNum.value, pageSize.value, name.value).then((res) => {
     if (res.code === '200') {
       tableData.value = res.data?.list || []
       total.value = res.data?.total
@@ -34,19 +34,20 @@ const adminForm = ref(null)
 const baseUrl = import.meta.env.VITE_BASE_URL
 // 图片上传列表
 const fileList = ref([])
-const formData = ref({
-  id: '',
-  username: '',
-  password: '',
-  name: '',
-  avatar: '',
-  phone: '',
-  email: ''
-})
+const formData = ref({})
 const rules = reactive({
-  username: [{ validator: validateUsername, trigger: 'blur' }],
-  phone: [{ validator: validatePhone, trigger: 'blur' }],
-  email: [{ validator: validateEmail, trigger: 'blur' }]
+  username: [
+    { required: true, message: '用户名不得为空', trigger: 'blur' },
+    { validator: validateUsername, trigger: 'blur' }
+  ],
+  phone: [
+    { required: true, message: '电话号码不得为空', trigger: 'blur' },
+    { validator: validatePhone, trigger: 'blur' }
+  ],
+  email: [
+    { required: true, message: '邮箱不得为空', trigger: 'blur' },
+    { validator: validateEmail, trigger: 'blur' }
+  ]
 })
 // 打开dialog
 const handeleAdd = () => {
@@ -103,6 +104,14 @@ const handleDelBatch = () => {
 }
 const handleUploadSuccess = (res) => {
   formData.value.avatar = res.data
+}
+const beforeUpload = (file) => {
+  const maxSize = 1024 * 1024
+  if (file.size > maxSize) {
+    ElMessage.error('文件过大，请上传小于1MB的文件')
+    return false
+  }
+  return true
 }
 // 处理表单是否可见
 const toggleFormVisiable = (isvisiable) => {
@@ -219,10 +228,11 @@ const update = () => {
           <el-input v-model="formData.username" placeholder="请输入用户名" />
         </el-form-item>
         <el-form-item label="名字" prop="name">
-          <el-input v-model="formData.name" placeholder="请输入名字" />
+          <el-input v-model="formData.name" placeholder="请输入昵称" />
         </el-form-item>
         <el-form-item label="头像" prop="avatar">
           <el-upload
+            :before-upload="beforeUpload"
             :action="baseUrl + '/files/upload'"
             :on-success="handleUploadSuccess"
             list-type="picture"

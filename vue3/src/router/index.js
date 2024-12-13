@@ -5,6 +5,7 @@ const router = createRouter({
     { path: '/', redirect: '/manager/home' },
     {
       path: '/manager',
+      redirect: '/manager/home',
       component: () => import('@/views/BackManager.vue'),
       children: [
         {
@@ -15,7 +16,7 @@ const router = createRouter({
         {
           path: 'admin',
           meta: { name: '管理员管理' },
-          component: () => import('@/views/manager/admin/ManagerAdmin.vue')
+          component: () => import('@/views/manager/ManagerAdmin.vue')
         },
         {
           path: 'user',
@@ -26,6 +27,11 @@ const router = createRouter({
           path: 'password',
           meta: { name: '修改密码' },
           component: () => import('@/views/manager/ManagerPassword.vue')
+        },
+        {
+          path: 'notice',
+          meta: { name: '系统公告' },
+          component: () => import('@/views/manager/ManagerNotice.vue')
         }
       ]
     },

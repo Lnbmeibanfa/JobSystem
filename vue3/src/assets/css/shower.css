@@ -3,6 +3,10 @@
   height: 100vh;
 }
 
+.front-notice {
+  border-bottom: 1px solid #dcdfe6;
+}
+
 .front-shower-header {
   display: flex;
   align-items: center;
