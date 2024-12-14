@@ -169,7 +169,7 @@ const update = () => {
       <el-button @click="handleDelBatch" plain type="danger">批量删除</el-button>
     </div>
     <div class="card">
-      <el-table :data="tableData" @selection-change="handleSelectionChange">
+      <el-table :data="tableData" @selection-change="handleSelectionChange" show-overflow-tooltip>
         <el-table-column type="selection" width="55" />
         <el-table-column prop="username" label="用户名" />
         <el-table-column prop="name" label="名字" />

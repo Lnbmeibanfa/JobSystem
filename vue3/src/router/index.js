@@ -37,6 +37,11 @@ const router = createRouter({
           path: 'industry',
           meta: { name: '行业信息' },
           component: () => import('@/views/manager/ManagerIndustry.vue')
+        },
+        {
+          path: 'employ',
+          meta: { name: '企业信息' },
+          component: () => import('@/views/manager/ManagerEmploy.vue')
         }
       ]
     },

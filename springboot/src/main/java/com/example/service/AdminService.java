@@ -16,17 +16,17 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class AdminService {
+public class AdminService extends AccountService {
     @Resource
     AdminMapper adminMapper;
 
     public void add (Admin admin) {
-        Admin dbAdmin = adminMapper.selectById(admin.getId());
+        Admin dbAdmin = adminMapper.selectByUsername(admin.getUsername());
         // 校验用户是否已存在
         if (ObjectUtil.isNotNull(dbAdmin)) {
             throw new CustomException(ResultCodeEnum.USER_EXIST_ERROR);
         }
-        initAdmin(admin);
+        initAccount(admin);
         admin.setRole(RoleEnum.ADMIN.name());
         adminMapper.insert(admin);
     }
@@ -51,18 +51,13 @@ public class AdminService {
         if (!ObjectUtil.isNotNull(dbAdmin)) {
             throw new CustomException(ResultCodeEnum.USER_NOT_EXIST_ERROR);
         }
-        initAdmin(admin);
+        initAccount(admin);
         adminMapper.update(admin);
     }
 
-    private void initAdmin (Admin admin) {
-        if (ObjectUtil.isEmpty(admin.getUsername())) {
-            throw new CustomException(ResultCodeEnum.PARAM_LOST_ERROR);
-        }
-        if (ObjectUtil.isEmpty(admin.getPassword())) {
-            admin.setPassword("123456");
-        }
-        if (ObjectUtil.isEmpty(admin.getName())) {
+    @Override
+    protected void initSpecific(Account account) {
+        if (account instanceof Admin admin && ObjectUtil.isNull(admin.getName())) {
             admin.setName(admin.getUsername());
         }
     }

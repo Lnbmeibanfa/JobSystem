@@ -29,7 +29,7 @@ const toPassword = () => {
     <div class="back-manager-header">
       <div class="back-manager-header-left">
         <div class="content">
-          <img src="../assets/imgs/logo.svg" alt="" />
+          <img src="../assets/imgs/logo.png" alt="" />
           <div class="title">后台管理系统</div>
         </div>
       </div>
@@ -100,7 +100,11 @@ const toPassword = () => {
               :class="{ tag: route.path === ROUTE_PATH.ACCOUNT.ADMIN }"
               >管理员信息</el-menu-item
             >
-            <el-menu-item index="3-2">企业信息</el-menu-item>
+            <el-menu-item
+              :index="ROUTE_PATH.ACCOUNT.EMPLOY"
+              :class="{ tag: route.path === ROUTE_PATH.ACCOUNT.EMPLOY }"
+              >企业信息</el-menu-item
+            >
             <el-menu-item index="3-3">用户信息</el-menu-item>
           </el-sub-menu>
         </el-menu>
