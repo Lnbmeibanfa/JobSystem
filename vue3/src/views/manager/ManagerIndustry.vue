@@ -2,12 +2,12 @@
 import { ref, reactive, onMounted } from 'vue'
 import { ElButton, ElDialog, ElMessage, ElMessageBox } from 'element-plus'
 import {
-  addNoticeAPI,
+  addIndustryAPI,
   selectByPageAPI,
-  updateNoticeAPI,
+  updateIndustryAPI,
   deleteBatch,
   deleteById
-} from '@/api/notice'
+} from '@/api/industry'
 
 onMounted(() => {
   // 加载表格数据
@@ -18,9 +18,9 @@ const tableData = ref([])
 const pageNum = ref(1)
 const pageSize = ref(10)
 const total = ref(0)
-const title = ref('')
+const name = ref('')
 const load = () => {
-  selectByPageAPI(pageNum.value, pageSize.value, title.value).then((res) => {
+  selectByPageAPI(pageNum.value, pageSize.value, name.value).then((res) => {
     if (res.code === '200') {
       tableData.value = res.data?.list || []
       total.value = res.data?.total
@@ -29,16 +29,16 @@ const load = () => {
 }
 // 重置搜索关键字
 const replace = () => {
-  title.value = ''
+  name.value = ''
   load()
 }
 /**dialog数据和方法*/
 // 表单数据和rules
-const noticeForm = ref(null)
+const industryForm = ref(null)
 const formData = ref({})
 const rules = reactive({
-  title: [{ required: true, message: '通知标题不得为空', trigger: 'blur' }],
-  content: [{ required: true, message: '通知内容不得为空', trigger: 'blur' }]
+  name: [{ required: true, message: '行业名称不得为空', trigger: 'blur' }],
+  content: [{ required: true, message: '行业描述不得为空', trigger: 'blur' }]
 })
 // 打开dialog
 const handeleAdd = () => {
@@ -98,14 +98,14 @@ const toggleFormVisiable = (isvisiable) => {
 const formVisiable = ref(false)
 // 提交表单
 const submit = () => {
-  noticeForm.value.validate(async (valid) => {
+  industryForm.value.validate(async (valid) => {
     if (valid) {
       formData.value.id ? update() : add()
     }
   })
 }
 const add = () => {
-  addNoticeAPI(formData.value).then((res) => {
+  addIndustryAPI(formData.value).then((res) => {
     if (res.code === '200') {
       ElMessage.success('添加成功')
       toggleFormVisiable(false)
@@ -116,7 +116,7 @@ const add = () => {
   })
 }
 const update = () => {
-  updateNoticeAPI(formData.value).then((res) => {
+  updateIndustryAPI(formData.value).then((res) => {
     console.log(res)
     if (res.code === '200') {
       ElMessage.success('修改成功')
@@ -130,10 +130,10 @@ const update = () => {
 </script>
 
 <template>
-  <div class="manager-notice">
+  <div class="manager-industry">
     <div class="card">
       <el-input
-        v-model="title"
+        v-model="name"
         prefix-icon="Search"
         placeholder="请输入名称查询"
         style="width: 400px; margin-right: 15px"
@@ -149,8 +149,8 @@ const update = () => {
     <div class="card">
       <el-table :data="tableData" @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" />
-        <el-table-column prop="title" label="标题" />
-        <el-table-column prop="content" label="通知内容" />
+        <el-table-column prop="name" label="行业名称" />
+        <el-table-column prop="content" label="行业描述" />
         <el-table-column prop="time" label="通知时间" />
         <el-table-column label="操作">
           <template #default="scope">
@@ -184,21 +184,21 @@ const update = () => {
     </div>
     <el-dialog v-model="formVisiable" title="新增管理员" width="40%">
       <el-form
-        ref="noticeForm"
+        ref="industryForm"
         :model="formData"
-        label-width="70px"
+        label-width="80px"
         style="padding: 20px"
         :rules="rules"
       >
-        <el-form-item label="标题" prop="title">
-          <el-input v-model="formData.title" placeholder="请输入通知标题" />
+        <el-form-item label="行业名称" prop="name">
+          <el-input v-model="formData.name" placeholder="请输入行业名称" />
         </el-form-item>
-        <el-form-item label="内容" prop="content">
+        <el-form-item label="行业描述" prop="content">
           <el-input
             type="textarea"
             :autosize="{ minRows: 4, maxRows: 8 }"
             v-model="formData.content"
-            placeholder="请输入通知内容"
+            placeholder="请输入行业描述"
           />
         </el-form-item>
       </el-form>

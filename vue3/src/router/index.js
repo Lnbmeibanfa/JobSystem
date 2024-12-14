@@ -32,6 +32,11 @@ const router = createRouter({
           path: 'notice',
           meta: { name: '系统公告' },
           component: () => import('@/views/manager/ManagerNotice.vue')
+        },
+        {
+          path: 'industry',
+          meta: { name: '行业信息' },
+          component: () => import('@/views/manager/ManagerIndustry.vue')
         }
       ]
     },

@@ -65,25 +65,39 @@ const toPassword = () => {
             <el-icon><House /></el-icon>
             <span>系统首页</span>
           </el-menu-item>
-          <el-sub-menu index="/manager/admin">
+          <el-sub-menu
+            index="/manager/admin"
+            :class="{ tag: Object.values(ROUTE_PATH.MESSAGE).includes(route.path) }"
+          >
             <template #title>
               <el-icon><User /></el-icon>
               <span>信息管理</span>
             </template>
-            <el-menu-item index="/manager/notice">系统公告</el-menu-item>
+            <el-menu-item
+              :index="ROUTE_PATH.MESSAGE.NOTICE"
+              :class="{ tag: route.path === ROUTE_PATH.MESSAGE.NOTICE }"
+              >系统公告</el-menu-item
+            >
             <el-menu-item index="2-2">广告信息</el-menu-item>
-            <el-menu-item index="2-3">行业信息</el-menu-item>
+            <el-menu-item
+              :index="ROUTE_PATH.MESSAGE.INDUSTRY"
+              :class="{ tag: route.path === ROUTE_PATH.MESSAGE.INDUSTRY }"
+              >行业信息</el-menu-item
+            >
             <el-menu-item index="2-4">职位信息</el-menu-item>
             <el-menu-item index="2-5">岗位投递</el-menu-item>
           </el-sub-menu>
-          <el-sub-menu index="3" :class="{ tag: route.path === ROUTE_PATH.ADMIN }">
+          <el-sub-menu
+            index="3"
+            :class="{ tag: Object.values(ROUTE_PATH.ACCOUNT).includes(route.path) }"
+          >
             <template #title>
               <el-icon><User /></el-icon>
               <span>用户信息</span>
             </template>
             <el-menu-item
-              :index="ROUTE_PATH.ADMIN"
-              :class="{ tag: route.path === ROUTE_PATH.ADMIN }"
+              :index="ROUTE_PATH.ACCOUNT.ADMIN"
+              :class="{ tag: route.path === ROUTE_PATH.ACCOUNT.ADMIN }"
               >管理员信息</el-menu-item
             >
             <el-menu-item index="3-2">企业信息</el-menu-item>

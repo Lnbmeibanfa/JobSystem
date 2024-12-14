@@ -1026,7 +1026,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
     </schema>
     <schema id="298" parent="1" name="system">
       <Current>1</Current>
-      <LastIntrospectionLocalTimestamp>2024-12-12.08:16:59</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2024-12-14.02:13:34</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
     <user id="299" parent="1" name="Qibro">
@@ -1057,83 +1057,83 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_unicode_ci</CollationName>
     </table>
-    <table id="305" parent="298" name="notice">
+    <table id="305" parent="298" name="industry">
+      <Comment>行业信息</Comment>
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <column id="306" parent="304" name="id">
+    <table id="306" parent="298" name="notice">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </table>
+    <column id="307" parent="304" name="id">
       <AutoIncrement>31</AutoIncrement>
       <Comment>主键ID</Comment>
       <NotNull>1</NotNull>
       <Position>1</Position>
       <StoredType>int|0s</StoredType>
     </column>
-    <column id="307" parent="304" name="username">
+    <column id="308" parent="304" name="username">
       <Comment>账号</Comment>
       <Position>2</Position>
       <StoredType>varchar(255)|0s</StoredType>
     </column>
-    <column id="308" parent="304" name="password">
+    <column id="309" parent="304" name="password">
       <Comment>密码</Comment>
       <Position>3</Position>
       <StoredType>varchar(255)|0s</StoredType>
     </column>
-    <column id="309" parent="304" name="name">
+    <column id="310" parent="304" name="name">
       <Comment>姓名</Comment>
       <Position>4</Position>
       <StoredType>varchar(255)|0s</StoredType>
     </column>
-    <column id="310" parent="304" name="avatar">
+    <column id="311" parent="304" name="avatar">
       <Comment>头像</Comment>
       <Position>5</Position>
       <StoredType>varchar(255)|0s</StoredType>
     </column>
-    <column id="311" parent="304" name="role">
+    <column id="312" parent="304" name="role">
       <Comment>角色</Comment>
       <Position>6</Position>
       <StoredType>varchar(255)|0s</StoredType>
     </column>
-    <column id="312" parent="304" name="phone">
+    <column id="313" parent="304" name="phone">
       <Comment>手机</Comment>
       <Position>7</Position>
       <StoredType>varchar(255)|0s</StoredType>
     </column>
-    <column id="313" parent="304" name="email">
+    <column id="314" parent="304" name="email">
       <Comment>邮箱</Comment>
       <Position>8</Position>
       <StoredType>varchar(255)|0s</StoredType>
     </column>
-    <index id="314" parent="304" name="PRIMARY">
+    <index id="315" parent="304" name="PRIMARY">
       <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <key id="315" parent="304" name="PRIMARY">
+    <key id="316" parent="304" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <column id="316" parent="305" name="content">
-      <Comment>公告内容</Comment>
-      <Position>1</Position>
-      <StoredType>text|0s</StoredType>
-    </column>
-    <column id="317" parent="305" name="title">
-      <Comment>公告标题</Comment>
-      <Position>2</Position>
-      <StoredType>varchar(255)|0s</StoredType>
-    </column>
-    <column id="318" parent="305" name="time">
-      <Comment>公告时间</Comment>
-      <Position>3</Position>
-      <StoredType>datetime|0s</StoredType>
-    </column>
-    <column id="319" parent="305" name="id">
+    <column id="317" parent="305" name="id">
       <AutoIncrement>1</AutoIncrement>
       <Comment>主键ID</Comment>
       <NotNull>1</NotNull>
-      <Position>4</Position>
+      <Position>1</Position>
       <StoredType>int|0s</StoredType>
+    </column>
+    <column id="318" parent="305" name="content">
+      <Comment>行业描述</Comment>
+      <Position>2</Position>
+      <StoredType>text|0s</StoredType>
+    </column>
+    <column id="319" parent="305" name="name">
+      <Comment>行业名称</Comment>
+      <Position>3</Position>
+      <StoredType>varchar(255)|0s</StoredType>
     </column>
     <index id="320" parent="305" name="PRIMARY">
       <ColNames>id</ColNames>
@@ -1141,6 +1141,38 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <Unique>1</Unique>
     </index>
     <key id="321" parent="305" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="322" parent="306" name="content">
+      <Comment>公告内容</Comment>
+      <Position>1</Position>
+      <StoredType>text|0s</StoredType>
+    </column>
+    <column id="323" parent="306" name="title">
+      <Comment>公告标题</Comment>
+      <Position>2</Position>
+      <StoredType>varchar(255)|0s</StoredType>
+    </column>
+    <column id="324" parent="306" name="time">
+      <Comment>公告时间</Comment>
+      <Position>3</Position>
+      <StoredType>datetime|0s</StoredType>
+    </column>
+    <column id="325" parent="306" name="id">
+      <AutoIncrement>7</AutoIncrement>
+      <Comment>主键ID</Comment>
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+      <StoredType>int|0s</StoredType>
+    </column>
+    <index id="326" parent="306" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="327" parent="306" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>

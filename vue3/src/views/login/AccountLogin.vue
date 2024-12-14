@@ -25,7 +25,6 @@ const login = () => {
   form.value.validate((valid) => {
     if (valid) {
       loginAPI(data.form).then((res) => {
-        console.log(res)
         if (res.code === '200') {
           accountStore.setAccountInfo(res.data)
           ElMessage.success('登录成功')
@@ -53,7 +52,7 @@ const login = () => {
       >
         欢迎登录
       </div>
-      <el-form :model="data.form" ref="form" :rules="data.rules">
+      <el-form :model="data.form" ref="form" :rules="data.rules" @keyup.enter="login">
         <el-form-item prop="username">
           <el-input
             size="large"
