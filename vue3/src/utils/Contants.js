@@ -7,9 +7,10 @@ const ROUTE_PATH = {
   },
   ACCOUNT: {
     ADMIN: '/manager/admin',
-    USER: '/manager/user',
+    SELF: '/manager/self',
     PASSWORD: '/manager/password',
-    EMPLOY: '/manager/employ'
+    EMPLOY: '/manager/employ',
+    USER: '/manager/user'
   },
   INVALID: '/404',
   LOGIN: '/login',

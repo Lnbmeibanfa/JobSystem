@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class EmployService extends AccountService {
+public class EmployService extends AccountServiceImpl {
     @Resource
     EmployMapper employMapper;
 

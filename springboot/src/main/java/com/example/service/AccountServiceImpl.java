@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
  * @since 2024-12-8
  */
 @Service
-public abstract class AccountService implements AccountSerive {
+public abstract class AccountServiceImpl implements AccountSerive {
     @Override
     public void initAccount(Account account) {
         if (ObjectUtil.isEmpty(account.getUsername())) {

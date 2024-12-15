@@ -19,9 +19,9 @@ const router = createRouter({
           component: () => import('@/views/manager/ManagerAdmin.vue')
         },
         {
-          path: 'user',
+          path: 'self',
           meta: { name: '个人中心' },
-          component: () => import('@/views/manager/ManagerUser.vue')
+          component: () => import('@/views/manager/ManagerSelf.vue')
         },
         {
           path: 'password',
@@ -42,6 +42,11 @@ const router = createRouter({
           path: 'employ',
           meta: { name: '企业信息' },
           component: () => import('@/views/manager/ManagerEmploy.vue')
+        },
+        {
+          path: 'user',
+          meta: { name: '用户信息' },
+          component: () => import('@/views/manager/ManagerUser.vue')
         }
       ]
     },

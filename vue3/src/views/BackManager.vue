@@ -13,14 +13,14 @@ const handleQuit = () => {
     type: 'warning'
   }).then(() => {
     accountStore.setAccountInfo({})
-    router.push('/login')
+    router.push(ROUTE_PATH.LOGIN)
   })
 }
-const toUser = () => {
-  router.push('/manager/user')
+const toSelf = () => {
+  router.push(ROUTE_PATH.ACCOUNT.SELF)
 }
 const toPassword = () => {
-  router.push('/manager/password')
+  router.push(ROUTE_PATH.ACCOUNT.PASSWORD)
 }
 </script>
 
@@ -49,7 +49,7 @@ const toPassword = () => {
           </div>
           <template #dropdown>
             <el-dropdown-menu>
-              <el-dropdown-item @click="toUser">个人资料</el-dropdown-item>
+              <el-dropdown-item @click="toSelf">个人资料</el-dropdown-item>
               <el-dropdown-item @click="toPassword">修改密码</el-dropdown-item>
               <el-dropdown-item @click="handleQuit">退出登录</el-dropdown-item>
             </el-dropdown-menu>
@@ -105,7 +105,11 @@ const toPassword = () => {
               :class="{ tag: route.path === ROUTE_PATH.ACCOUNT.EMPLOY }"
               >企业信息</el-menu-item
             >
-            <el-menu-item index="3-3">用户信息</el-menu-item>
+            <el-menu-item
+              :index="ROUTE_PATH.ACCOUNT.USER"
+              :class="{ tag: route.path === ROUTE_PATH.ACCOUNT.USER }"
+              >用户信息</el-menu-item
+            >
           </el-sub-menu>
         </el-menu>
       </div>
