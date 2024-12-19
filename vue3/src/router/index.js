@@ -47,6 +47,11 @@ const router = createRouter({
           path: 'user',
           meta: { name: '用户信息' },
           component: () => import('@/views/manager/ManagerUser.vue')
+        },
+        {
+          path: 'eSelf',
+          meta: { name: '企业信息' },
+          component: () => import('@/views/employ/EmploySelf.vue')
         }
       ]
     },

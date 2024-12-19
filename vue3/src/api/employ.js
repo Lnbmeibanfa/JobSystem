@@ -15,6 +15,14 @@ const selectByPageAPI = (pageNum = 1, pageSize = 10, name, status) => {
   })
 }
 
+const selectById = (id) => {
+  return request.get('/employ/selectById', {
+    params: {
+      id
+    }
+  })
+}
+
 const updateEmployAPI = (data) => {
   return request.put('/employ/update', data)
 }
@@ -37,5 +45,6 @@ export {
   updateEmployAPI,
   deleteById,
   deleteBatch,
-  updatePasswordAPI
+  updatePasswordAPI,
+  selectById
 }

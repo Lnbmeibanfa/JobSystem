@@ -1,5 +1,6 @@
 package com.example.service;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.example.common.enums.ResultCodeEnum;
 import com.example.common.enums.RoleEnum;
@@ -27,7 +28,7 @@ public class UserService extends AccountServiceImpl {
             throw new CustomException(ResultCodeEnum.USER_EXIST_ERROR);
         }
         initAccount(user);
-        user.setRole(RoleEnum.ADMIN.name());
+        user.setRole(RoleEnum.USER.name());
         userMapper.insert(user);
     }
 
@@ -83,6 +84,16 @@ public class UserService extends AccountServiceImpl {
         String token = JWTUtil.createJWT(dbUser.getId() + "-" + dbUser.getRole(), dbUser.getPassword());
         dbUser.setToken(token);
         return dbUser;
+    }
+
+    public void register(Account account) {
+        User dbUser = userMapper.selectByUsername(account.getUsername());
+        if (ObjectUtil.isNotNull(dbUser)) {
+            throw new CustomException(ResultCodeEnum.USER_EXIST_ERROR);
+        }
+        User user = new User();
+        BeanUtil.copyProperties(account, user);
+        userMapper.insert(user);
     }
 
     public List<User> selectAll() {

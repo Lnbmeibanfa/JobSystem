@@ -8,6 +8,8 @@ import com.example.common.enums.Constants;
 import com.example.common.enums.RoleEnum;
 import com.example.entity.Account;
 import com.example.service.AdminService;
+import com.example.service.EmployService;
+import com.example.service.UserService;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,12 +27,20 @@ import java.util.Date;
 public class JWTUtil {
     @Resource
     private AdminService adminService;
+    @Resource
+    private EmployService employService;
+    @Resource
+    private UserService userService;
 
     private static AdminService staticAdminService;
+    private static EmployService staticEmployService;
+    private static UserService staticUserService;
 
     @PostConstruct
     private void init() {
         staticAdminService = adminService;
+        staticEmployService = employService;
+        staticUserService = userService;
     }
     /**
      * 根据 1-ADMIN 和 密码创建tokne
@@ -58,6 +68,10 @@ public class JWTUtil {
             String role = userRole[1];
             if (RoleEnum.ADMIN.name().equals(role)) {
                 return staticAdminService.selectById(Integer.valueOf(userId));
+            } else if (RoleEnum.EMPLOY.name().equals(role)) {
+                return staticEmployService.selectById(Integer.valueOf(userId));
+            } else if (RoleEnum.USER.name().equals(role)) {
+                return staticUserService.selectById(Integer.valueOf(userId));
             }
         } catch (Exception e) {
             log.error("获取当前登录用户出错", e);

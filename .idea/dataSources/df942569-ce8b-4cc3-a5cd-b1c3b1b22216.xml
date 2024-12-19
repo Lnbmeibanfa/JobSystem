@@ -1026,7 +1026,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
     </schema>
     <schema id="298" parent="1" name="system">
       <Current>1</Current>
-      <LastIntrospectionLocalTimestamp>2024-12-15.02:34:05</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2024-12-15.11:42:43</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
     <user id="299" parent="1" name="Qibro">
@@ -1139,7 +1139,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <StoredType>varchar(255)|0s</StoredType>
     </column>
     <column id="321" parent="305" name="id">
-      <AutoIncrement>1</AutoIncrement>
+      <AutoIncrement>6</AutoIncrement>
       <Comment>主键ID</Comment>
       <NotNull>1</NotNull>
       <Position>3</Position>
@@ -1187,7 +1187,6 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
     </column>
     <column id="330" parent="305" name="industry_id">
       <Comment>行业id</Comment>
-      <NotNull>1</NotNull>
       <Position>12</Position>
       <StoredType>int|0s</StoredType>
     </column>

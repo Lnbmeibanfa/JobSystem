@@ -10,6 +10,8 @@ import com.example.common.enums.RoleEnum;
 import com.example.entity.Account;
 import com.example.exception.CustomException;
 import com.example.service.AdminService;
+import com.example.service.EmployService;
+import com.example.service.UserService;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -24,7 +26,10 @@ import org.springframework.web.servlet.HandlerInterceptor;
 public class JWTInterceptor implements HandlerInterceptor {
     @Resource
     private AdminService adminService;
-
+    @Resource
+    private EmployService employService;
+    @Resource
+    private UserService userService;
     @Override
     public boolean preHandle (HttpServletRequest request, HttpServletResponse response, Object handler) {
         // 拿到token字段
@@ -43,6 +48,11 @@ public class JWTInterceptor implements HandlerInterceptor {
             String role = audience.split("-")[1];
             if (RoleEnum.ADMIN.name().equals(role)) {
                 account = adminService.selectById(Integer.valueOf(userId));
+            } else if (RoleEnum.EMPLOY.name().equals(role)) {
+                account = employService.selectById(Integer.valueOf(userId));
+            } else if (RoleEnum.USER.name().equals(role)) {
+                account = userService.selectById(Integer.valueOf(userId));
+
             }
         } catch (Exception e) {
             throw new CustomException(ResultCodeEnum.TOKEN_CHECK_ERROR);

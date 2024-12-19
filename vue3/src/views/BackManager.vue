@@ -16,12 +16,10 @@ const handleQuit = () => {
     router.push(ROUTE_PATH.LOGIN)
   })
 }
-const toSelf = () => {
-  router.push(ROUTE_PATH.ACCOUNT.SELF)
-}
 const toPassword = () => {
   router.push(ROUTE_PATH.ACCOUNT.PASSWORD)
 }
+console.log(accountStore.AccountInfo.role)
 </script>
 
 <template>
@@ -45,11 +43,20 @@ const toPassword = () => {
         <el-dropdown>
           <div class="content">
             <img style="border-radius: 50%" :src="accountStore.AccountInfo.avatar" />
-            <span>管理员</span>
+            <span>{{ accountStore.AccountInfo.name }}</span>
           </div>
           <template #dropdown>
             <el-dropdown-menu>
-              <el-dropdown-item @click="toSelf">个人资料</el-dropdown-item>
+              <el-dropdown-item
+                v-if="accountStore.AccountInfo.role === 'ADMIN'"
+                @click="router.push(ROUTE_PATH.ACCOUNT.SELF)"
+                >个人资料</el-dropdown-item
+              >
+              <el-dropdown-item
+                v-if="accountStore.AccountInfo.role === 'EMPLOY'"
+                @click="router.push(ROUTE_PATH.ACCOUNT.EMPLOYSELF)"
+                >企业资料</el-dropdown-item
+              >
               <el-dropdown-item @click="toPassword">修改密码</el-dropdown-item>
               <el-dropdown-item @click="handleQuit">退出登录</el-dropdown-item>
             </el-dropdown-menu>

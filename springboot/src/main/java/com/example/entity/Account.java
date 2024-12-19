@@ -16,4 +16,5 @@ public class Account {
     private String role;
     private String newPassword;
     private String token;
+    private String name;
 }

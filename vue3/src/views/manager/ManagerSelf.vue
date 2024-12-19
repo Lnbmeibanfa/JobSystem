@@ -17,10 +17,7 @@ const rules = reactive({
     { required: true, message: '用户名不得为空' },
     { validator: validateUsername, trigger: 'blur' }
   ],
-  name: [
-    { required: true, message: '呢称不得为空', trigger: 'blur' },
-    { min: 5, max: 50, message: '呢称为5-50个字符' }
-  ],
+  name: [{ required: true, message: '呢称不得为空', trigger: 'blur' }],
   phone: [
     { required: true, message: '手机号码不得为空' },
     { validator: validatePhone, trigger: 'blur' }

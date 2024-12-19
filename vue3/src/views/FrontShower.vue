@@ -1,8 +1,12 @@
 <script setup>
+import router from '@/router'
 import { selectAllAPI } from '@/api/notice'
 import { reactive, ref } from 'vue'
-import { ElMessage } from 'element-plus'
+import { ElMessageBox, ElMessage } from 'element-plus'
+import { useAccountStore } from '@/stores/login'
+import { ROUTE_PATH } from '@/utils/Contants'
 
+const accountStore = useAccountStore()
 const data = reactive({
   notices: {},
   top: ''
@@ -10,7 +14,6 @@ const data = reactive({
 const loadNotice = () => {
   selectAllAPI().then((res) => {
     if (res.code === '200') {
-      console.log(111)
       data.notices = res.data
       let i = 0
       if (data.notices && data.notices.length) {
@@ -28,6 +31,16 @@ const loadNotice = () => {
     }
   })
 }
+const handleQuit = () => {
+  ElMessageBox.confirm('确认退出登录？', '退出登录？', {
+    confirmButtonText: '确认',
+    cancelButtonText: '取消',
+    type: 'warning'
+  }).then(() => {
+    accountStore.setAccountInfo({})
+    router.push(ROUTE_PATH.LOGIN)
+  })
+}
 loadNotice()
 const isLogin = ref(false)
 </script>
@@ -41,6 +54,8 @@ const isLogin = ref(false)
       white-space: nowrap;
       padding: 5px 10px;
       color: #666;
+      display: flex;
+      align-items: center;
     "
   >
     <el-icon><Bell /></el-icon> 公告:{{ data.top }}
@@ -48,7 +63,7 @@ const isLogin = ref(false)
   <div class="front-shower">
     <header class="front-shower-header">
       <div class="left">
-        <img src="../assets/imgs/logo.svg" />
+        <img src="@/assets/imgs/logo.png" />
         <span class="title">项目前台</span>
       </div>
       <div class="center">
@@ -70,7 +85,7 @@ const isLogin = ref(false)
             </div>
             <template #dropdown>
               <el-dropdown-menu>
-                <el-dropdown-item>退出登录</el-dropdown-item>
+                <el-dropdown-item @click="handleQuit">退出登录</el-dropdown-item>
               </el-dropdown-menu>
             </template>
           </el-dropdown>

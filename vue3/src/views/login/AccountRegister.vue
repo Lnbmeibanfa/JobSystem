@@ -3,10 +3,9 @@ import { reactive } from 'vue'
 import { ref } from 'vue'
 import { registerAPI } from '@/api/login'
 import { ElMessage } from 'element-plus'
-import { useAccountStore } from '@/stores/login'
+import { ROUTE_PATH } from '@/utils/Contants'
 import router from '@/router'
 
-const accountStore = useAccountStore()
 // 校验确认密码
 const validatorPassword = (rules, value, callback) => {
   if (value === '') {
@@ -21,7 +20,7 @@ const data = reactive({
   form: {
     username: '',
     password: '',
-    role: 'USER'
+    role: ''
   },
   rules: {
     username: [{ required: true, message: '用户名不得为空', trigger: 'blur' }],
@@ -30,27 +29,29 @@ const data = reactive({
   }
 })
 
-const options = ref([{ value: 'USER', label: '用户' }])
+const options = ref([
+  { value: 'USER', label: '用户' },
+  { value: 'EMPLOY', label: '企业' }
+])
 const form = ref(null)
-const login = () => {
+const register = () => {
   form.value.validate((valid) => {
     if (valid) {
-      registerAPI(form).then((res) => {
+      registerAPI(data.form).then((res) => {
         if (res.code === '200') {
           ElMessage.success('注册成功')
-          router.push('/login')
+          router.push(ROUTE_PATH.LOGIN)
         } else {
           ElMessage.error(res.msg)
         }
       })
     }
   })
-  console.log(accountStore.getToken())
 }
 </script>
 <template>
-  <div class="login-container">
-    <div class="login-box">
+  <div class="register-container">
+    <div class="register-box">
       <div
         style="
           text-align: center;
@@ -70,6 +71,14 @@ const login = () => {
             prefix-icon="User"
             v-model="data.form.username"
             placeholder="请输入账号"
+          ></el-input>
+        </el-form-item>
+        <el-form-item prop="name">
+          <el-input
+            size="large"
+            prefix-icon="User"
+            v-model="data.form.name"
+            placeholder="请输入昵称"
           ></el-input>
         </el-form-item>
         <el-form-item prop="password">
@@ -103,7 +112,7 @@ const login = () => {
             style="width: 100%; margin-top: 20px"
             type="primary"
             size="large"
-            @click="login"
+            @click="register"
             >注 册</el-button
           >
         </el-form-item>
@@ -114,7 +123,7 @@ const login = () => {
 </template>
 
 <style scoped>
-.login-container {
+.register-container {
   height: 100vh;
   overflow: hidden;
   display: flex;
@@ -122,7 +131,7 @@ const login = () => {
   align-items: center;
   background: linear-gradient(to top, #01477f, #4c8481, #a3ca82);
 }
-.login-box {
+.register-box {
   width: 350px;
   padding: 30px;
   border-radius: 5px;

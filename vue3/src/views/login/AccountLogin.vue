@@ -4,20 +4,32 @@ import { ref } from 'vue'
 import { loginAPI } from '@/api/login'
 import { ElMessage } from 'element-plus'
 import { useAccountStore } from '@/stores/login'
+import { ROUTE_PATH } from '@/utils/Contants'
 import router from '@/router'
 
 const accountStore = useAccountStore()
+const validateRole = (rules, value, callback) => {
+  if (value === '') {
+    console.log('ok')
+    callback(new Error('请选择身份'))
+  } else {
+    callback()
+  }
+}
 const data = reactive({
   form: {
-    role: 'ADMIN'
+    role: ''
   },
   rules: {
     username: [{ required: true, message: '用户名不得为空', trigger: 'blur' }],
-    password: [{ required: true, message: '密码不得为空', trigger: 'blur' }]
+    password: [{ required: true, message: '密码不得为空', trigger: 'blur' }],
+    role: [{ validator: validateRole, trigger: 'blur' }]
   }
 })
+
 const options = ref([
   { value: 'ADMIN', label: '管理员' },
+  { value: 'EMPLOY', label: '企业' },
   { value: 'USER', label: '用户' }
 ])
 const form = ref(null)
@@ -27,8 +39,13 @@ const login = () => {
       loginAPI(data.form).then((res) => {
         if (res.code === '200') {
           accountStore.setAccountInfo(res.data)
-          ElMessage.success('登录成功')
-          router.push('/manager/home')
+          if (accountStore.AccountInfo.role === 'USER') {
+            router.push(ROUTE_PATH.FRONT)
+            ElMessage.success('登录成功')
+          } else {
+            router.push(ROUTE_PATH.MANAGER)
+            ElMessage.success('登录成功')
+          }
         } else {
           ElMessage.error(res.msg)
         }
@@ -70,14 +87,16 @@ const login = () => {
             show-password
           ></el-input>
         </el-form-item>
-        <el-select size="large" v-model="data.form.role" placeholder="请选择角色">
-          <el-option
-            v-for="item in options"
-            :key="item.value"
-            :value="item.value"
-            :label="item.label"
-          ></el-option>
-        </el-select>
+        <el-form-item prop="role">
+          <el-select size="large" v-model="data.form.role" placeholder="请选择角色">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :value="item.value"
+              :label="item.label"
+            ></el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item>
           <el-button
             style="width: 100%; margin-top: 20px"

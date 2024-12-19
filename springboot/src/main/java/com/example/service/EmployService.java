@@ -1,8 +1,10 @@
 package com.example.service;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.example.common.enums.ResultCodeEnum;
 import com.example.common.enums.RoleEnum;
+import com.example.common.enums.Status;
 import com.example.entity.Account;
 import com.example.entity.Employ;
 import com.example.exception.CustomException;
@@ -27,7 +29,7 @@ public class EmployService extends AccountServiceImpl {
             throw new CustomException(ResultCodeEnum.USER_EXIST_ERROR);
         }
         initAccount(employ);
-        employ.setRole(RoleEnum.EMPLOYEE.name());
+        employ.setRole(RoleEnum.EMPLOY.name());
         employMapper.insert(employ);
     }
 
@@ -42,6 +44,8 @@ public class EmployService extends AccountServiceImpl {
         if (ObjectUtil.isNull(dbEmploy)) {
             throw new CustomException(ResultCodeEnum.USER_NOT_EXIST_ERROR);
         }
+        String token = JWTUtil.createJWT(dbEmploy.getId() + "-" + dbEmploy.getRole(), dbEmploy.getPassword());
+        dbEmploy.setToken(token);
         return dbEmploy;
     }
 
@@ -102,5 +106,16 @@ public class EmployService extends AccountServiceImpl {
         }
         dbEmploy.setPassword(account.getNewPassword());
         employMapper.update(dbEmploy);
+    }
+
+    public void register(Account account) {
+        Employ dbEmploy = employMapper.selectByUsername(account.getUsername());
+        if (ObjectUtil.isNotNull(dbEmploy)) {
+            throw new CustomException(ResultCodeEnum.USER_EXIST_ERROR);
+        }
+        Employ employ = new Employ();
+        BeanUtil.copyProperties(account, employ);
+        employ.setStatus(Status.WAIT.name());
+        add(employ);
     }
 }

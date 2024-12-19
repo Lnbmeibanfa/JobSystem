@@ -9,10 +9,13 @@ export const useAccountStore = defineStore(
     const setAccountInfo = (data) => {
       AccountInfo.value = cloneDeep(data)
     }
+    const setToken = (token) => {
+      AccountInfo.value.token = token
+    }
     const getToken = () => {
       return AccountInfo.value.token
     }
-    return { AccountInfo, setAccountInfo, getToken }
+    return { AccountInfo, setAccountInfo, getToken, setToken }
   },
   {
     persist: true

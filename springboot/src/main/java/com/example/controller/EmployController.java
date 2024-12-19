@@ -41,6 +41,12 @@ public class EmployController {
         return Result.success(employs);
     }
 
+    @GetMapping("/selectById")
+    public Result selectById(@RequestParam Integer id) {
+        Employ employ = employService.selectById(id);
+        return Result.success(employ);
+    }
+
     @PutMapping("/update")
     public Result update (@RequestBody Employ employ) {
         employService.update(employ);

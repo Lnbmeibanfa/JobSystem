@@ -10,16 +10,20 @@ const ROUTE_PATH = {
     SELF: '/manager/self',
     PASSWORD: '/manager/password',
     EMPLOY: '/manager/employ',
-    USER: '/manager/user'
+    USER: '/manager/user',
+    EMPLOYSELF: '/manager/eSelf'
   },
   INVALID: '/404',
   LOGIN: '/login',
   REGISTER: '/register',
-  FRONT: '/front'
+  FRONT: '/front',
+  MANAGER: '/manager'
 }
 
 const ROLE = {
-  ADMIN: '管理员'
+  ADMIN: '管理员',
+  EMPLOY: '企业',
+  USER: '用户'
 }
 
 const LOCALSTORAGE_KEY = {
