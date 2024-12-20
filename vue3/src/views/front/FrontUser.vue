@@ -3,13 +3,31 @@ import { reactive, ref } from 'vue'
 import { useAccountStore } from '@/stores/login'
 import { validateUsername, validateEmail, validatePhone } from '@/utils/validateUtil'
 import { LOCALSTORAGE_KEY } from '@/utils/Contants'
-import { updateAdminAPI } from '@/api/admin'
+import { updateUserAPI } from '@/api/user'
+import { updatePasswordAPI } from '@/api/login'
 import { ROLE } from '@/utils/Contants'
+import router from '@/router'
 import { ElMessage } from 'element-plus'
 const accountStore = new useAccountStore()
 const baseUrl = import.meta.env.VITE_BASE_URL
+const confirmPassword = (rules, value, callback) => {
+  if (value !== data.form.newPassword) {
+    callback(new Error('两次密码输入不一致'))
+  }
+  callback()
+}
 const data = reactive({
-  formData: JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY.USER)).AccountInfo
+  formData: JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY.USER)).AccountInfo,
+  formVisiable: false,
+  form: JSON.parse(localStorage.getItem(LOCALSTORAGE_KEY.USER)).AccountInfo,
+  rules: {
+    password: [{ required: true, message: '原密码不得为空', trigger: 'blur' }],
+    newPassword: [{ required: true, message: '密码不得为空', trigger: 'blur' }],
+    confirmPassword: [
+      { required: true, message: '确认密码不得为空', trigger: 'blur' },
+      { validator: confirmPassword, trigger: 'blur' }
+    ]
+  }
 })
 const adminForm = ref(null)
 const rules = reactive({
@@ -17,10 +35,7 @@ const rules = reactive({
     { required: true, message: '用户名不得为空' },
     { validator: validateUsername, trigger: 'blur' }
   ],
-  name: [
-    { required: true, message: '呢称不得为空', trigger: 'blur' },
-    { min: 5, max: 50, message: '呢称为5-50个字符' }
-  ],
+  name: [{ required: true, message: '呢称不得为空', trigger: 'blur' }],
   phone: [
     { required: true, message: '手机号码不得为空' },
     { validator: validatePhone, trigger: 'blur' }
@@ -34,13 +49,32 @@ const fileList = ref([])
 const handleUploadSuccess = (res) => {
   data.formData.avatar = res.data
 }
+const handlePassword = () => {
+  data.formVisiable = true
+}
 const save = () => {
   adminForm.value.validate((valid) => {
     if (valid) {
-      updateAdminAPI(data.formData).then((res) => {
+      updateUserAPI(data.formData).then((res) => {
         if (res.code === '200') {
           accountStore.setAccountInfo(data.formData)
           ElMessage.success('修改成功')
+        } else {
+          ElMessage.error(res.msg)
+        }
+      })
+    }
+  })
+}
+const form = ref()
+const submitPassword = () => {
+  form.value.validate((valid) => {
+    if (valid) {
+      updatePasswordAPI(data.form).then((res) => {
+        if (res.code === '200') {
+          accountStore.AccountInfo.password = data.form.newPassword
+          ElMessage.success('修改密码成功')
+          router.push('/login')
         } else {
           ElMessage.error(res.msg)
         }
@@ -90,6 +124,7 @@ const save = () => {
         </div>
       </div>
     </div>
+
     <div class="card user-info" style="display: flex; justify-content: center">
       <div class="manager-form" style="width: 700px">
         <el-form
@@ -112,11 +147,36 @@ const save = () => {
             <el-input v-model="data.formData.email" placeholder="请输入邮箱" />
           </el-form-item>
         </el-form>
-        <div style="text-align: center">
+        <div style="display: flex; justify-content: space-around">
           <el-button type="primary" @click="save">保 存</el-button>
+          <el-button type="warning" size="default" @click="handlePassword">修改密码</el-button>
         </div>
       </div>
     </div>
+    <el-dialog v-model="data.formVisiable" title="修改密码" width="40%">
+      <div class="password-box">
+        <el-form
+          :model="data.form"
+          ref="form"
+          :rules="data.rules"
+          label-width="80px"
+          style="padding-right: 20px"
+        >
+          <el-form-item label="原密码" prop="password">
+            <el-input show-password v-model="data.form.password"></el-input>
+          </el-form-item>
+          <el-form-item label="新密码" prop="newPassword">
+            <el-input show-password v-model="data.form.newPassword"></el-input>
+          </el-form-item>
+          <el-form-item label="确认密码" prop="confirmPassword">
+            <el-input show-password v-model="data.form.confirmPassword"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <div><el-button type="primary" @click="submitPassword">确认修改</el-button></div>
+          </el-form-item>
+        </el-form>
+      </div>
+    </el-dialog>
   </div>
 </template>
 

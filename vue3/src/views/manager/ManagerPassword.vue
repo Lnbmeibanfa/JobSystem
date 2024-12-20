@@ -1,7 +1,7 @@
 <script setup>
 import { reactive, ref } from 'vue'
 import { LOCALSTORAGE_KEY } from '@/utils/Contants'
-import { updatePasswordAPI } from '@/api/admin'
+import { updatePasswordAPI } from '@/api/login'
 import { useAccountStore } from '@/stores/login'
 import { ElMessage } from 'element-plus'
 import router from '@/router'

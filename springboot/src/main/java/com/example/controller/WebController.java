@@ -11,6 +11,7 @@ import com.example.service.UserService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -50,6 +51,18 @@ public class WebController {
             userService.register(account);
         } else if (account.getRole().equals(RoleEnum.EMPLOY.name())) {
             employService.register(account);
+        }
+        return Result.success();
+    }
+
+    @PutMapping("/update/password")
+    public Result updatePassword (@RequestBody Account account) {
+        if (account.getRole().equals(RoleEnum.ADMIN.name())) {
+            adminService.updatePassword(account);
+        } else if (account.getRole().equals(RoleEnum.EMPLOY.name())) {
+            employService.updatePassword(account);
+        } else if (account.getRole().equals(RoleEnum.USER.name())) {
+            userService.updatePassword(account);
         }
         return Result.success();
     }

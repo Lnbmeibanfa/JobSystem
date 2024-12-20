@@ -7,4 +7,7 @@ const registerAPI = (data) => {
   return request.post('/register', data)
 }
 
-export { loginAPI, registerAPI }
+const updatePasswordAPI = (data) => {
+  return request.put('/update/password', data)
+}
+export { loginAPI, registerAPI, updatePasswordAPI }

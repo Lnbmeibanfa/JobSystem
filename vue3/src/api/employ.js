@@ -35,16 +35,4 @@ const deleteBatch = (ids) => {
   return request.delete('/employ/delete/batch', { data: ids })
 }
 
-const updatePasswordAPI = (data) => {
-  return request.put('/employ/update/password', data)
-}
-
-export {
-  addEmployAPI,
-  selectByPageAPI,
-  updateEmployAPI,
-  deleteById,
-  deleteBatch,
-  updatePasswordAPI,
-  selectById
-}
+export { addEmployAPI, selectByPageAPI, updateEmployAPI, deleteById, deleteBatch, selectById }

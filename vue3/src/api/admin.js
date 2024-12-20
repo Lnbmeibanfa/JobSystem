@@ -26,8 +26,4 @@ const deleteBatch = (ids) => {
   return request.delete('/admin/delete/batch', { data: ids })
 }
 
-const updatePasswordAPI = (data) => {
-  return request.put('/admin/update/password', data)
-}
-
-export { addAdminAPI, selectByPageAPI, updateAdminAPI, deleteById, deleteBatch, updatePasswordAPI }
+export { addAdminAPI, selectByPageAPI, updateAdminAPI, deleteById, deleteBatch }

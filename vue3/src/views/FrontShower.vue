@@ -80,8 +80,8 @@ const isLogin = ref(false)
         <div v-else>
           <el-dropdown>
             <div class="content">
-              <img src="../assets/imgs/user.svg" />
-              <span class="info">管理员</span>
+              <img :src="accountStore.AccountInfo.avatar" />
+              <span class="info">{{ accountStore.AccountInfo.name }}</span>
             </div>
             <template #dropdown>
               <el-dropdown-menu>

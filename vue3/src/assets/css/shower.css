@@ -3,6 +3,12 @@
   height: 100vh;
 }
 
+.front-shower .right .content img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
 .front-notice {
   border-bottom: 1px solid #dcdfe6;
 }

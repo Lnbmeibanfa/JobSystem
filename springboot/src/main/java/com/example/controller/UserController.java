@@ -58,13 +58,6 @@ public class UserController {
         return Result.success();
     }
 
-    @PutMapping("/update/password")
-    public Result updatePassword (@RequestBody Account account) {
-        if (account.getRole().equals(RoleEnum.ADMIN.name())) {
-            userService.updatePassword(account);
 
-        }
-        return Result.success();
-    }
 
 }
