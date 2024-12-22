@@ -19,7 +19,6 @@ const handleQuit = () => {
 const toPassword = () => {
   router.push(ROUTE_PATH.ACCOUNT.PASSWORD)
 }
-console.log(accountStore.AccountInfo.role)
 </script>
 
 <template>
@@ -33,7 +32,7 @@ console.log(accountStore.AccountInfo.role)
       </div>
       <div class="back-manager-header-center">
         <el-breadcrumb separator="/">
-          <el-breadcrumb-item :to="{ path: '/manager/home' }">首页</el-breadcrumb-item>
+          <el-breadcrumb-item :to="{ path: ROUTE_PATH.HOME }">首页</el-breadcrumb-item>
           <el-breadcrumb-item>
             {{ route.meta.name }}
           </el-breadcrumb-item>
@@ -91,12 +90,13 @@ console.log(accountStore.AccountInfo.role)
               :class="{ tag: route.path === ROUTE_PATH.MESSAGE.INDUSTRY }"
               >行业信息</el-menu-item
             >
-            <el-menu-item index="2-4">职位信息</el-menu-item>
+            <el-menu-item :index="ROUTE_PATH.ACCOUNT.POSITION">职位信息</el-menu-item>
             <el-menu-item index="2-5">岗位投递</el-menu-item>
           </el-sub-menu>
           <el-sub-menu
             index="3"
             :class="{ tag: Object.values(ROUTE_PATH.ACCOUNT).includes(route.path) }"
+            v-if="accountStore.AccountInfo.role === 'ADMIN'"
           >
             <template #title>
               <el-icon><User /></el-icon>

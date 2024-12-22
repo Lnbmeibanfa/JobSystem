@@ -11,6 +11,7 @@ const ROUTE_PATH = {
     PASSWORD: '/manager/password',
     EMPLOY: '/manager/employ',
     USER: '/manager/user',
+    POSITION: '/manager/position',
     EMPLOYSELF: '/manager/eSelf'
   },
   INVALID: '/404',
@@ -19,17 +20,23 @@ const ROUTE_PATH = {
   FRONT: '/front',
   MANAGER: '/manager'
 }
-
+// 用户角色
 const ROLE = {
   ADMIN: '管理员',
   EMPLOY: '企业',
   USER: '用户'
 }
-
+// 审核状态
+const STATUS = {
+  AUDIT_STATUS_PENDING: '待审核',
+  AUDIT_STATUS_APPROVED: '审核通过',
+  AUDIT_STATUS_REJECTED: '审核不通过'
+}
+// localstorage的key
 const LOCALSTORAGE_KEY = {
   USER: 'pinia-userInfo'
 }
-
+// 枚举类型
 const OPTIONS = {
   EMPLOY: {
     SCALE: [
@@ -57,5 +64,4 @@ const OPTIONS = {
     ]
   }
 }
-
-export { ROUTE_PATH, ROLE, LOCALSTORAGE_KEY, OPTIONS }
+export { ROUTE_PATH, ROLE, LOCALSTORAGE_KEY, OPTIONS, STATUS }

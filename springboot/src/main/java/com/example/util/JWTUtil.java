@@ -14,6 +14,7 @@ import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -24,6 +25,7 @@ import java.util.Date;
  * @since 2024-12-8
  */
 @Slf4j
+@Component
 public class JWTUtil {
     @Resource
     private AdminService adminService;
@@ -43,7 +45,7 @@ public class JWTUtil {
         staticUserService = userService;
     }
     /**
-     * 根据 1-ADMIN 和 密码创建tokne
+     * 根据 1-ADMIN 和 密码创建token
      */
     public static String createJWT(String data, String sign) {
         // token的创建也包含了,token需要哪些要素
@@ -63,7 +65,7 @@ public class JWTUtil {
             HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
             String token = request.getHeader(Constants.token);
             String audience = JWT.decode(token).getAudience().get(0);
-            String[] userRole = token.split("-");
+            String[] userRole = audience.split("-");
             String userId = userRole[0];
             String role = userRole[1];
             if (RoleEnum.ADMIN.name().equals(role)) {
