@@ -84,7 +84,11 @@ const toPassword = () => {
               :class="{ tag: route.path === ROUTE_PATH.MESSAGE.NOTICE }"
               >系统公告</el-menu-item
             >
-            <el-menu-item index="2-2">广告信息</el-menu-item>
+            <el-menu-item
+              :index="ROUTE_PATH.ACCOUNT.ADVERTISE"
+              :class="{ tag: route.path === ROUTE_PATH.ACCOUNT.ADVERTISE }"
+              >广告信息</el-menu-item
+            >
             <el-menu-item
               :index="ROUTE_PATH.MESSAGE.INDUSTRY"
               :class="{ tag: route.path === ROUTE_PATH.MESSAGE.INDUSTRY }"

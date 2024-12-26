@@ -1,5 +1,8 @@
 <script setup>
-import { ref, reactive, onMounted } from 'vue'
+import '@wangeditor/editor/dist/css/style.css' // 引入 css
+
+import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
+import { ref, reactive, onMounted, shallowRef, onBeforeUnmount } from 'vue'
 import { ElButton, ElDialog, ElMessage, ElMessageBox } from 'element-plus'
 import { useAccountStore } from '@/stores/login'
 import {
@@ -9,12 +12,36 @@ import {
   deleteBatch,
   deleteById
 } from '@/api/position'
+import { cloneDeep } from 'lodash'
+import { STATUS } from '@/utils/Contants'
 
 onMounted(() => {
   // 加载表格数据
   load()
 })
+// pinia用户数据仓库初始化
 const accountStore = useAccountStore()
+
+// 富文本编辑器配置
+// 编辑器实例，必须用 shallowRef
+const editorRef = shallowRef()
+// 内容 HTML
+const toolbarConfig = {}
+const editorConfig = { MENU_CONF: {} }
+editorConfig.MENU_CONF['uploadImage'] = {
+  server: 'http://localhost:9090/files/wang/upload', // 服务端图片上传接口
+  fieldName: 'file' // 服务端图片上传接口参数
+}
+// 组件销毁时，也及时销毁编辑器
+onBeforeUnmount(() => {
+  const editor = editorRef.value
+  if (editor == null) return
+  editor.destroy()
+})
+const handleCreated = (editor) => {
+  editorRef.value = editor // 记录 editor 实例，重要！
+}
+const mode = ref('default')
 /**table 数据和方法*/
 const tableData = ref([])
 const pageNum = ref(1)
@@ -36,6 +63,13 @@ const replace = () => {
   employName.value = null
   load()
 }
+// 展示职位描述
+const contentVisiable = ref(false)
+const viewContent = ref(null)
+const showContent = (content) => {
+  viewContent.value = cloneDeep(content)
+  contentVisiable.value = true
+}
 /**dialog数据和方法*/
 // 表单数据和rules
 const positionForm = ref(null)
@@ -46,10 +80,23 @@ const handeleAdd = () => {
   formData.value = {}
   toggleFormVisiable(true)
 }
+// 修改行表格
 const handleEdit = (row) => {
   formData.value = {}
   formData.value = JSON.parse(JSON.stringify(row))
   toggleFormVisiable(true)
+}
+// 审批通过行表格
+const handleApprove = (row) => {
+  formData.value = JSON.parse(JSON.stringify(row))
+  formData.value.status = STATUS.AUDIT_STATUS_APPROVED
+  update()
+}
+// 审批不通过行表格
+const handleReject = (row) => {
+  formData.value = JSON.parse(JSON.stringify(row))
+  formData.value.status = STATUS.AUDIT_STATUS_REJECTED
+  update()
 }
 const handleDel = (id) => {
   ElMessageBox.confirm('删除数据后不可恢复', '确认删除', {
@@ -119,7 +166,7 @@ const add = () => {
 const update = () => {
   updatePositionAPI(formData.value).then((res) => {
     if (res.code === '200') {
-      ElMessage.success('修改成功')
+      ElMessage.success('操作成功')
       toggleFormVisiable(false)
       load()
     } else {
@@ -163,17 +210,23 @@ const update = () => {
         <el-table-column prop="experience" label="工作经验" />
         <el-table-column prop="salary" label="薪资待遇" />
         <el-table-column prop="education" label="学历要求" />
-        <el-table-column prop="content" label="职位描述" />
+        <el-table-column prop="content" label="职位描述">
+          <template v-slot="scope">
+            <el-button type="primary" size="default" @click="showContent(scope.row.content)"
+              >查看详情</el-button
+            >
+          </template>
+        </el-table-column>
         <el-table-column prop="tag" label="职位标签" />
         <el-table-column prop="status" label="审核状态">
           <template v-slot="scope">
-            <el-tag v-if="scope.row.status === '待审核'" type="warning">{{
+            <el-tag v-if="scope.row.status === STATUS.AUDIT_STATUS_PENDING" type="warning">{{
               scope.row.status
             }}</el-tag>
-            <el-tag v-if="scope.row.status === '审核通过'" type="success">{{
+            <el-tag v-if="scope.row.status === STATUS.AUDIT_STATUS_APPROVED" type="success">{{
               scope.row.status
             }}</el-tag>
-            <el-tag v-if="scope.row.status === '审核不通过'" type="danger">{{
+            <el-tag v-if="scope.row.status === STATUS.AUDIT_STATUS_REJECTED" type="danger">{{
               scope.row.status
             }}</el-tag>
           </template></el-table-column
@@ -186,6 +239,23 @@ const update = () => {
               icon="Edit"
               size="default"
               @click="handleEdit(scope.row)"
+              v-if="accountStore.AccountInfo.role === 'EMPLOY'"
+            ></el-button>
+            <el-button
+              type="primary"
+              circle
+              icon="Select"
+              size="default"
+              @click="handleApprove(scope.row)"
+              v-if="accountStore.AccountInfo.role === 'ADMIN'"
+            ></el-button>
+            <el-button
+              type="primary"
+              circle
+              icon="Close"
+              size="default"
+              @click="handleReject(scope.row)"
+              v-if="accountStore.AccountInfo.role === 'ADMIN'"
             ></el-button>
             <el-button
               type="danger"
@@ -208,7 +278,7 @@ const update = () => {
         @current-change="load"
       />
     </div>
-    <el-dialog v-model="formVisiable" title="职位信息" width="40%">
+    <el-dialog v-model="formVisiable" title="职位信息" width="50%">
       <el-form
         ref="positionForm"
         :model="formData"
@@ -263,12 +333,21 @@ const update = () => {
           <el-input v-model="formData.tag" placeholder="请输入职位标签,标签间请用英文逗号分开" />
         </el-form-item>
         <el-form-item label="职位描述" prop="content">
-          <el-input
-            type="textarea"
-            :autosize="{ minRows: 4, maxRows: 8 }"
-            v-model="formData.content"
-            placeholder="请输入职位描述"
-          />
+          <div style="border: 1px solid #ccc">
+            <Toolbar
+              style="border-bottom: 1px solid #ccc"
+              :editor="editorRef"
+              :defaultConfig="toolbarConfig"
+              :mode="mode"
+            />
+            <Editor
+              style="height: 500px; overflow-y: hidden"
+              v-model="formData.content"
+              :defaultConfig="editorConfig"
+              :mode="mode"
+              @onCreated="handleCreated"
+            />
+          </div>
         </el-form-item>
       </el-form>
       <template #footer>
@@ -277,6 +356,9 @@ const update = () => {
           <el-button type="primary" @click="submit"> 确定 </el-button>
         </div>
       </template>
+    </el-dialog>
+    <el-dialog v-model="contentVisiable" title="职位描述" width="50%">
+      <div style="padding: 0px 20px" v-html="viewContent"></div>
     </el-dialog>
   </div>
 </template>

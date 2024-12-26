@@ -2,10 +2,12 @@
 <project version="4">
   <component name="SqlDialectMappings">
     <file url="file://$PROJECT_DIR$/springboot/src/main/java/com/example/mapper/AdminMapper.java" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/springboot/src/main/java/com/example/mapper/AdvertiseMapper.java" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/springboot/src/main/java/com/example/mapper/IndustryMapper.java" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/springboot/src/main/java/com/example/mapper/NoticeMapper.java" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/springboot/src/main/java/com/example/mapper/PositionMapper.java" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/springboot/src/main/resources/mapper/AdminMapper.xml" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/springboot/src/main/resources/mapper/AdvertiseMapper.xml" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/springboot/src/main/resources/mapper/EmployMapper.xml" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/springboot/src/main/resources/mapper/IndustryMapper.xml" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/springboot/src/main/resources/mapper/NoticeMapper.xml" dialect="MySQL" />

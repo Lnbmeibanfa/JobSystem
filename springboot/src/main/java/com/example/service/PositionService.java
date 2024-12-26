@@ -2,6 +2,7 @@ package com.example.service;
 
 import cn.hutool.core.date.DateUtil;
 import com.example.common.enums.ResultCodeEnum;
+import com.example.common.enums.RoleEnum;
 import com.example.entity.Account;
 import com.example.entity.Employ;
 import com.example.entity.Position;
@@ -38,6 +39,13 @@ public class PositionService {
 
     public PageInfo<Position> selectByPage(Position position, Integer pageNum, Integer pageSize) {
         PageHelper.startPage(pageNum, pageSize);
+        Account currentUser = JWTUtil.getCurAccount();
+        if (currentUser == null) {
+            throw new CustomException(ResultCodeEnum.USER_NOT_EXIST_ERROR);
+        }
+        if (currentUser.getRole().equals(RoleEnum.EMPLOY.name())) {
+            position.setEmployId(currentUser.getId());
+        }
         List<Position> list = positionMapper.selectByPage(position);
         return PageInfo.of(list);
     }

@@ -10,6 +10,7 @@
             <if test="name != null">and position.name like concat('%',
                 #{name}, '%')</if>
             <if test="employName != null">and employ.name = #{employName}</if>
+            <if test="employId != null">and position.employ_id = #{employId}</if>
         </where>
     </select>
     <insert id="insert">
@@ -70,5 +71,11 @@
     <select id="selectByName" resultType="com.example.entity.Position">
         select * from `position`
         where name = #{name}
+    </select>
+
+    <select id="selectAll" resultType="com.example.entity.Position">
+        select position.*, employ.name as employName, industry.name as industryName from `position`
+        left join `system`.employ on position.employ_id = employ.id
+        left join `system`.industry on position.industry_id = industry.id
     </select>
 </mapper>

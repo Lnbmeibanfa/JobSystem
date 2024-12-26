@@ -57,6 +57,11 @@ const router = createRouter({
           path: 'eSelf',
           meta: { name: '企业信息' },
           component: () => import('@/views/employ/EmploySelf.vue')
+        },
+        {
+          path: 'advertise',
+          meta: { name: '广告信息' },
+          component: () => import('@/views/manager/ManagerAdvertise.vue')
         }
       ]
     },
@@ -66,8 +71,12 @@ const router = createRouter({
     { path: '/register', component: () => import('@/views/login/AccountRegister.vue') },
     {
       path: '/front',
+      redirect: '/front/home',
       component: () => import('@/views/FrontShower.vue'),
-      children: [{ path: 'user', component: () => import('@/views/front/FrontUser.vue') }]
+      children: [
+        { path: 'user', component: () => import('@/views/front/FrontUser.vue') },
+        { path: 'home', component: () => import('@/views/front/FrontHome.vue') }
+      ]
     }
   ]
 })

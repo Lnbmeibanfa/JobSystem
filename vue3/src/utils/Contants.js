@@ -12,7 +12,8 @@ const ROUTE_PATH = {
     EMPLOY: '/manager/employ',
     USER: '/manager/user',
     POSITION: '/manager/position',
-    EMPLOYSELF: '/manager/eSelf'
+    EMPLOYSELF: '/manager/eSelf',
+    ADVERTISE: '/manager/advertise'
   },
   INVALID: '/404',
   LOGIN: '/login',
