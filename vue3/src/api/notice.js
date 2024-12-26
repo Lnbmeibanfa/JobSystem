@@ -14,7 +14,7 @@ const selectByPageAPI = (pageNum = 1, pageSize = 10, title) => {
   })
 }
 
-const selectAllAPI = () => {
+const selectAllNoticeAPI = () => {
   return request.get('/notice/selectAll')
 }
 
@@ -30,4 +30,11 @@ const deleteBatch = (ids) => {
   return request.delete('/notice/delete/batch', { data: ids })
 }
 
-export { addNoticeAPI, selectByPageAPI, updateNoticeAPI, deleteById, deleteBatch, selectAllAPI }
+export {
+  addNoticeAPI,
+  selectByPageAPI,
+  updateNoticeAPI,
+  deleteById,
+  deleteBatch,
+  selectAllNoticeAPI
+}

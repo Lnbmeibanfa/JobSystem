@@ -77,5 +77,8 @@
         select position.*, employ.name as employName, industry.name as industryName from `position`
         left join `system`.employ on position.employ_id = employ.id
         left join `system`.industry on position.industry_id = industry.id
+        <where>
+            <if test="industryId != null">postion.industry_id = #{industryId}</if>
+        </where>
     </select>
 </mapper>

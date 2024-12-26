@@ -3,7 +3,7 @@ import { reactive, ref } from 'vue'
 import { useAccountStore } from '@/stores/login'
 // import { LOCALSTORAGE_KEY } from '@/utils/Contants'
 import { updateEmployAPI, selectById } from '@/api/employ'
-import { selectAllAPI } from '@/api/industry'
+import { selectAllIndustryAPI } from '@/api/industry'
 import { ROLE, OPTIONS } from '@/utils/Contants'
 import { ElMessage, ElMessageBox } from 'element-plus'
 const accountStore = new useAccountStore()
@@ -19,7 +19,7 @@ const optionData = reactive({
 })
 // 获取行业选择器数据
 const loadIndustryOptions = () => {
-  selectAllAPI().then((res) => {
+  selectAllIndustryAPI().then((res) => {
     if (res.code === '200') {
       res.data.forEach((industry) => {
         optionData.industryOptions.push({

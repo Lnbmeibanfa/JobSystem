@@ -8,7 +8,7 @@ import {
   deleteBatch,
   deleteById
 } from '@/api/advertise'
-import { selectAllAPI } from '@/api/position'
+import { selectAllPositionAPI } from '@/api/position'
 
 onMounted(() => {
   // 加载表格数据
@@ -47,7 +47,7 @@ const formData = ref({})
 const rules = reactive({})
 // 获取行业选择器数据
 const loadPositionOptions = () => {
-  selectAllAPI().then((res) => {
+  selectAllPositionAPI().then((res) => {
     if (res.code === '200') {
       res.data.forEach((position) => {
         optionData.positionOptions.push({

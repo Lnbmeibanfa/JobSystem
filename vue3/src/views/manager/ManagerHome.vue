@@ -1,13 +1,13 @@
 <script setup>
 import { reactive } from 'vue'
-import { selectAllAPI } from '@/api/notice'
+import { selectAllNoticeAPI } from '@/api/notice'
 import { ElMessage } from 'element-plus'
 
 const data = reactive({
   notices: {}
 })
 const load = () => {
-  selectAllAPI().then((res) => {
+  selectAllNoticeAPI().then((res) => {
     if (res.code === '200') {
       data.notices = res.data
     } else {

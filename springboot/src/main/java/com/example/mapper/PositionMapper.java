@@ -10,7 +10,7 @@ import java.util.List;
 public interface PositionMapper {
     int insert(Position position);
 
-    List<Position> selectAll();
+    List<Position> selectAll(Position position);
 
     @Select("select * from `position` where id = #{id}")
     Position selectById(Integer id);

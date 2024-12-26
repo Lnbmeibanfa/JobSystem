@@ -14,7 +14,7 @@ const selectByPageAPI = (pageNum = 1, pageSize = 10, name) => {
   })
 }
 
-const selectAllAPI = () => {
+const selectAllIndustryAPI = () => {
   return request.get('/industry/selectAll')
 }
 
@@ -30,4 +30,11 @@ const deleteBatch = (ids) => {
   return request.delete('/industry/delete/batch', { data: ids })
 }
 
-export { addIndustryAPI, selectByPageAPI, updateIndustryAPI, deleteById, deleteBatch, selectAllAPI }
+export {
+  addIndustryAPI,
+  selectByPageAPI,
+  updateIndustryAPI,
+  deleteById,
+  deleteBatch,
+  selectAllIndustryAPI
+}

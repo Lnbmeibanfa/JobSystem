@@ -32,6 +32,13 @@
   width: 200px;
 }
 
+.front-shower-header .left img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid #34daa9;
+}
+
 .front-shower-header .title {
   font-weight: bold;
   font-size: 20px;

@@ -15,8 +15,12 @@ const selectByPageAPI = (pageNum = 1, pageSize = 10, name, employName) => {
   })
 }
 
-const selectAllAPI = () => {
-  return request.get('/position/selectAll')
+const selectAllPositionAPI = (industryId) => {
+  return request.get('/position/selectAll', {
+    params: {
+      industryId
+    }
+  })
 }
 
 const updatePositionAPI = (data) => {
@@ -31,4 +35,11 @@ const deleteBatch = (ids) => {
   return request.delete('/position/delete/batch', { data: ids })
 }
 
-export { addPositionAPI, selectByPageAPI, updatePositionAPI, deleteById, deleteBatch, selectAllAPI }
+export {
+  addPositionAPI,
+  selectByPageAPI,
+  updatePositionAPI,
+  deleteById,
+  deleteBatch,
+  selectAllPositionAPI
+}

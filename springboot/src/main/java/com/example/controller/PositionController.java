@@ -39,8 +39,8 @@ public class PositionController {
     }
 
     @GetMapping("/selectAll")
-    public Result selectAll() {
-        List<Position> positions = positionService.selectAll();
+    public Result selectAll(Position position) {
+        List<Position> positions = positionService.selectAll(position);
         return Result.success(positions);
     }
 

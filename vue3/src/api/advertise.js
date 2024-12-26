@@ -34,4 +34,16 @@ const deleteBatch = (ids) => {
   return request.delete('/advertise/delete/batch', { data: ids })
 }
 
-export { addAdvertiseAPI, selectByPageAPI, updateAdvertiseAPI, deleteById, deleteBatch, selectById }
+const selectAllAdvertiseAPI = () => {
+  return request.get('/advertise/selectAll')
+}
+
+export {
+  addAdvertiseAPI,
+  selectByPageAPI,
+  updateAdvertiseAPI,
+  deleteById,
+  deleteBatch,
+  selectById,
+  selectAllAdvertiseAPI
+}

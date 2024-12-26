@@ -1,6 +1,6 @@
 <script setup>
 import router from '@/router'
-import { selectAllAPI } from '@/api/notice'
+import { selectAllNoticeAPI } from '@/api/notice'
 import { reactive, ref } from 'vue'
 import { ElMessageBox, ElMessage } from 'element-plus'
 import { useAccountStore } from '@/stores/login'
@@ -12,7 +12,7 @@ const data = reactive({
   top: ''
 })
 const loadNotice = () => {
-  selectAllAPI().then((res) => {
+  selectAllNoticeAPI().then((res) => {
     if (res.code === '200') {
       data.notices = res.data
       let i = 0
@@ -64,7 +64,7 @@ const isLogin = ref(false)
     <header class="front-shower-header">
       <div class="left">
         <img src="@/assets/imgs/logo.png" />
-        <span class="title">项目前台</span>
+        <span class="title">Job直聘网</span>
       </div>
       <div class="center">
         <el-menu class="el-menu-demo" mode="horizontal" router>

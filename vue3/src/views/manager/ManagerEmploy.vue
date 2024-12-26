@@ -9,7 +9,7 @@ import {
   deleteBatch,
   deleteById
 } from '@/api/employ'
-import { selectAllAPI } from '@/api/industry'
+import { selectAllIndustryAPI } from '@/api/industry'
 
 onMounted(() => {
   // 加载表格数据
@@ -54,7 +54,7 @@ const rules = reactive({
 })
 // 获取行业选择器数据
 const loadIndustryOptions = () => {
-  selectAllAPI().then((res) => {
+  selectAllIndustryAPI().then((res) => {
     if (res.code === '200') {
       res.data.forEach((industry) => {
         optionData.industryOptions.push({

@@ -65,7 +65,7 @@ public class PositionService {
     }
 
 
-    public List<Position> selectAll() {
-        return positionMapper.selectAll();
+    public List<Position> selectAll(Position position) {
+        return positionMapper.selectAll(position);
     }
 }
