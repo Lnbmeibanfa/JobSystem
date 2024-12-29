@@ -28,5 +28,5 @@ public class Position {
     private String industryName;
     private String employAvatar;
     private String employStage;
-    private String employAddress;
+    private String employCity;
 }
