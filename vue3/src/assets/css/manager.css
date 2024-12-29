@@ -1,6 +1,6 @@
 .back-manager {
   background-color: #f8f8ff;
-  min-height: 100vh;
+  height: 1700px;
 }
 
 .back-manager-header {
@@ -66,10 +66,10 @@
 
 .back-manager-main {
   display: flex;
-  height: 100vh;
+  height: 750px;
 }
 
-.back-manager-main .back-manager-main-left {
+.back-manager-main-left {
   width: 200px;
   height: 100%;
   background-color: #00162a;

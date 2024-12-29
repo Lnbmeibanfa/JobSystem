@@ -75,7 +75,8 @@ const router = createRouter({
       component: () => import('@/views/FrontShower.vue'),
       children: [
         { path: 'user', component: () => import('@/views/front/FrontUser.vue') },
-        { path: 'home', component: () => import('@/views/front/FrontHome.vue') }
+        { path: 'home', component: () => import('@/views/front/FrontHome.vue') },
+        { path: 'position', component: () => import('@/views/front/FrontPosition.vue') }
       ]
     }
   ]
@@ -83,7 +84,10 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const token = JSON.parse(localStorage.getItem('pinia-userInfo'))?.AccountInfo?.username
+  const role = JSON.parse(localStorage.getItem('pinia-userInfo'))?.AccountInfo?.role
+  console.log(role)
   if (token === undefined && to.path.includes('/manager')) next('/login')
+  if (role === 'USER' && to.path.includes('/manager')) next('/front')
   else next()
 })
 

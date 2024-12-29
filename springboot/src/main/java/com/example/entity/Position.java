@@ -26,4 +26,7 @@ public class Position {
     private String status;
     private Integer industryId;
     private String industryName;
+    private String employAvatar;
+    private String employStage;
+    private String employAddress;
 }

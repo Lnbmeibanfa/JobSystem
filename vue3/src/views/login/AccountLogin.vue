@@ -56,59 +56,63 @@ const login = () => {
 </script>
 <template>
   <div class="login-container">
-    <div class="login-box">
-      <div
-        style="
-          text-align: center;
-          font-weight: bold;
-          font-size: 24px;
-          margin-bottom: 30px;
-          color: #1450aa;
-        "
-        class="title"
-      >
-        欢迎登录
+    <div style="display: flex; justify-content: center; flex: 1">
+      <div class="login-box">
+        <div
+          style="
+            text-align: center;
+            font-weight: bold;
+            font-size: 24px;
+            margin-bottom: 30px;
+            color: #1450aa;
+          "
+          class="title"
+        >
+          欢迎登录
+        </div>
+        <el-form :model="data.form" ref="form" :rules="data.rules" @keyup.enter="login">
+          <el-form-item prop="username">
+            <el-input
+              size="large"
+              prefix-icon="User"
+              v-model="data.form.username"
+              placeholder="请输入账号"
+            ></el-input>
+          </el-form-item>
+          <el-form-item prop="password">
+            <el-input
+              size="large"
+              prefix-icon="Lock"
+              v-model="data.form.password"
+              placeholder="请输入密码"
+              show-password
+            ></el-input>
+          </el-form-item>
+          <el-form-item prop="role">
+            <el-select size="large" v-model="data.form.role" placeholder="请选择角色">
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :value="item.value"
+                :label="item.label"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item>
+            <el-button
+              style="width: 100%; margin-top: 20px"
+              type="primary"
+              size="large"
+              @click="login"
+              >登 录</el-button
+            >
+          </el-form-item>
+        </el-form>
+        <div style="text-align: right">没有账号？去 <a href="/register">注 册</a></div>
       </div>
-      <el-form :model="data.form" ref="form" :rules="data.rules" @keyup.enter="login">
-        <el-form-item prop="username">
-          <el-input
-            size="large"
-            prefix-icon="User"
-            v-model="data.form.username"
-            placeholder="请输入账号"
-          ></el-input>
-        </el-form-item>
-        <el-form-item prop="password">
-          <el-input
-            size="large"
-            prefix-icon="Lock"
-            v-model="data.form.password"
-            placeholder="请输入密码"
-            show-password
-          ></el-input>
-        </el-form-item>
-        <el-form-item prop="role">
-          <el-select size="large" v-model="data.form.role" placeholder="请选择角色">
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :value="item.value"
-              :label="item.label"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item>
-          <el-button
-            style="width: 100%; margin-top: 20px"
-            type="primary"
-            size="large"
-            @click="login"
-            >登 录</el-button
-          >
-        </el-form-item>
-      </el-form>
-      <div style="text-align: right">没有账号？去 <a href="/register">注 册</a></div>
     </div>
+
+    <div style="flex: 1"></div>
   </div>
 </template>
 
@@ -117,9 +121,8 @@ const login = () => {
   height: 100vh;
   overflow: hidden;
   display: flex;
-  justify-content: center;
   align-items: center;
-  background: linear-gradient(to top, #7f7fd5, #86a8e7, #91eae4);
+  background: url('@/assets/imgs/bg.jpg');
 }
 .login-box {
   width: 350px;

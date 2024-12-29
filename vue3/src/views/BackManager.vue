@@ -85,8 +85,8 @@ const toPassword = () => {
               >系统公告</el-menu-item
             >
             <el-menu-item
-              :index="ROUTE_PATH.ACCOUNT.ADVERTISE"
-              :class="{ tag: route.path === ROUTE_PATH.ACCOUNT.ADVERTISE }"
+              :index="ROUTE_PATH.MESSAGE.ADVERTISE"
+              :class="{ tag: route.path === ROUTE_PATH.MESSAGE.ADVERTISE }"
               >广告信息</el-menu-item
             >
             <el-menu-item
@@ -94,7 +94,11 @@ const toPassword = () => {
               :class="{ tag: route.path === ROUTE_PATH.MESSAGE.INDUSTRY }"
               >行业信息</el-menu-item
             >
-            <el-menu-item :index="ROUTE_PATH.ACCOUNT.POSITION">职位信息</el-menu-item>
+            <el-menu-item
+              :index="ROUTE_PATH.MESSAGE.POSITION"
+              :class="{ tag: route.path === ROUTE_PATH.MESSAGE.POSITION }"
+              >职位信息</el-menu-item
+            >
             <el-menu-item index="2-5">岗位投递</el-menu-item>
           </el-sub-menu>
           <el-sub-menu

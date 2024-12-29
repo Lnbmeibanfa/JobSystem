@@ -45,7 +45,7 @@ const mode = ref('default')
 /**table 数据和方法*/
 const tableData = ref([])
 const pageNum = ref(1)
-const pageSize = ref(10)
+const pageSize = ref(5)
 const total = ref(0)
 const name = ref(null)
 const employName = ref(null)

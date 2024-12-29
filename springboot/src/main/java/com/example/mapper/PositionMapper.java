@@ -12,7 +12,6 @@ public interface PositionMapper {
 
     List<Position> selectAll(Position position);
 
-    @Select("select * from `position` where id = #{id}")
     Position selectById(Integer id);
 
     List<Position> selectByPage(Position position);

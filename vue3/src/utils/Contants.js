@@ -3,7 +3,9 @@ const ROUTE_PATH = {
   HOME: '/manager/home',
   MESSAGE: {
     INDUSTRY: '/manager/industry',
-    NOTICE: '/manager/notice'
+    NOTICE: '/manager/notice',
+    POSITION: '/manager/position',
+    ADVERTISE: '/manager/advertise'
   },
   ACCOUNT: {
     ADMIN: '/manager/admin',
@@ -11,9 +13,7 @@ const ROUTE_PATH = {
     PASSWORD: '/manager/password',
     EMPLOY: '/manager/employ',
     USER: '/manager/user',
-    POSITION: '/manager/position',
-    EMPLOYSELF: '/manager/eSelf',
-    ADVERTISE: '/manager/advertise'
+    EMPLOYSELF: '/manager/eSelf'
   },
   INVALID: '/404',
   LOGIN: '/login',

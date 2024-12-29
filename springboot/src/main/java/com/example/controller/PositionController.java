@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Slf4j
@@ -42,6 +43,12 @@ public class PositionController {
     public Result selectAll(Position position) {
         List<Position> positions = positionService.selectAll(position);
         return Result.success(positions);
+    }
+
+    @GetMapping("/selectById")
+    public Result selectById(@RequestParam Integer id) {
+        Position position = positionService.selectById(id);
+        return Result.success(position);
     }
 
     @PutMapping("/update")

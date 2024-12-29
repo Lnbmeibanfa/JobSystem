@@ -5,12 +5,13 @@ const addPositionAPI = (data) => {
 }
 
 const selectByPageAPI = (pageNum = 1, pageSize = 10, name, employName) => {
+  console.log(name, employName)
   return request.get('/position/selectPage', {
     params: {
-      pageNum,
-      pageSize,
       name,
-      employName
+      employName,
+      pageNum,
+      pageSize
     }
   })
 }
@@ -18,7 +19,17 @@ const selectByPageAPI = (pageNum = 1, pageSize = 10, name, employName) => {
 const selectAllPositionAPI = (industryId) => {
   return request.get('/position/selectAll', {
     params: {
-      industryId
+      industryId,
+      status: '审核通过'
+    }
+  })
+}
+
+const selectById = (id) => {
+  console.log(id)
+  return request.get('position/selectById', {
+    params: {
+      id
     }
   })
 }
@@ -41,5 +52,6 @@ export {
   updatePositionAPI,
   deleteById,
   deleteBatch,
-  selectAllPositionAPI
+  selectAllPositionAPI,
+  selectById
 }

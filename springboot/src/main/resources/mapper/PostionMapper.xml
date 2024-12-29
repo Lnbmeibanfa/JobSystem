@@ -13,6 +13,14 @@
             <if test="employId != null">and position.employ_id = #{employId}</if>
         </where>
     </select>
+    <select id="selectById" resultType="com.example.entity.Position">
+        select position.*, employ.name as employName, industry.name as industryName, employ.address as employAddress, employ.avatar as employAvatar, employ.stage as employStage  from `position`
+        left join `system`.employ on position.employ_id = employ.id
+        left join `system`.industry on position.industry_id = industry.id
+        <where>
+            <if test="id != null">position.id = #{id}</if>
+        </where>
+    </select>
     <insert id="insert">
         insert into `position`
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -45,6 +53,7 @@
 
     <update id="update">
         update `position`
+
         <set>
             <if test="name != null">name = #{name},</if>
             <if test="content != null">content = #{content},</if>
@@ -74,11 +83,12 @@
     </select>
 
     <select id="selectAll" resultType="com.example.entity.Position">
-        select position.*, employ.name as employName, industry.name as industryName from `position`
+        select position.*, employ.name as employName, employ.avatar as employAvatar,employ.stage as employStage, industry.name as industryName from `position`
         left join `system`.employ on position.employ_id = employ.id
         left join `system`.industry on position.industry_id = industry.id
         <where>
-            <if test="industryId != null">postion.industry_id = #{industryId}</if>
+            <if test="industryId != null">and position.industry_id = #{industryId}</if>
+            <if test="status != null">and position.status = #{status}</if>
         </where>
     </select>
 </mapper>

@@ -12,10 +12,13 @@ import com.example.mapper.PositionMapper;
 import com.example.util.JWTUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -37,8 +40,16 @@ public class PositionService {
         positionMapper.insert(position);
     }
 
+    public Position selectById (Integer id) {
+        Position position = positionMapper.selectById(id);
+        if (position == null) {
+            throw new CustomException(ResultCodeEnum.SYSTEM_ERROR);
+        }
+        position.setTagList(tagsToList(position.getTag()));
+        return position;
+    }
+
     public PageInfo<Position> selectByPage(Position position, Integer pageNum, Integer pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
         Account currentUser = JWTUtil.getCurAccount();
         if (currentUser == null) {
             throw new CustomException(ResultCodeEnum.USER_NOT_EXIST_ERROR);
@@ -46,6 +57,7 @@ public class PositionService {
         if (currentUser.getRole().equals(RoleEnum.EMPLOY.name())) {
             position.setEmployId(currentUser.getId());
         }
+        PageHelper.startPage(pageNum, pageSize);
         List<Position> list = positionMapper.selectByPage(position);
         return PageInfo.of(list);
     }
@@ -64,8 +76,28 @@ public class PositionService {
         }
     }
 
+    /**
+     * 将tags转为tagList
+     */
+    private List<String> tagsToList (String tags) {
+        if (tags == null) {
+            return new ArrayList<>();
+        }
+        String[] split = tags.split(",");
+        List<String> list = Arrays.asList(split);
+        if (list.size() > 3) {
+            return list.subList(0,3);
+        } else {
+            return list;
+        }
+    }
 
     public List<Position> selectAll(Position position) {
-        return positionMapper.selectAll(position);
+        List<Position> positions = positionMapper.selectAll(position);
+        for (Position dbposition : positions) {
+            String tags = dbposition.getTag();
+            dbposition.setTagList(tagsToList(tags));
+        }
+        return positions;
     }
 }

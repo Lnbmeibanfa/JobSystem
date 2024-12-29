@@ -68,7 +68,7 @@ const isLogin = ref(false)
       </div>
       <div class="center">
         <el-menu class="el-menu-demo" mode="horizontal" router>
-          <el-menu-item index="/front">首页</el-menu-item>
+          <el-menu-item index="/front/home">首页</el-menu-item>
           <el-menu-item index="/front/user">个人中心</el-menu-item>
         </el-menu>
       </div>
