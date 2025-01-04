@@ -63,6 +63,9 @@
   width: 30px;
   height: 30px;
 }
+.front-shower-content {
+  height: 100%;
+}
 
 /* 覆盖Element UI 样式 */
 .el-dropdown {

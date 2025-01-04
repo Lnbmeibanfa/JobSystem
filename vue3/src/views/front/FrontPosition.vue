@@ -1,15 +1,21 @@
 <script setup>
 import { reactive, onMounted } from 'vue'
-import { selectById } from '@/api/position'
+import { selectById, selectRecommend } from '@/api/position'
+import PositionShower from '../components/PositionShower.vue'
 import { useRoute } from 'vue-router'
 import { ElMessage } from 'element-plus'
+import { addCollectAPI } from '@/api/collect'
+import { useAccountStore } from '@/stores/login'
+import router from '@/router'
+import { watch } from 'vue'
 const route = useRoute()
+const accountStore = useAccountStore()
 const data = reactive({
-  jobInfo: {}
+  jobInfo: {},
+  recommendJobs: []
 })
-
 const loadJobInfo = () => {
-  selectById(route.query.id).then((res) => {
+  selectById(route.params.id).then((res) => {
     if (res.code === '200') {
       data.jobInfo = res.data
     } else {
@@ -17,9 +23,45 @@ const loadJobInfo = () => {
     }
   })
 }
+const loadRecommendJobs = () => {
+  selectRecommend().then((res) => {
+    if (res.code === '200') {
+      data.recommendJobs = res.data
+    } else {
+      ElMessage.error(res.msg)
+    }
+  })
+}
 onMounted(() => {
   loadJobInfo()
+  loadRecommendJobs()
 })
+const sendResume = () => {}
+const showAllPosition = () => {}
+const starPosition = () => {
+  addCollectAPI({
+    positionId: data.jobInfo.id,
+    studentId: accountStore.AccountInfo.id
+  }).then((res) => {
+    if (res.code === '200') {
+      ElMessage.success('收藏成功')
+    } else {
+      ElMessage.error(res.msg)
+    }
+  })
+}
+watch(
+  () => route.params.id,
+  (newId, oldId) => {
+    if (newId !== oldId) {
+      loadJobInfo()
+    }
+  },
+  { immediate: true }
+)
+const navTo = (id) => {
+  router.push({ name: 'FrontPosition', params: { id }, replace: true })
+}
 </script>
 
 <template>
@@ -86,7 +128,116 @@ onMounted(() => {
         </div>
         <div v-html="data.jobInfo.content"></div>
       </div>
-      <aside class="aside" style="width: 300px"></aside>
+      <aside class="aside" style="width: 300px; margin-left: 10px">
+        <div class="company-detail-info" style="margin-bottom: 10px">
+          <div
+            style="
+              font-weight: bold;
+              background-color: #d1d7d7;
+              height: 40px;
+              border-top-left-radius: 10px;
+              border-top-right-radius: 10px;
+              text-align: center;
+              line-height: 40px;
+              font-size: 16px;
+            "
+          >
+            公司基本信息
+          </div>
+          <div
+            style="
+              padding: 20px;
+              background-color: #fff;
+              border-bottom-left-radius: 10px;
+              border-bottom-right-radius: 10px;
+            "
+          >
+            <div>
+              <div style="display: flex; align-items: center">
+                <img
+                  style="width: 40px; height: 40px; margin-right: 20px"
+                  :src="data.jobInfo.employAvatar"
+                  alt=""
+                />
+                <div style="font-size: 18px">{{ data.jobInfo.employName }}</div>
+              </div>
+            </div>
+            <div style="display: flex; flex-direction: column">
+              <div
+                style="
+                  font-size: 15px;
+                  color: rgb(51, 51, 51);
+                  display: flex;
+                  align-items: center;
+                  margin-top: 10px;
+                "
+              >
+                <el-icon><Coordinate /></el-icon>
+                <div style="margin-left: 10px">{{ data.jobInfo.employStage }}</div>
+              </div>
+              <div
+                style="
+                  font-size: 15px;
+                  color: rgb(51, 51, 51);
+                  display: flex;
+                  align-items: center;
+                  margin-top: 10px;
+                "
+              >
+                <el-icon><User /></el-icon>
+                <div style="margin-left: 10px">{{ data.jobInfo.employScale }}</div>
+              </div>
+              <div
+                style="
+                  font-size: 15px;
+                  color: rgb(51, 51, 51);
+                  display: flex;
+                  align-items: center;
+                  margin-top: 10px;
+                "
+              >
+                <el-icon><OfficeBuilding /></el-icon>
+                <div style="margin-left: 10px">{{ data.jobInfo.employAddress }}</div>
+              </div>
+            </div>
+            <div style="text-align: center">
+              <el-button
+                style="margin: 20px 0px; text-align: center"
+                type="success"
+                size="default"
+                @click="showAllPosition"
+                >查看全部职位</el-button
+              >
+            </div>
+          </div>
+        </div>
+        <div class="recommend">
+          <div
+            style="
+              font-weight: bold;
+              background-color: #d1d7d7;
+              height: 40px;
+              border-top-left-radius: 10px;
+              border-top-right-radius: 10px;
+              text-align: center;
+              line-height: 40px;
+              font-size: 16px;
+            "
+          >
+            你可能对这些职位感兴趣
+          </div>
+          <div style="background-color: #fff; border-radius: 10px">
+            <div
+              class="card"
+              style="margin-bottom: 5px"
+              v-for="position in data.recommendJobs"
+              :key="position.id"
+            >
+              <position-shower :positionInfo="position" @navTo="navTo"></position-shower>
+            </div>
+          </div>
+        </div>
+      </aside>
     </main>
   </div>
 </template>

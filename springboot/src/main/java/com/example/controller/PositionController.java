@@ -51,6 +51,12 @@ public class PositionController {
         return Result.success(position);
     }
 
+    @GetMapping("/selectRecommend")
+    public Result selectRecommend() {
+        List<Position> positions = positionService.selectRecommend();
+        return Result.success(positions);
+    }
+
     @PutMapping("/update")
     public Result update (@RequestBody Position position) {
         positionService.update(position);

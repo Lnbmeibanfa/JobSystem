@@ -18,7 +18,12 @@ const ROUTE_PATH = {
   INVALID: '/404',
   LOGIN: '/login',
   REGISTER: '/register',
-  FRONT: '/front',
+  FRONT: {
+    HOME: '/front/home',
+    USER: '/front/user',
+    COLLECT: '/front/collect',
+    POSITION: '/front/position'
+  },
   MANAGER: '/manager'
 }
 // 用户角色

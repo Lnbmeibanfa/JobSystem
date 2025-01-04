@@ -77,9 +77,8 @@ const handleClick = (industryId) => {
   })
 }
 
-const navTo = (positionId) => {
-  const preUrl = '/front/position?id='
-  router.push(preUrl + positionId)
+const navTo = (id) => {
+  router.push({ name: 'FrontPosition', params: { id } })
 }
 
 const search = () => {
@@ -168,11 +167,7 @@ loadAdvertiseImg()
           >
             <el-row :gutter="10">
               <el-col :span="8" v-for="position in data.positionList" :key="position.id"
-                ><position-shower
-                  style="cursor: pointer"
-                  @click="navTo(position.id)"
-                  :positionInfo="position"
-                />
+                ><position-shower @navTo="navTo" :positionInfo="position" />
               </el-col>
             </el-row>
           </el-tab-pane>

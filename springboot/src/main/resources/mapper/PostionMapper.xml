@@ -14,7 +14,9 @@
         </where>
     </select>
     <select id="selectById" resultType="com.example.entity.Position">
-        select position.*, employ.name as employName, industry.name as industryName, employ.city as employCity, employ.avatar as employAvatar, employ.stage as employStage  from `position`
+        select position.*, employ.name as employName, industry.name as industryName, employ.city as employCity
+             , employ.avatar as employAvatar, employ.stage as employStage, employ.scale as employScale,employ.address as employAddress
+               from `position`
         left join `system`.employ on position.employ_id = employ.id
         left join `system`.industry on position.industry_id = industry.id
         <where>

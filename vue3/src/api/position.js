@@ -26,7 +26,6 @@ const selectAllPositionAPI = (industryId) => {
 }
 
 const selectById = (id) => {
-  console.log(id)
   return request.get('position/selectById', {
     params: {
       id
@@ -46,6 +45,10 @@ const deleteBatch = (ids) => {
   return request.delete('/position/delete/batch', { data: ids })
 }
 
+const selectRecommend = () => {
+  return request.get('/position/selectRecommend')
+}
+
 export {
   addPositionAPI,
   selectByPageAPI,
@@ -53,5 +56,6 @@ export {
   deleteById,
   deleteBatch,
   selectAllPositionAPI,
-  selectById
+  selectById,
+  selectRecommend
 }

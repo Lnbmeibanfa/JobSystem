@@ -5,7 +5,9 @@ import { reactive, ref } from 'vue'
 import { ElMessageBox, ElMessage } from 'element-plus'
 import { useAccountStore } from '@/stores/login'
 import { ROUTE_PATH } from '@/utils/Contants'
+import { useRoute } from 'vue-router'
 
+const route = useRoute()
 const accountStore = useAccountStore()
 const data = reactive({
   notices: {},
@@ -68,8 +70,17 @@ const isLogin = ref(false)
       </div>
       <div class="center">
         <el-menu class="el-menu-demo" mode="horizontal" router>
-          <el-menu-item index="/front/home">首页</el-menu-item>
-          <el-menu-item index="/front/user">个人中心</el-menu-item>
+          <el-menu-item :index="ROUTE_PATH.FRONT.HOME">首页</el-menu-item>
+          <el-menu-item
+            :index="ROUTE_PATH.FRONT.USER"
+            :class="{ 'is-active': route.path === ROUTE_PATH.FRONT.USER }"
+            >个人中心</el-menu-item
+          >
+          <el-menu-item
+            :index="ROUTE_PATH.FRONT.COLLECT"
+            :class="{ 'is-active': route.path === ROUTE_PATH.FRONT.COLLECT }"
+            >我的收藏</el-menu-item
+          >
         </el-menu>
       </div>
       <div class="right">

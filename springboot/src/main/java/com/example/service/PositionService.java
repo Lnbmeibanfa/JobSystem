@@ -100,4 +100,14 @@ public class PositionService {
         }
         return positions;
     }
+
+    public List<Position> selectRecommend() {
+        Position position = new Position();
+        List<Position> positions = positionMapper.selectAll(position).subList(0,3);
+        for (Position dbposition : positions) {
+            String tags = dbposition.getTag();
+            dbposition.setTagList(tagsToList(tags));
+        }
+        return positions;
+    }
 }

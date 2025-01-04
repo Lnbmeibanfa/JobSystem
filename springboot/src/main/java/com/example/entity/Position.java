@@ -29,4 +29,6 @@ public class Position {
     private String employAvatar;
     private String employStage;
     private String employCity;
+    private String employScale;
+    private String employAddress;
 }
