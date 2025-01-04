@@ -81,7 +81,9 @@ const router = createRouter({
           component: () => import('@/views/front/FrontPosition.vue'),
           name: 'FrontPosition'
         },
-        { path: 'collect', component: () => import('@/views/front/FrontCollect.vue') }
+        { path: 'collect', component: () => import('@/views/front/FrontCollect.vue') },
+        { path: 'resume', component: () => import('@/views/front/FrontResume.vue') },
+        { path: 'resumeEdit', component: () => import('@/views/front/FrontResumeEdit.vue') }
       ]
     }
   ]

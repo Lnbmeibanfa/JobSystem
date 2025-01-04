@@ -70,7 +70,11 @@ const isLogin = ref(false)
       </div>
       <div class="center">
         <el-menu class="el-menu-demo" mode="horizontal" router>
-          <el-menu-item :index="ROUTE_PATH.FRONT.HOME">首页</el-menu-item>
+          <el-menu-item
+            :index="ROUTE_PATH.FRONT.HOME"
+            :class="{ 'is-active': route.path === ROUTE_PATH.FRONT.HOME }"
+            >首页</el-menu-item
+          >
           <el-menu-item
             :index="ROUTE_PATH.FRONT.USER"
             :class="{ 'is-active': route.path === ROUTE_PATH.FRONT.USER }"
@@ -80,6 +84,11 @@ const isLogin = ref(false)
             :index="ROUTE_PATH.FRONT.COLLECT"
             :class="{ 'is-active': route.path === ROUTE_PATH.FRONT.COLLECT }"
             >我的收藏</el-menu-item
+          >
+          <el-menu-item
+            :index="ROUTE_PATH.FRONT.RESUME"
+            :class="{ 'is-active': route.path === ROUTE_PATH.FRONT.RESUME }"
+            >我的简历</el-menu-item
           >
         </el-menu>
       </div>

@@ -22,7 +22,9 @@ const ROUTE_PATH = {
     HOME: '/front/home',
     USER: '/front/user',
     COLLECT: '/front/collect',
-    POSITION: '/front/position'
+    POSITION: '/front/position',
+    RESUME: '/front/resume',
+    RESUME_EDIT: '/front/resumeEdit'
   },
   MANAGER: '/manager'
 }
