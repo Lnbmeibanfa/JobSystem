@@ -2,14 +2,22 @@
 import { reactive } from 'vue'
 import { addResumeAPI } from '@/api/resume'
 import { ElMessage } from 'element-plus'
+import ResumeShower from '@/views/components/ResumeShower.vue'
 const data = reactive({
   resumeData: {
-    eduExpList: []
+    eduExpList: [],
+    workExpList: [],
+    proExpList: []
   },
   eduDialogVisable: false,
-  eduFrom: {}
+  eduFrom: {},
+  workFrom: {},
+  proFrom: {}
 })
 const createEduExp = () => {
+  data.eduFrom = {
+    id: new Date().getTime() + Math.random().toString(36).substr(2)
+  }
   data.eduDialogVisable = true
 }
 const submitEduExp = () => {
@@ -120,6 +128,19 @@ const saveResume = () => {
           </div>
           <div>
             <el-button type="success" size="default" @click="createEduExp">添加学校经历</el-button>
+            <div style="font-size: 16px; font-weight: bold; margin-top: 10px">教育经历:</div>
+
+            <div v-for="eduExp in data.resumeData.eduExpList" :key="eduExp.id">
+              <resume-shower :eduInfo="eduExp"></resume-shower>
+            </div>
+          </div>
+
+          <div>
+            <el-button type="success" size="default" @click="createWorkExp">添加工作经历</el-button>
+            <div style="font-size: 16px; font-weight: bold; margin-top: 10px">工作经历:</div>
+            <div v-for="workExp in data.resumeData.workExpList" :key="workExp.id">
+              <resume-shower :workInfo="workExp"></resume-shower>
+            </div>
           </div>
         </div>
         <div class="center">
@@ -139,7 +160,7 @@ const saveResume = () => {
           <el-form-item label="选择学历" prop="educationDegree">
             <el-select
               class="input-style"
-              v-model="data.resumeData.educationDegree"
+              v-model="data.eduFrom.educationDegree"
               placeholder="请选择您的学历"
             >
               <el-option label="初中及以下" value="初中及以下"></el-option>

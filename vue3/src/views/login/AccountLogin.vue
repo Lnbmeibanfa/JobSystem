@@ -40,7 +40,7 @@ const login = () => {
         if (res.code === '200') {
           accountStore.setAccountInfo(res.data)
           if (accountStore.AccountInfo.role === 'USER') {
-            router.push(ROUTE_PATH.FRONT)
+            router.push(ROUTE_PATH.FRONT.HOME)
             ElMessage.success('登录成功')
           } else {
             router.push(ROUTE_PATH.MANAGER)
