@@ -9,7 +9,6 @@ import java.util.List;
 public interface ResumeMapper {
     int insert(Resume resume);
 
-    @Select("select * from `resume`")
     List<Resume> selectAll();
 
     List<Resume> selectByPage(Resume resume);
@@ -18,4 +17,6 @@ public interface ResumeMapper {
 
     void deleteById(Integer id);
 
+    @Select("select resume.*, u.avatar as avatar from resume left join `system`.user u on u.id = resume.user_id where resume.id = #{id}")
+    List<Resume> selectById(Integer id);
 }

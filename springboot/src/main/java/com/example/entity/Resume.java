@@ -31,4 +31,5 @@ public class Resume {
     private String proExp;
     private List<ProExp> proExpList;
     private Integer userId;
+    private String avatar;
 }

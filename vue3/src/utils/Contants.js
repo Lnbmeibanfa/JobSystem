@@ -18,6 +18,7 @@ const ROUTE_PATH = {
   INVALID: '/404',
   LOGIN: '/login',
   REGISTER: '/register',
+  PREVIEW: '/resumePreview',
   FRONT: {
     HOME: '/front/home',
     USER: '/front/user',

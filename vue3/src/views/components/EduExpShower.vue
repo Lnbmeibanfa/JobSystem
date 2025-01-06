@@ -1,6 +1,10 @@
 <script setup>
 defineProps({
-  eduInfo: Object
+  eduInfo: Object,
+  showIcon: {
+    type: Boolean,
+    default: true
+  }
 })
 const emit = defineEmits(['onEdit', 'onDelete'])
 const handleEdit = (eduExp) => {
@@ -17,13 +21,13 @@ const handleDel = (id) => {
         <div style="flex: 1">{{ eduInfo.beginTime }} ~ {{ eduInfo.endTime }}</div>
         <div style="flex: 1">{{ eduInfo.schoolName }}</div>
         <div style="flex: 1">{{ eduInfo.majorName }}</div>
-        <div class="icon">
+        <div class="icon" v-if="showIcon">
           <el-icon class="edit" style="cursor: pointer; color: #17c4c3" @click="handleEdit(eduInfo)"
             ><Edit
           /></el-icon>
           <el-icon
             class="del"
-            style="cursor: pointer; margin-left: 5px; color: rgb(172, 58, 48)"
+            style="cursor: pointer; margin-left: 5px; color: #ac3a30"
             @click="handleDel(eduInfo.id)"
             ><Delete
           /></el-icon>
@@ -36,10 +40,10 @@ const handleDel = (id) => {
 
 <style scoped>
 .edu-box {
-  height: 80px;
+  height: 70px;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-evenly;
 }
 .content {
   color: #17c4c3;

@@ -1026,7 +1026,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
     </schema>
     <schema id="298" parent="1" name="system">
       <Current>1</Current>
-      <LastIntrospectionLocalTimestamp>2025-01-04.02:52:39</LastIntrospectionLocalTimestamp>
+      <LastIntrospectionLocalTimestamp>2025-01-06.09:03:29</LastIntrospectionLocalTimestamp>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </schema>
     <user id="299" parent="1" name="Qibro">
@@ -1201,7 +1201,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <StoredType>int|0s</StoredType>
     </column>
     <column id="333" parent="306" name="id">
-      <AutoIncrement>1</AutoIncrement>
+      <AutoIncrement>10</AutoIncrement>
       <Comment>主键id</Comment>
       <NotNull>1</NotNull>
       <Position>3</Position>
@@ -1451,7 +1451,7 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <UnderlyingIndexName>id</UnderlyingIndexName>
     </key>
     <column id="382" parent="311" name="id">
-      <AutoIncrement>1</AutoIncrement>
+      <AutoIncrement>7</AutoIncrement>
       <Comment>主键id</Comment>
       <NotNull>1</NotNull>
       <Position>1</Position>
@@ -1497,17 +1497,17 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <Position>9</Position>
       <StoredType>varchar(255)|0s</StoredType>
     </column>
-    <column id="391" parent="311" name="edu_exps">
+    <column id="391" parent="311" name="edu_exp">
       <Comment>教育经历</Comment>
       <Position>10</Position>
       <StoredType>longtext|0s</StoredType>
     </column>
-    <column id="392" parent="311" name="work_exps">
+    <column id="392" parent="311" name="work_exp">
       <Comment>工作经历</Comment>
       <Position>11</Position>
       <StoredType>longtext|0s</StoredType>
     </column>
-    <column id="393" parent="311" name="pro_exps">
+    <column id="393" parent="311" name="pro_exp">
       <Comment>项目经验</Comment>
       <Position>12</Position>
       <StoredType>longtext|0s</StoredType>

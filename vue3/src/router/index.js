@@ -69,6 +69,7 @@ const router = createRouter({
     { path: '/:pathMatch(.*)', redirect: '/404' },
     { path: '/login', component: () => import('@/views/login/AccountLogin.vue') },
     { path: '/register', component: () => import('@/views/login/AccountRegister.vue') },
+    { path: '/resumePreview', component: () => import('@/views/global/ResumePreview.vue') },
     {
       path: '/front',
       redirect: '/front/home',

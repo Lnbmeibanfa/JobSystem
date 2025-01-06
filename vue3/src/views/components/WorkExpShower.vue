@@ -1,6 +1,10 @@
 <script setup>
 defineProps({
-  workInfo: Object
+  workInfo: Object,
+  showIcon: {
+    type: Boolean,
+    default: true
+  }
 })
 const emit = defineEmits(['onEdit', 'onDelete'])
 const handleEdit = (workExp) => {
@@ -18,7 +22,7 @@ const handleDel = (id) => {
         <div style="flex: 1">{{ workInfo.beginTime }} ~ {{ workInfo.endTime }}</div>
         <div style="flex: 1">{{ workInfo.companyName }}</div>
         <div style="flex: 1">{{ workInfo.positionType }}</div>
-        <div class="icon">
+        <div class="icon" v-if="showIcon">
           <el-icon
             class="edit"
             style="cursor: pointer; color: #17c4c3"
@@ -27,7 +31,7 @@ const handleDel = (id) => {
           /></el-icon>
           <el-icon
             class="del"
-            style="cursor: pointer; margin-left: 5px; color: rgb(172, 58, 48)"
+            style="cursor: pointer; margin-left: 5px; color: #ac3a30"
             @click="handleDel(workInfo.id)"
             ><Delete
           /></el-icon>
@@ -40,10 +44,10 @@ const handleDel = (id) => {
 
 <style scoped>
 .work-box {
-  height: 80px;
+  height: 70px;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-evenly;
 }
 .content {
   color: #17c4c3;

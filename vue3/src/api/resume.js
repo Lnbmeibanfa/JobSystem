@@ -14,6 +14,14 @@ const selectByPageAPI = (pageNum = 1, pageSize = 10, title) => {
   })
 }
 
+const selectResumeById = (id) => {
+  return request.get('/resume/selectById', {
+    params: {
+      id
+    }
+  })
+}
+
 const selectAllResumeAPI = () => {
   return request.get('/resume/selectAll')
 }
@@ -36,5 +44,6 @@ export {
   updateResumeAPI,
   deleteById,
   deleteBatch,
-  selectAllResumeAPI
+  selectAllResumeAPI,
+  selectResumeById
 }

@@ -1,13 +1,19 @@
 <script setup>
 import { reactive } from 'vue'
-import { addResumeAPI } from '@/api/resume'
+import { addResumeAPI, selectResumeById } from '@/api/resume'
 import { useAccountStore } from '@/stores/login'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import EduExpShower from '@/views/components/EduExpShower.vue'
 import WorkExpShower from '@/views/components/WorkExpShower.vue'
 import ProExpShower from '@/views/components/ProExpShower.vue'
+import router from '@/router'
+import { ROUTE_PATH } from '@/utils/Contants'
+import { useRoute } from 'vue-router'
+import { updateResumeAPI } from '@/api/resume'
+const route = useRoute()
 const accountStore = useAccountStore()
 const data = reactive({
+  id: route.query.id,
   resumeData: {
     eduExpList: [],
     workExpList: [],
@@ -20,6 +26,17 @@ const data = reactive({
   workFrom: {},
   proFrom: {}
 })
+const loadResumeData = () => {
+  if (data.id) {
+    selectResumeById(data.id).then((res) => {
+      if (res.code === '200') {
+        data.resumeData = res.data
+      } else {
+        ElMessage.error(res.msg)
+      }
+    })
+  }
+}
 const createEduExp = () => {
   data.eduFrom = {
     id: new Date().getTime() + Math.random().toString(36).substr(2)
@@ -143,15 +160,27 @@ const submitProExp = () => {
   data.proDialogVisable = false
 }
 const saveResume = () => {
-  data.resumeData.userId = accountStore.AccountInfo.id
-  addResumeAPI(data.resumeData).then((res) => {
-    if (res.code === '200') {
-      ElMessage.success('保存成功')
-    } else {
-      ElMessage.error(res.msg)
-    }
-  })
+  if (data.id) {
+    updateResumeAPI(data.resumeData).then((res) => {
+      if (res.code === '200') {
+        ElMessage.success('修改成功')
+      } else {
+        ElMessage.error(res.msg)
+      }
+    })
+  } else {
+    data.resumeData.userId = accountStore.AccountInfo.id
+    addResumeAPI(data.resumeData).then((res) => {
+      if (res.code === '200') {
+        ElMessage.success('保存成功')
+        router.push(ROUTE_PATH.FRONT.RESUME)
+      } else {
+        ElMessage.error(res.msg)
+      }
+    })
+  }
 }
+loadResumeData()
 </script>
 
 <template>

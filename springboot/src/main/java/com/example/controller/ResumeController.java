@@ -38,6 +38,12 @@ public class ResumeController {
         return Result.success(resumes);
     }
 
+    @GetMapping("/selectById")
+    public Result selectById(@RequestParam Integer id) {
+        Resume resume = resumeService.selectById(id);
+        return Result.success(resume);
+    }
+
     @PutMapping("/update")
     public Result update (@RequestBody Resume resume) {
         resumeService.update(resume);
