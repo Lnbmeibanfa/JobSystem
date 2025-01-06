@@ -1,11 +1,10 @@
 <script setup>
 defineProps({
-  eduInfo: Object
+  proInfo: Object
 })
 const emit = defineEmits(['onEdit', 'onDelete'])
-const handleEdit = (id) => {
-  console.log(id)
-  emit('onEdit', id)
+const handleEdit = (proExp) => {
+  emit('onEdit', proExp)
 }
 const handleDel = (id) => {
   console.log(id)
@@ -14,30 +13,29 @@ const handleDel = (id) => {
 </script>
 <template>
   <div>
-    <div class="edu-box">
+    <div class="pro-box">
       <div class="content" style="display: flex">
-        <div style="flex: 1">{{ eduInfo.beginTime }} ~ {{ eduInfo.endTime }}</div>
-        <div style="flex: 1">{{ eduInfo.schoolName }}</div>
-        <div style="flex: 1">{{ eduInfo.majorName }}</div>
+        <div style="flex: 1">{{ proInfo.beginTime }} ~ {{ proInfo.endTime }}</div>
+        <div style="flex: 1">{{ proInfo.projectName }}</div>
         <div class="icon">
-          <el-icon class="edit" style="cursor: pointer" @click="handleEdit(eduInfo.id)"
+          <el-icon class="edit" style="cursor: pointer; color: #17c4c3" @click="handleEdit(proInfo)"
             ><Edit
           /></el-icon>
           <el-icon
             class="del"
-            style="cursor: pointer; margin-left: 5px"
-            @click="handleDel(eduInfo.id)"
+            style="cursor: pointer; margin-left: 5px; color: rgb(172, 58, 48)"
+            @click="handleDel(proInfo.id)"
             ><Delete
           /></el-icon>
         </div>
       </div>
-      <div class="major">主修课程: {{ eduInfo.majorCourse }}</div>
+      <div class="major">项目介绍: {{ proInfo.projectDesc }}</div>
     </div>
   </div>
 </template>
 
 <style scoped>
-.edu-box {
+.pro-box {
   height: 80px;
   display: flex;
   flex-direction: column;
@@ -45,6 +43,8 @@ const handleDel = (id) => {
 }
 .content {
   color: #17c4c3;
+  font-weight: bold;
+
   font-size: 16px;
 }
 .major {

@@ -3,6 +3,7 @@ package com.example.entity.experience;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -15,7 +16,7 @@ public class EduExp {
     private String schoolName;
     private String majorName;
     private String educationDegree;
-    private LocalDateTime beginTime;
-    private LocalDateTime endTime;
+    private LocalDate beginTime;
+    private LocalDate endTime;
     private String majorCourse;
 }

@@ -19,9 +19,9 @@
             <if test="experience != null">experience,</if>
             <if test="phone != null">phone,</if>
             <if test="email != null">email,</if>
-            <if test="eduExps != null">edu_exps,</if>
-            <if test="workExps != null">work_exps,</if>
-            <if test="proExps != null">pro_exps,</if>
+            <if test="eduExp != null">edu_exps,</if>
+            <if test="workExp != null">work_exps,</if>
+            <if test="proExp != null">pro_exps,</if>
             <if test="userId != null">user_id,</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -33,9 +33,9 @@
             <if test="experience != null">#{experience},</if>
             <if test="phone != null">#{phone},</if>
             <if test="email != null">#{email},</if>
-            <if test="eduExps != null">#{eduExps},</if>
-            <if test="workExps != null">#{workExps},</if>
-            <if test="proExps != null">#{proExps},</if>
+            <if test="eduExp != null">#{eduExp},</if>
+            <if test="workExp != null">#{workExp},</if>
+            <if test="proExp != null">#{proExp},</if>
             <if test="userId != null">#{userId},</if>
         </trim>
     </insert>
@@ -51,9 +51,9 @@
             <if test="experience != null">experience = #{experience},</if>
             <if test="phone != null">phone = #{phone},</if>
             <if test="email != null">email = #{email},</if>
-            <if test="eduExps != null">edu_exps = #{eduExps},</if>
-            <if test="workExps != null">work_exps = #{workExps},</if>
-            <if test="proExps != null">pro_exps = #{proExps},</if>
+            <if test="eduExp != null">edu_exps = #{eduExp},</if>
+            <if test="workExp != null">work_exps = #{workExp},</if>
+            <if test="proExp != null">pro_exps = #{proExp},</if>
             <if test="userId != null">user_id = #{userId},</if>
         </set>
         <where>

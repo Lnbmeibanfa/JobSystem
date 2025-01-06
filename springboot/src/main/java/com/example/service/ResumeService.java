@@ -1,6 +1,7 @@
 package com.example.service;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.json.JSONUtil;
 import com.example.entity.Resume;
 import com.example.mapper.ResumeMapper;
 import com.github.pagehelper.PageHelper;
@@ -16,6 +17,9 @@ public class ResumeService {
     private ResumeMapper resumeMapper;
 
     public void add (Resume resume) {
+        resume.setEduExp(JSONUtil.toJsonStr(resume.getEduExpList()));
+        resume.setWorkExp(JSONUtil.toJsonStr(resume.getWorkExpList()));
+        resume.setProExp(JSONUtil.toJsonStr(resume.getProExpList()));
         resumeMapper.insert(resume);
     }
 

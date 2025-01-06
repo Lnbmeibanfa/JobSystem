@@ -1,8 +1,12 @@
 <script setup>
 import { reactive } from 'vue'
 import { addResumeAPI } from '@/api/resume'
-import { ElMessage } from 'element-plus'
-import ResumeShower from '@/views/components/ResumeShower.vue'
+import { useAccountStore } from '@/stores/login'
+import { ElMessage, ElMessageBox } from 'element-plus'
+import EduExpShower from '@/views/components/EduExpShower.vue'
+import WorkExpShower from '@/views/components/WorkExpShower.vue'
+import ProExpShower from '@/views/components/ProExpShower.vue'
+const accountStore = useAccountStore()
 const data = reactive({
   resumeData: {
     eduExpList: [],
@@ -10,6 +14,8 @@ const data = reactive({
     proExpList: []
   },
   eduDialogVisable: false,
+  workDialogVisable: false,
+  proDialogVisable: false,
   eduFrom: {},
   workFrom: {},
   proFrom: {}
@@ -20,11 +26,124 @@ const createEduExp = () => {
   }
   data.eduDialogVisable = true
 }
+const createWorkExp = () => {
+  data.workFrom = {
+    id: new Date().getTime() + Math.random().toString(36).substr(2)
+  }
+  data.workDialogVisable = true
+}
+const createProExp = () => {
+  data.proFrom = {
+    id: new Date().getTime() + Math.random().toString(36).substr(2)
+  }
+  data.proDialogVisable = true
+}
+const handleEditEduExp = (eduExp) => {
+  data.eduFrom = JSON.parse(JSON.stringify(eduExp))
+  data.eduDialogVisable = true
+}
+const handleEditWorkExp = (workExp) => {
+  data.workFrom = JSON.parse(JSON.stringify(workExp))
+  data.workDialogVisable = true
+}
+const handleEditProExp = (proExp) => {
+  data.proFrom = JSON.parse(JSON.stringify(proExp))
+  data.proDialogVisable = true
+}
+const handleDelEduExp = (id) => {
+  ElMessageBox.confirm('删除数据后不可恢复', '确认删除', {
+    confirmButtonText: '确认',
+    cancelButtonText: '取消',
+    type: 'warning'
+  })
+    .then(() => {
+      data.resumeData.eduExpList = data.resumeData.eduExpList.filter((eduExp) => eduExp.id !== id)
+      ElMessage.success('删除成功')
+    })
+    .catch((err) => console.error(err))
+}
+const handleDelWorkExp = (id) => {
+  ElMessageBox.confirm('删除数据后不可恢复', '确认删除', {
+    confirmButtonText: '确认',
+    cancelButtonText: '取消',
+    type: 'warning'
+  })
+    .then(() => {
+      data.resumeData.workExpList = data.resumeData.workExpList.filter(
+        (workExp) => workExp.id !== id
+      )
+      ElMessage.success('删除成功')
+    })
+    .catch((err) => console.error(err))
+}
+const handleDelProExp = (id) => {
+  ElMessageBox.confirm('删除数据后不可恢复', '确认删除', {
+    confirmButtonText: '确认',
+    cancelButtonText: '取消',
+    type: 'warning'
+  })
+    .then(() => {
+      data.resumeData.proExpList = data.resumeData.proExpList.filter((proExp) => proExp.id !== id)
+      ElMessage.success('删除成功')
+    })
+    .catch((err) => console.error(err))
+}
 const submitEduExp = () => {
-  data.resumeData.eduExpList.push(data.eduFrom)
+  const form = data.resumeData.eduExpList.filter((eduExp) => eduExp.id === data.eduFrom.id)
+  if (form.length === 0) {
+    data.resumeData.eduExpList.push(data.eduFrom)
+  } else {
+    data.resumeData.eduExpList.forEach((eduExp) => {
+      if (eduExp.id === data.eduFrom.id) {
+        eduExp.schoolName = data.eduFrom.schoolName
+        eduExp.majorName = data.eduFrom.majorName
+        eduExp.education = data.eduFrom.education
+        eduExp.beginTime = data.eduFrom.beginTime
+        eduExp.endTime = data.eduFrom.endTime
+        eduExp.majorCourse = data.eduFrom.majorCourse
+      }
+    })
+  }
   data.eduDialogVisable = false
 }
+const submitWorkExp = () => {
+  const form = data.resumeData.workExpList.filter((workExp) => workExp.id === data.workFrom.id)
+  if (form.length === 0) {
+    data.resumeData.workExpList.push(data.workFrom)
+  } else {
+    data.resumeData.workExpList.forEach((workExp) => {
+      if (workExp.id === data.workFrom.id) {
+        console.log('in')
+        workExp.companyName = data.workFrom.companyName
+        workExp.projectName = data.workFrom.projectName
+        workExp.positionName = data.workFrom.positionName
+        workExp.positionType = data.workFrom.positionType
+        workExp.beginTime = data.workFrom.beginTime
+        workExp.endTime = data.workFrom.endTime
+        workExp.projectDesc = data.workFrom.projectDesc
+      }
+    })
+  }
+  data.workDialogVisable = false
+}
+const submitProExp = () => {
+  const form = data.resumeData.proExpList.filter((proExp) => proExp.id === data.proFrom.id)
+  if (form.length === 0) {
+    data.resumeData.proExpList.push(data.proFrom)
+  } else {
+    data.resumeData.proExpList.forEach((proExp) => {
+      if (proExp.id === data.proFrom.id) {
+        proExp.projectName = data.proFrom.projectName
+        proExp.beginTime = data.proFrom.beginTime
+        proExp.endTime = data.proFrom.endTime
+        proExp.projectDesc = data.proFrom.projectDesc
+      }
+    })
+  }
+  data.proDialogVisable = false
+}
 const saveResume = () => {
+  data.resumeData.userId = accountStore.AccountInfo.id
   addResumeAPI(data.resumeData).then((res) => {
     if (res.code === '200') {
       ElMessage.success('保存成功')
@@ -127,19 +246,71 @@ const saveResume = () => {
             />
           </div>
           <div>
-            <el-button type="success" size="default" @click="createEduExp">添加学校经历</el-button>
-            <div style="font-size: 16px; font-weight: bold; margin-top: 10px">教育经历:</div>
+            <el-button
+              type="success"
+              size="default"
+              @click="createEduExp"
+              style="margin-bottom: 20px"
+              >添加学校经历</el-button
+            >
+            <div
+              style="font-size: 16px; font-weight: bold; margin-top: 10px"
+              v-if="data.resumeData.eduExpList.length > 0"
+            >
+              教育经历:
+            </div>
 
             <div v-for="eduExp in data.resumeData.eduExpList" :key="eduExp.id">
-              <resume-shower :eduInfo="eduExp"></resume-shower>
+              <edu-exp-shower
+                :eduInfo="eduExp"
+                @onEdit="handleEditEduExp"
+                @onDelete="handleDelEduExp"
+              />
             </div>
           </div>
 
           <div>
-            <el-button type="success" size="default" @click="createWorkExp">添加工作经历</el-button>
-            <div style="font-size: 16px; font-weight: bold; margin-top: 10px">工作经历:</div>
+            <el-button
+              type="success"
+              size="default"
+              @click="createWorkExp"
+              style="margin-bottom: 20px"
+              >添加工作经历</el-button
+            >
+            <div
+              style="font-size: 16px; font-weight: bold; margin-top: 10px"
+              v-if="data.resumeData.workExpList.length > 0"
+            >
+              工作经历:
+            </div>
             <div v-for="workExp in data.resumeData.workExpList" :key="workExp.id">
-              <resume-shower :workInfo="workExp"></resume-shower>
+              <work-exp-shower
+                :workInfo="workExp"
+                @onEdit="handleEditWorkExp"
+                @onDelete="handleDelWorkExp"
+              />
+            </div>
+          </div>
+          <div>
+            <el-button
+              type="success"
+              size="default"
+              @click="createProExp"
+              style="margin-bottom: 20px"
+              >添加项目经验</el-button
+            >
+            <div
+              style="font-size: 16px; font-weight: bold; margin-top: 10px"
+              v-if="data.resumeData.proExpList.length > 0"
+            >
+              工作经历:
+            </div>
+            <div v-for="proExp in data.resumeData.proExpList" :key="proExp.id">
+              <pro-exp-shower
+                :proInfo="proExp"
+                @onEdit="handleEditProExp"
+                @onDelete="handleDelProExp"
+              />
             </div>
           </div>
         </div>
@@ -198,7 +369,104 @@ const saveResume = () => {
             ></el-input>
           </el-form-item>
           <el-form-item>
-            <div><el-button type="primary" @click="submitEduExp">确认</el-button></div>
+            <div style="width: 100%; display: flex; justify-content: end">
+              <el-button type="primary" @click="submitEduExp">保存</el-button>
+              <el-button size="default" @click="data.eduDialogVisable = false">取消</el-button>
+            </div>
+          </el-form-item>
+        </el-form>
+      </div>
+    </el-dialog>
+    <el-dialog v-model="data.workDialogVisable" title="工作经历" width="40%">
+      <div class="work-experience-box">
+        <el-form :model="data.workFrom" label-width="80px" style="padding-right: 20px">
+          <el-form-item label="公司名称" prop="companyName">
+            <el-input v-model="data.workFrom.companyName" placeholder="请输入公司名称"></el-input>
+          </el-form-item>
+          <el-form-item label="项目名称" prop="projectName">
+            <el-input v-model="data.workFrom.projectName" placeholder="请输入项目名称"></el-input>
+          </el-form-item>
+          <el-form-item label="职位名称" prop="positionName">
+            <el-input v-model="data.workFrom.positionName" placeholder="请输入职位名称"></el-input>
+          </el-form-item>
+          <el-form-item label="职位类型" prop="positionType">
+            <el-select
+              class="input-style"
+              v-model="data.workFrom.positionType"
+              placeholder="请选择职位类型"
+            >
+              <el-option label="实习" value="实习"></el-option>
+              <el-option label="全职" value="全职"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="入职时间" prop="beginTime">
+            <el-date-picker
+              style="width: 100%"
+              v-model="data.workFrom.beginTime"
+              type="date"
+              placeholder="请选择入职时间"
+              value-format="YYYY-MM-DD"
+          /></el-form-item>
+          <el-form-item label="离职时间" prop="endTime">
+            <el-date-picker
+              style="width: 100%"
+              v-model="data.workFrom.endTime"
+              type="date"
+              value-format="YYYY-MM-DD"
+              placeholder="请选择离职时间"
+            />
+          </el-form-item>
+          <el-form-item label="项目介绍" prop="projectDesc">
+            <el-input
+              v-model="data.workFrom.projectDesc"
+              type="textarea"
+              placeholder="请填写项目介绍"
+            ></el-input>
+          </el-form-item>
+          <el-form-item>
+            <div style="width: 100%; display: flex; justify-content: end">
+              <el-button type="primary" @click="submitWorkExp">保存</el-button>
+              <el-button @click="data.workDialogVisable = false">取消</el-button>
+            </div>
+          </el-form-item>
+        </el-form>
+      </div>
+    </el-dialog>
+    <el-dialog v-model="data.proDialogVisable" title="项目经理" width="40%">
+      <div class="pro-experience-box">
+        <el-form :model="data.proFrom" label-width="80px" style="padding-right: 20px">
+          <el-form-item label="项目名称" prop="projectName">
+            <el-input v-model="data.proFrom.projectName" placeholder="请输入项目名称"></el-input>
+          </el-form-item>
+          <el-form-item label="开始时间" prop="beginTime">
+            <el-date-picker
+              style="width: 100%"
+              v-model="data.proFrom.beginTime"
+              type="date"
+              placeholder="请选择开始时间"
+              value-format="YYYY-MM-DD"
+          /></el-form-item>
+          <el-form-item label="结束时间" prop="endTime">
+            <el-date-picker
+              style="width: 100%"
+              v-model="data.proFrom.endTime"
+              type="date"
+              value-format="YYYY-MM-DD"
+              placeholder="请选择结束时间"
+            />
+          </el-form-item>
+          <el-form-item label="项目介绍" prop="projectDesc">
+            <el-input
+              v-model="data.proFrom.projectDesc"
+              type="textarea"
+              placeholder="请输入项目介绍"
+            ></el-input>
+          </el-form-item>
+          <el-form-item>
+            <div style="width: 100%; display: flex; justify-content: end">
+              <el-button type="primary" @click="submitProExp">保存</el-button>
+              <el-button @click="data.proDialogVisable = false">取消</el-button>
+            </div>
           </el-form-item>
         </el-form>
       </div>
