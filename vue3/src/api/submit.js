@@ -4,12 +4,13 @@ const addSubmitAPI = (data) => {
   return request.post('/submit/add', data)
 }
 
-const selectByPageAPI = (pageNum = 1, pageSize = 10, positionName) => {
+const selectByPageAPI = (pageNum = 1, pageSize = 10, positionName, employId) => {
   return request.get('/submit/selectPage', {
     params: {
       pageNum,
       pageSize,
-      positionName
+      positionName,
+      employId
     }
   })
 }

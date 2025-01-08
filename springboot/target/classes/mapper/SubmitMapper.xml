@@ -9,8 +9,8 @@
         left join `system`.user u on u.id = submit.user_id
         <where>
             <if test="userId != null">and submit.userId = #{userId}</if>
-            <if test="positionId != null">and submit.positionId = #{positionId}</if>
             <if test="employId != null">and submit.employ_id = #{employId}</if>
+            <if test="positionName != null">and p.name like concat('%', #{positionName} , '%')</if>
         </where>
     </select>
     <select id="selectAll" resultType="com.example.entity.Submit">

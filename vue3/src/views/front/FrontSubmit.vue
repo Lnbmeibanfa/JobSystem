@@ -1,7 +1,7 @@
 <script setup>
 import { deleteById, selectAllSubmitAPI } from '@/api/submit'
 import { useAccountStore } from '@/stores/login'
-import { ROUTE_PATH } from '@/utils/Contants'
+import { ROUTE_PATH, STATUS } from '@/utils/Contants'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { reactive } from 'vue'
 const accountStore = useAccountStore()
@@ -58,7 +58,25 @@ loadSubmitData()
             </template>
           </el-table-column>
           <el-table-column prop="time" label="投递时间" />
-          <el-table-column prop="status" label="投递状态" />
+          <el-table-column prop="status" label="投递状态">
+            <template #default="scope">
+              <el-tag v-if="scope.row.status === STATUS.SUBMIT.HAVE_SUBMIT" type="info">{{
+                scope.row.status
+              }}</el-tag>
+              <el-tag v-if="scope.row.status === STATUS.SUBMIT.INAPPROPRIATE" type="danger">{{
+                scope.row.status
+              }}</el-tag>
+              <el-tag v-if="scope.row.status === STATUS.SUBMIT.ONINTERVIEW" type="primary">{{
+                scope.row.status
+              }}</el-tag>
+              <el-tag v-if="scope.row.status === STATUS.SUBMIT.PASS" type="success">{{
+                scope.row.status
+              }}</el-tag>
+              <el-tag v-if="scope.row.status === STATUS.SUBMIT.NOTPASS" type="warning">{{
+                scope.row.status
+              }}</el-tag>
+            </template>
+          </el-table-column>
           <el-table-column label="操作">
             <template #default="scope">
               <el-button type="danger" size="default" @click="handleDel(scope.row.id)"

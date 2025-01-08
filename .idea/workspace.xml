@@ -212,6 +212,7 @@
       <workItem from="1736234691315" duration="3627000" />
       <workItem from="1736238529783" duration="157000" />
       <workItem from="1736238697769" duration="8423000" />
+      <workItem from="1736324119001" duration="761000" />
     </task>
     <task id="LOCAL-00001" summary="项目初始化">
       <option name="closed" value="true" />
@@ -315,6 +316,15 @@
     <option name="LAST_COMMIT_MESSAGE" value="JWT校验" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/springboot/src/main/java/com/example/controller/SubmitController.java</url>
+          <line>34</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="com.example.entity.Resume" memberName="eduExpList" />

@@ -16,12 +16,26 @@ const pageSize = ref(10)
 const total = ref(0)
 const positionName = ref('')
 const load = () => {
-  selectByPageAPI(pageNum.value, pageSize.value, positionName.value).then((res) => {
-    if (res.code === '200') {
-      tableData.value = res.data?.list || []
-      total.value = res.data?.total
-    }
-  })
+  if (accountStore.AccountInfo.role === 'ADMIN') {
+    selectByPageAPI(pageNum.value, pageSize.value, positionName.value).then((res) => {
+      if (res.code === '200') {
+        tableData.value = res.data?.list || []
+        total.value = res.data?.total
+      }
+    })
+  } else {
+    selectByPageAPI(
+      pageNum.value,
+      pageSize.value,
+      positionName.value,
+      accountStore.AccountInfo.id
+    ).then((res) => {
+      if (res.code === '200') {
+        tableData.value = res.data?.list || []
+        total.value = res.data?.total
+      }
+    })
+  }
 }
 // 重置搜索关键字
 const replace = () => {
