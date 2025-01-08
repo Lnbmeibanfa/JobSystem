@@ -1,0 +1,65 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.SubmitMapper">
+    <select id="selectByPage" resultType="com.example.entity.Submit">
+        select submit.*, e.name as employName, p.name as positionName, u.name as userName from `submit`
+        left join `system`.employ e on e.id = submit.employ_id
+        left join `system`.position p on p.id = submit.position_id
+        left join `system`.user u on u.id = submit.user_id
+        <where>
+            <if test="userId != null">and submit.userId = #{userId}</if>
+            <if test="positionId != null">and submit.positionId = #{positionId}</if>
+            <if test="employId != null">and submit.employ_id = #{employId}</if>
+        </where>
+    </select>
+    <select id="selectAll" resultType="com.example.entity.Submit">
+        select submit.*, e.name as employName, p.name as positionName, u.name as userName from `submit`
+        left join `system`.employ e on e.id = submit.employ_id
+        left join `system`.position p on p.id = submit.position_id
+        left join `system`.user u on u.id = submit.user_id
+        <where>
+            <if test="userId != null">and submit.user_id = #{userId}</if>
+        </where>
+        </select>
+    <insert id="insert">
+        insert into `submit`
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="employId != null">employ_id,</if>
+            <if test="positionId != null">position_id,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="resumeId != null">resume_id,</if>
+            <if test="status != null">status,</if>
+            <if test="time != null">time,</if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="employId != null">#{employId},</if>
+            <if test="positionId != null">#{positionId},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="resumeId != null">#{resumeId},</if>
+            <if test="status != null">#{status},</if>
+            <if test="time != null">#{time},</if>
+        </trim>
+    </insert>
+
+    <update id="update">
+        update `submit`
+        <set>
+            <if test="status != null">status = #{status},</if>
+        </set>
+        <where>
+            <if test="userId != null">and user_id = #{userId}</if>
+            <if test="positionId != null">and position_id = #{positionId}</if>
+            <if test="employId != null">and employ_id = #{employId}</if>
+            <if test="resumeId != null">and resume_id = #{resumeId}</if>
+        </where>
+    </update>
+
+    <delete id="deleteById">
+        delete from `submit`
+        where id = #{id}
+    </delete>
+</mapper>

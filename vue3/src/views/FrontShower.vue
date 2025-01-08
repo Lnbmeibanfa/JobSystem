@@ -90,6 +90,11 @@ const isLogin = ref(false)
             :class="{ 'is-active': route.path === ROUTE_PATH.FRONT.RESUME }"
             >我的简历</el-menu-item
           >
+          <el-menu-item
+            :index="ROUTE_PATH.FRONT.SUBMIT"
+            :class="{ 'is-active': route.path === ROUTE_PATH.FRONT.SUBMIT }"
+            >我的投递</el-menu-item
+          >
         </el-menu>
       </div>
       <div class="right">

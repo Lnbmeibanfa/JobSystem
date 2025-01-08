@@ -22,8 +22,8 @@ const selectResumeById = (id) => {
   })
 }
 
-const selectAllResumeAPI = () => {
-  return request.get('/resume/selectAll')
+const selectAllResumeAPI = (userId) => {
+  return request.get('/resume/selectAll', { params: { userId } })
 }
 
 const updateResumeAPI = (data) => {

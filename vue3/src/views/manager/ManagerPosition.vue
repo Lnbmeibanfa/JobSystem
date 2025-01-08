@@ -89,13 +89,13 @@ const handleEdit = (row) => {
 // 审批通过行表格
 const handleApprove = (row) => {
   formData.value = JSON.parse(JSON.stringify(row))
-  formData.value.status = STATUS.AUDIT_STATUS_APPROVED
+  formData.value.status = STATUS.CHECK.AUDIT_STATUS_APPROVED
   update()
 }
 // 审批不通过行表格
 const handleReject = (row) => {
   formData.value = JSON.parse(JSON.stringify(row))
-  formData.value.status = STATUS.AUDIT_STATUS_REJECTED
+  formData.value.status = STATUS.CHECK.AUDIT_STATUS_REJECTED
   update()
 }
 const handleDel = (id) => {
@@ -220,13 +220,13 @@ const update = () => {
         <el-table-column prop="tag" label="职位标签" />
         <el-table-column prop="status" label="审核状态">
           <template v-slot="scope">
-            <el-tag v-if="scope.row.status === STATUS.AUDIT_STATUS_PENDING" type="warning">{{
+            <el-tag v-if="scope.row.status === STATUS.CHECK.AUDIT_STATUS_PENDING" type="warning">{{
               scope.row.status
             }}</el-tag>
-            <el-tag v-if="scope.row.status === STATUS.AUDIT_STATUS_APPROVED" type="success">{{
+            <el-tag v-if="scope.row.status === STATUS.CHECK.AUDIT_STATUS_APPROVED" type="success">{{
               scope.row.status
             }}</el-tag>
-            <el-tag v-if="scope.row.status === STATUS.AUDIT_STATUS_REJECTED" type="danger">{{
+            <el-tag v-if="scope.row.status === STATUS.CHECK.AUDIT_STATUS_REJECTED" type="danger">{{
               scope.row.status
             }}</el-tag>
           </template></el-table-column

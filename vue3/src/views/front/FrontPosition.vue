@@ -2,22 +2,36 @@
 import { reactive, onMounted } from 'vue'
 import { selectById, selectRecommend } from '@/api/position'
 import PositionShower from '../components/PositionShower.vue'
+import { addSubmitAPI } from '@/api/submit'
 import { useRoute } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { addCollectAPI } from '@/api/collect'
 import { useAccountStore } from '@/stores/login'
 import router from '@/router'
 import { watch } from 'vue'
+import { selectAllResumeAPI } from '@/api/resume'
 const route = useRoute()
 const accountStore = useAccountStore()
 const data = reactive({
   jobInfo: {},
-  recommendJobs: []
+  recommendJobs: [],
+  resumeList: [],
+  submitVisiable: false,
+  resumeId: null
 })
 const loadJobInfo = () => {
   selectById(route.params.id).then((res) => {
     if (res.code === '200') {
       data.jobInfo = res.data
+    } else {
+      ElMessage.error(res.msg)
+    }
+  })
+}
+const loadResumeList = () => {
+  selectAllResumeAPI(accountStore.AccountInfo.id).then((res) => {
+    if (res.code === '200') {
+      data.resumeList = res.data
     } else {
       ElMessage.error(res.msg)
     }
@@ -35,8 +49,27 @@ const loadRecommendJobs = () => {
 onMounted(() => {
   loadJobInfo()
   loadRecommendJobs()
+  loadResumeList()
 })
-const sendResume = () => {}
+const submitInit = () => {
+  data.submitVisiable = true
+}
+const submitResume = () => {
+  const submitData = {
+    userId: accountStore.AccountInfo.id,
+    positionId: data.jobInfo.id,
+    resumeId: data.resumeId,
+    employId: data.jobInfo.employId
+  }
+  addSubmitAPI(submitData).then((res) => {
+    if (res.code === '200') {
+      ElMessage.success('投递成功')
+      data.submitVisiable = false
+    } else {
+      ElMessage.error(res.msg)
+    }
+  })
+}
 const showAllPosition = () => {}
 const starPosition = () => {
   addCollectAPI({
@@ -104,7 +137,7 @@ const navTo = (id) => {
         </div>
         <div class="operation">
           <el-button type="success" size="default" @click="starPosition">收藏岗位</el-button>
-          <el-button type="primary" size="default" @click="sendResume">投递简历</el-button>
+          <el-button type="primary" size="default" @click="submitInit">投递简历</el-button>
         </div>
       </div>
     </header>
@@ -239,6 +272,22 @@ const navTo = (id) => {
         </div>
       </aside>
     </main>
+    <el-dialog v-model="data.submitVisiable" title="简历投递" width="40%">
+      <el-select v-model="data.resumeId" placeholder="请选择要投递的简历">
+        <el-option
+          v-for="item in data.resumeList"
+          :key="item.id"
+          :label="item.name"
+          :value="item.id"
+        ></el-option>
+      </el-select>
+      <div style="display: flex; justify-content: end; padding: 10px">
+        <el-button type="info" size="default" @click="submitResume">投递</el-button>
+        <el-button type="warning" size="default" @click="data.submitVisiable = false"
+          >取消</el-button
+        >
+      </div>
+    </el-dialog>
   </div>
 </template>
 

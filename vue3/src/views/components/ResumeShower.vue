@@ -11,7 +11,7 @@ const navToDetail = () => {
 }
 const handlePreview = () => {
   const baseURl = ROUTE_PATH.PREVIEW + '?id='
-  router.push(baseURl + props.resumeInfo.id)
+  window.open(baseURl + props.resumeInfo.id)
 }
 const handleDel = () => {
   emit('onDelete', props.resumeInfo.id)

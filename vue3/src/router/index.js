@@ -62,6 +62,11 @@ const router = createRouter({
           path: 'advertise',
           meta: { name: '广告信息' },
           component: () => import('@/views/manager/ManagerAdvertise.vue')
+        },
+        {
+          path: 'submit',
+          meta: { name: '投递信息' },
+          component: () => import('@/views/manager/ManagerSubmit.vue')
         }
       ]
     },
@@ -84,7 +89,8 @@ const router = createRouter({
         },
         { path: 'collect', component: () => import('@/views/front/FrontCollect.vue') },
         { path: 'resume', component: () => import('@/views/front/FrontResume.vue') },
-        { path: 'resumeEdit', component: () => import('@/views/front/FrontResumeEdit.vue') }
+        { path: 'resumeEdit', component: () => import('@/views/front/FrontResumeEdit.vue') },
+        { path: 'submit', component: () => import('@/views/front/FrontSubmit.vue') }
       ]
     }
   ]

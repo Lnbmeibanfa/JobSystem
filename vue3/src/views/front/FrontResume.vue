@@ -5,6 +5,8 @@ import ResumeShower from '@/views/components/ResumeShower.vue'
 import { ROUTE_PATH } from '@/utils/Contants'
 import { deleteById, selectAllResumeAPI } from '@/api/resume'
 import { ElMessage, ElMessageBox } from 'element-plus'
+import { useAccountStore } from '@/stores/login'
+const accountStore = useAccountStore()
 const router = useRouter()
 const data = reactive({
   resumeList: []
@@ -29,7 +31,8 @@ const handleDel = (id) => {
   })
 }
 const loadResumeList = () => {
-  selectAllResumeAPI().then((res) => {
+  console.log(accountStore.AccountInfo.id)
+  selectAllResumeAPI(accountStore.AccountInfo.id).then((res) => {
     if (res.code === '200') {
       data.resumeList = res.data
     } else {

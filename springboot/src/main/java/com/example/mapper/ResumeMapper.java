@@ -9,7 +9,7 @@ import java.util.List;
 public interface ResumeMapper {
     int insert(Resume resume);
 
-    List<Resume> selectAll();
+    List<Resume> selectAll(Integer userId);
 
     List<Resume> selectByPage(Resume resume);
 

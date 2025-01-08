@@ -99,7 +99,11 @@ const toPassword = () => {
               :class="{ tag: route.path === ROUTE_PATH.MESSAGE.POSITION }"
               >职位信息</el-menu-item
             >
-            <el-menu-item index="2-5">岗位投递</el-menu-item>
+            <el-menu-item
+              :index="ROUTE_PATH.MESSAGE.SUBMIT"
+              :class="{ tag: route.path === ROUTE_PATH.MESSAGE.SUBMIT }"
+              >岗位投递</el-menu-item
+            >
           </el-sub-menu>
           <el-sub-menu
             index="3"

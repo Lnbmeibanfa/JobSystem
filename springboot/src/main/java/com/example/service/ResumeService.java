@@ -51,8 +51,8 @@ public class ResumeService {
     }
 
 
-    public List<Resume> selectAll() {
-        return resumeMapper.selectAll();
+    public List<Resume> selectAll(Integer userId) {
+        return resumeMapper.selectAll(userId);
     }
 
     public Resume selectById(Integer id) {

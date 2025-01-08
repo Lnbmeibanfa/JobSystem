@@ -5,7 +5,8 @@ const ROUTE_PATH = {
     INDUSTRY: '/manager/industry',
     NOTICE: '/manager/notice',
     POSITION: '/manager/position',
-    ADVERTISE: '/manager/advertise'
+    ADVERTISE: '/manager/advertise',
+    SUBMIT: '/manager/submit'
   },
   ACCOUNT: {
     ADMIN: '/manager/admin',
@@ -25,7 +26,8 @@ const ROUTE_PATH = {
     COLLECT: '/front/collect',
     POSITION: '/front/position',
     RESUME: '/front/resume',
-    RESUME_EDIT: '/front/resumeEdit'
+    RESUME_EDIT: '/front/resumeEdit',
+    SUBMIT: '/front/submit'
   },
   MANAGER: '/manager'
 }
@@ -35,11 +37,21 @@ const ROLE = {
   EMPLOY: '企业',
   USER: '用户'
 }
-// 审核状态
 const STATUS = {
-  AUDIT_STATUS_PENDING: '待审核',
-  AUDIT_STATUS_APPROVED: '审核通过',
-  AUDIT_STATUS_REJECTED: '审核不通过'
+  // 审核状态
+  CHECK: {
+    AUDIT_STATUS_PENDING: '待审核',
+    AUDIT_STATUS_APPROVED: '审核通过',
+    AUDIT_STATUS_REJECTED: '审核不通过'
+  },
+  // 投递状态
+  SUBMIT: {
+    HAVE_SUBMIT: '已投递',
+    INAPPROPRIATE: '不合适',
+    ONINTERVIEW: '面试中',
+    PASS: '通过',
+    NOTPASS: '不通过'
+  }
 }
 // localstorage的key
 const LOCALSTORAGE_KEY = {
