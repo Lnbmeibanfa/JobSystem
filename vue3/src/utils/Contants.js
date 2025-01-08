@@ -27,7 +27,8 @@ const ROUTE_PATH = {
     POSITION: '/front/position',
     RESUME: '/front/resume',
     RESUME_EDIT: '/front/resumeEdit',
-    SUBMIT: '/front/submit'
+    SUBMIT: '/front/submit',
+    EMPLOY: '/front/employAll'
   },
   MANAGER: '/manager'
 }

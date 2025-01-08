@@ -10,6 +10,7 @@ import { useAccountStore } from '@/stores/login'
 import router from '@/router'
 import { watch } from 'vue'
 import { selectAllResumeAPI } from '@/api/resume'
+import { ROUTE_PATH } from '@/utils/Contants'
 const route = useRoute()
 const accountStore = useAccountStore()
 const data = reactive({
@@ -70,7 +71,10 @@ const submitResume = () => {
     }
   })
 }
-const showAllPosition = () => {}
+const showAllPosition = () => {
+  const baseUrl = ROUTE_PATH.FRONT.EMPLOY + '?id='
+  router.push(baseUrl + data.jobInfo.employId)
+}
 const starPosition = () => {
   addCollectAPI({
     positionId: data.jobInfo.id,
@@ -121,18 +125,18 @@ const navTo = (id) => {
             {{ data.jobInfo.salary }}
           </div>
         </div>
-        <div style="display: flex; color: #fff; padding: 20px 0px">
+        <div style="display: flex; color: #fff; padding: 20px 0px; font-size: 16px">
           <div style="display: flex; align-items: center">
-            <el-icon><Location /></el-icon>{{ data.jobInfo.employCity }}
+            <el-icon style="margin-right: 3px"><Location /></el-icon>{{ data.jobInfo.employCity }}
           </div>
           <div style="display: flex; align-items: center; margin-left: 10px">
-            <el-icon><Calendar /></el-icon>{{ data.jobInfo.experience }}
+            <el-icon style="margin-right: 3px"><Calendar /></el-icon>{{ data.jobInfo.experience }}
           </div>
           <div style="display: flex; align-items: center; margin-left: 10px">
-            <el-icon><School /></el-icon>{{ data.jobInfo.education }}
+            <el-icon style="margin-right: 3px"><School /></el-icon>{{ data.jobInfo.education }}
           </div>
           <div style="display: flex; align-items: center; margin-left: 10px">
-            <el-icon><Monitor /></el-icon>{{ data.jobInfo.type }}
+            <el-icon style="margin-right: 3px"><Monitor /></el-icon>{{ data.jobInfo.type }}
           </div>
         </div>
         <div class="operation">

@@ -16,11 +16,23 @@ const selectByPageAPI = (pageNum = 1, pageSize = 10, name, employName) => {
   })
 }
 
-const selectAllPositionAPI = (industryId) => {
+const selectAllPositionAPI = () => {
+  return request.get('/position/selectAll')
+}
+
+const selectAllPositionByIndustryAPI = (industryId) => {
   return request.get('/position/selectAll', {
     params: {
       industryId,
       status: '审核通过'
+    }
+  })
+}
+
+const selectAllPositionByEmployAPI = (employId) => {
+  return request.get('/position/selectAll', {
+    params: {
+      employId
     }
   })
 }
@@ -56,6 +68,8 @@ export {
   deleteById,
   deleteBatch,
   selectAllPositionAPI,
+  selectAllPositionByIndustryAPI,
+  selectAllPositionByEmployAPI,
   selectById,
   selectRecommend
 }

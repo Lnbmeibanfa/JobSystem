@@ -90,6 +90,7 @@
         left join `system`.industry on position.industry_id = industry.id
         <where>
             <if test="industryId != null">and position.industry_id = #{industryId}</if>
+            <if test="employId != null">and position.employ_id = #{employId}</if>
             <if test="status != null">and position.status = #{status}</if>
         </where>
     </select>

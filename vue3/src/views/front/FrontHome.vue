@@ -2,7 +2,7 @@
 import { reactive } from 'vue'
 import { selectAllAdvertiseAPI } from '@/api/advertise'
 import { selectAllIndustryAPI } from '@/api/industry'
-import { selectAllPositionAPI } from '@/api/position'
+import { selectAllPositionByIndustryAPI } from '@/api/position'
 import PositionShower from '../components/PositionShower.vue'
 import { ElMessage } from 'element-plus'
 import router from '@/router'
@@ -68,7 +68,7 @@ const loadIndustry = () => {
   })
 }
 const handleClick = (industryId) => {
-  selectAllPositionAPI(industryId).then((res) => {
+  selectAllPositionByIndustryAPI(industryId).then((res) => {
     if (res.code === '200') {
       data.positionList = res.data
     } else {

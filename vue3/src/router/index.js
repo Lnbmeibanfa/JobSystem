@@ -90,7 +90,8 @@ const router = createRouter({
         { path: 'collect', component: () => import('@/views/front/FrontCollect.vue') },
         { path: 'resume', component: () => import('@/views/front/FrontResume.vue') },
         { path: 'resumeEdit', component: () => import('@/views/front/FrontResumeEdit.vue') },
-        { path: 'submit', component: () => import('@/views/front/FrontSubmit.vue') }
+        { path: 'submit', component: () => import('@/views/front/FrontSubmit.vue') },
+        { path: 'employAll', component: () => import('@/views/front/FrontEmploy.vue') }
       ]
     }
   ]
