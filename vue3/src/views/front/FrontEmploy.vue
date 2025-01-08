@@ -10,7 +10,8 @@ const route = useRoute()
 const data = reactive({
   employId: route.query.id,
   employData: {},
-  positionData: []
+  positionData: [],
+  positionName: null
 })
 const loadEmployData = () => {
   selectById(data.employId).then((res) => {
@@ -25,7 +26,7 @@ const navTo = (id) => {
   router.push({ name: 'FrontPosition', params: { id } })
 }
 const loadPositionData = () => {
-  selectAllPositionByEmployAPI(data.employId).then((res) => {
+  selectAllPositionByEmployAPI(data.employId, data.positionName).then((res) => {
     if (res.code === '200') {
       data.positionData = res.data
     } else {
@@ -94,11 +95,11 @@ loadPositionData()
         <el-input
           style="margin-right: 10px; width: 600px"
           size="large"
-          v-model="positionName"
+          v-model="data.positionName"
           placeholder="请输入职位名称查询"
           clearable
         />
-        <el-button type="primary" size="large" @click="searchPosition">查询</el-button>
+        <el-button type="primary" size="large" @click="loadPositionData">查询</el-button>
       </div>
       <div class="position-box">
         <el-row :gutter="10">

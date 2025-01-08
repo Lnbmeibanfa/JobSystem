@@ -31,4 +31,5 @@ public class Position {
     private String employCity;
     private String employScale;
     private String employAddress;
+    private String positionName;
 }

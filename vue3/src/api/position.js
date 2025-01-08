@@ -29,10 +29,11 @@ const selectAllPositionByIndustryAPI = (industryId) => {
   })
 }
 
-const selectAllPositionByEmployAPI = (employId) => {
+const selectAllPositionByEmployAPI = (employId, positionName) => {
   return request.get('/position/selectAll', {
     params: {
-      employId
+      employId,
+      positionName
     }
   })
 }
