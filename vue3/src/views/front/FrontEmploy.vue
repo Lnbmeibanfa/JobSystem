@@ -98,6 +98,7 @@ loadPositionData()
           v-model="data.positionName"
           placeholder="请输入职位名称查询"
           clearable
+          @clear="loadPositionData"
         />
         <el-button type="primary" size="large" @click="loadPositionData">查询</el-button>
       </div>

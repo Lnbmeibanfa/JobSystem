@@ -91,7 +91,12 @@ const router = createRouter({
         { path: 'resume', component: () => import('@/views/front/FrontResume.vue') },
         { path: 'resumeEdit', component: () => import('@/views/front/FrontResumeEdit.vue') },
         { path: 'submit', component: () => import('@/views/front/FrontSubmit.vue') },
-        { path: 'employAll', component: () => import('@/views/front/FrontEmploy.vue') }
+        { path: 'employAll', component: () => import('@/views/front/FrontEmploy.vue') },
+        {
+          path: 'search/:name',
+          component: () => import('@/views/front/FrontSearch.vue'),
+          name: 'search'
+        }
       ]
     }
   ]

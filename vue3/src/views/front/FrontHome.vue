@@ -14,7 +14,7 @@ const data = reactive({
   centerSmallAd: {},
   rightSmallAd: {},
   // 搜索框中搜索职位
-  position: '',
+  positionName: '',
   industryList: [],
   // 职位tag栏目中筛选的高亮职位
   activeIndustryName: '',
@@ -82,7 +82,7 @@ const navTo = (id) => {
 }
 
 const search = () => {
-  console.log('search')
+  router.push({ name: 'search', params: { name: data.positionName } })
 }
 loadIndustry()
 loadAdvertiseImg()
@@ -95,7 +95,7 @@ loadAdvertiseImg()
       <div class="search">
         <el-input
           style="width: 400px; margin-right: 5px"
-          v-model="data.position"
+          v-model="data.positionName"
           placeholder="请输入你感兴趣的职位"
           size="large"
           @key-up.enter="search"
