@@ -1,15 +1,15 @@
 package com.example.service;
 
+import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.ObjectUtil;
 import com.example.common.enums.ResultCodeEnum;
 import com.example.common.enums.RoleEnum;
-import com.example.entity.Account;
-import com.example.entity.Employ;
-import com.example.entity.Position;
+import com.example.entity.*;
 import com.example.exception.CustomException;
-import com.example.mapper.EmployMapper;
-import com.example.mapper.PositionMapper;
+import com.example.mapper.*;
 import com.example.util.JWTUtil;
+import com.example.util.UserCF;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import jakarta.annotation.PostConstruct;
@@ -17,16 +17,21 @@ import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class PositionService {
     @Resource
     private PositionMapper positionMapper;
-    @Autowired
+    @Resource
     private EmployMapper employMapper;
+    @Resource
+    private CollectMapper collectMapper;
+    @Resource
+    private SubmitMapper submitMapper;
+    @Resource
+    private UserMapper userMapper;
 
     public void add (Position position) {
         Account currentUser = JWTUtil.getCurAccount();
@@ -102,12 +107,59 @@ public class PositionService {
     }
 
     public List<Position> selectRecommend() {
-        Position position = new Position();
-        List<Position> positions = positionMapper.selectAll(position).subList(0,3);
-        for (Position dbposition : positions) {
-            String tags = dbposition.getTag();
-            dbposition.setTagList(tagsToList(tags));
+        Account account = JWTUtil.getCurAccount();
+        List<User> users = userMapper.selectAll();
+        List<Position> positions = positionMapper.selectAll(new Position());
+        List<Collect> collects = collectMapper.selectAll();
+        List<Submit> submits = submitMapper.selectAll(new Submit());
+        List<RelateDTO> data = new ArrayList<>();
+        for (Position position : positions) {
+            Integer positionId = position.getId();
+            for (User user : users) {
+                Integer userId = user.getId();
+                int index = 1;
+                // 如果用户收藏过该岗位，那么权重+1
+                List<Collect> collectList = collects.stream()
+                        .filter(collect -> collect.getPositionId().equals(positionId) && collect.getStudentId().equals(userId))
+                        .collect(Collectors.toList());
+                if(CollectionUtil.isNotEmpty(collectList)){
+                    index++;
+                }
+                // 如果用户投递过该岗位，那么权重+2
+                List<Submit> submitList = submits.stream()
+                        .filter(submit -> submit.getPositionId().equals(positionId) && submit.getUserId().equals(userId))
+                        .collect(Collectors.toList());
+                if(CollectionUtil.isNotEmpty(submitList)){
+                    index += 2;
+                }
+                if(index > 1) {
+                    RelateDTO relateDTO = new RelateDTO(positionId, userId, index);
+                    data.add(relateDTO);
+                }
+            }
         }
-        return positions;
+        // 调用基于用户行为的UserCF的推荐方法获取被推荐的岗位
+        // 处理空指针异常
+        List<Integer> recommendPositionIds = UserCF.recommend(Objects.requireNonNull(account).getId(), data);
+        // 将获取到的id变成岗位信息
+        List<Position> recommendPositions = positions.stream().filter(position -> recommendPositionIds.contains(position.getId())).collect(Collectors.toList());
+
+        if (ObjectUtil.isEmpty(recommendPositions)) {
+            recommendPositions = getRandomPositions(3, positions, null);
+        }
+        if(recommendPositions.size() < 3) {
+            recommendPositions.addAll(getRandomPositions(3 - recommendPositionIds.size(), positions, recommendPositions));
+        }
+        for (Position position : recommendPositions) {
+            position.setTagList(tagsToList(position.getTag()));
+        }
+        return recommendPositions;
+    }
+    public List<Position> getRandomPositions(int num, List<Position> positions, List<Position> result) {
+        Collections.shuffle(positions);
+        if (ObjectUtil.isNotEmpty(result)){
+           positions.stream().filter(position -> !result.contains(position)).collect(Collectors.toList());
+        }
+        return positions.size() > num ? positions.subList(0, num) : positions;
     }
 }

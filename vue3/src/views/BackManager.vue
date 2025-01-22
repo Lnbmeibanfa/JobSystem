@@ -64,8 +64,8 @@ const toPassword = () => {
       </div>
     </div>
     <!-- 页面主体部分开始 -->
-    <div class="back-manager-main">
-      <div class="back-manager-main-left">
+    <div class="back-manager-main" style="height: 1100px">
+      <div class="back-manager-main-left" style="height: 100%">
         <el-menu :default-active="ROUTE_PATH.HOME" class="el-menu-vertical-demo" router>
           <el-menu-item :index="ROUTE_PATH.HOME" :class="{ tag: route.path === ROUTE_PATH.HOME }">
             <el-icon><House /></el-icon>

@@ -59,7 +59,7 @@ public class SubmitService {
     }
 
 
-    public List<Submit> selectAll(Integer userId) {
-        return submitMapper.selectAll(userId);
+    public List<Submit> selectAll(Submit submit) {
+        return submitMapper.selectAll(submit);
     }
 }

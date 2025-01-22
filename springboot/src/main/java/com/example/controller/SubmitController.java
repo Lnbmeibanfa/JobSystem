@@ -37,8 +37,8 @@ public class SubmitController {
     }
 
     @GetMapping("/selectAll")
-    public Result selectAll(@RequestParam Integer userId) {
-        List<Submit> submits = submitService.selectAll(userId);
+    public Result selectAll(Submit submit) {
+        List<Submit> submits = submitService.selectAll(submit);
         return Result.success(submits);
     }
 

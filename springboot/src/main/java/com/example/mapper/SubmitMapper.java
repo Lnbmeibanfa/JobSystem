@@ -9,7 +9,7 @@ import java.util.List;
 public interface SubmitMapper {
     int insert(Submit submit);
 
-    List<Submit> selectAll(Integer userId);
+    List<Submit> selectAll(Submit submit);
 
     List<Submit> selectByPage(Submit submit);
 
